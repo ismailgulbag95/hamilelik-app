@@ -1,0 +1,130 @@
+import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
+import '../../../core/theme/clay_theme.dart';
+
+/// Claymorphic Tıbbi Tarama & Test Takip Kartı
+class MedicalTestsChecklistCard extends StatefulWidget {
+  final Map<String, dynamic>? milestoneTest;
+  final int week;
+
+  const MedicalTestsChecklistCard({
+    super.key,
+    required this.milestoneTest,
+    required this.week,
+  });
+
+  @override
+  State<MedicalTestsChecklistCard> createState() => _MedicalTestsChecklistCardState();
+}
+
+class _MedicalTestsChecklistCardState extends State<MedicalTestsChecklistCard> {
+  bool _isCompleted = false;
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.milestoneTest == null) {
+      return const SizedBox.shrink();
+    }
+
+    final test = widget.milestoneTest!;
+    final title = test['title'] as String? ?? 'Kritik Tıbbi Tarama';
+    final desc = test['desc'] as String? ?? '';
+    final action = test['action'] as String? ?? '';
+
+    return ClayCard(
+      color: _isCompleted ? AppColors.clayMint : AppColors.claySky,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800,
+                    color: _isCompleted ? AppColors.successGreen : AppColors.waterBlue,
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () => setState(() => _isCompleted = !_isCompleted),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: _isCompleted ? AppColors.successGreen : Colors.white,
+                    borderRadius: BorderRadius.circular(14),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.08),
+                        blurRadius: 4,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        _isCompleted ? Icons.check_circle_rounded : Icons.radio_button_unchecked_rounded,
+                        size: 16,
+                        color: _isCompleted ? Colors.white : AppColors.textSecondary,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        _isCompleted ? 'Tamamlandı' : 'Yapılacak',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w800,
+                          color: _isCompleted ? Colors.white : AppColors.textPrimary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+
+          Text(
+            desc,
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(height: 10),
+
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.85),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.info_outline_rounded, size: 18, color: AppColors.accentGold),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    action,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

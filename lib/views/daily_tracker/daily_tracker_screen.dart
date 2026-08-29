@@ -1,0 +1,139 @@
+import 'package:flutter/material.dart';
+import '../../core/constants/app_colors.dart';
+import '../../controllers/daily_tracker_controller.dart';
+import '../../utils/date_utils.dart';
+import 'widgets/medication_tracker_card.dart';
+import 'widgets/water_tracker_card.dart';
+import 'widgets/caffeine_tracker_card.dart';
+import 'widgets/walking_tracker_card.dart';
+import 'widgets/trimester_nutrition_card.dart';
+import 'widgets/weight_tracker_card.dart';
+import '../../services/database_helper.dart';
+
+/// Claymorphic Günlük Takip & Rutin Yönetim Ekranı (Daily Tracker)
+class DailyTrackerScreen extends StatefulWidget {
+  const DailyTrackerScreen({super.key});
+
+  @override
+  State<DailyTrackerScreen> createState() => _DailyTrackerScreenState();
+}
+
+class _DailyTrackerScreenState extends State<DailyTrackerScreen> {
+  final DailyTrackerController _controller = DailyTrackerController();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.loadTodayData();
+    _controller.addListener(() => setState(() {}));
+    DatabaseHelper.appDataRevision.addListener(_onAppDataChanged);
+  }
+
+  void _onAppDataChanged() {
+    if (mounted) {
+      _controller.loadTodayData();
+    }
+  }
+
+  @override
+  void dispose() {
+    DatabaseHelper.appDataRevision.removeListener(_onAppDataChanged);
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_controller.isLoading) {
+      return const Scaffold(
+        backgroundColor: AppColors.background,
+        body: Center(child: CircularProgressIndicator(color: AppColors.primaryPink)),
+      );
+    }
+
+    final log = _controller.currentLog;
+
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        title: Column(
+          children: [
+            const Text(
+              'Günlük Rutinler & Takip',
+              style: TextStyle(
+                color: AppColors.primaryDark,
+                fontWeight: FontWeight.w800,
+                fontSize: 18,
+              ),
+            ),
+            Text(
+              AppDateUtils.formatToday(),
+              style: const TextStyle(
+                color: AppColors.textSecondary,
+                fontWeight: FontWeight.w600,
+                fontSize: 12,
+              ),
+            ),
+          ],
+        ),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // 1. İlaç & Vitamin Takip Modülü (WhatsApp İsteği)
+              const MedicationTrackerCard(),
+              const SizedBox(height: 16),
+
+              // 2. Kilo Takip Modülü (WhatsApp İsteği)
+              WeightTrackerCard(
+                currentWeightEntry: log.weightEntry,
+                profile: _controller.profile,
+                onSaveWeight: (w) => _controller.setWeightEntry(w),
+              ),
+              const SizedBox(height: 16),
+
+              // 3. Su Takip Modülü
+              WaterTrackerCard(
+                currentWaterMl: log.waterIntakeMl,
+                onAddWater: (ml) => _controller.addWater(ml),
+                onReset: () => _controller.resetWater(),
+              ),
+              const SizedBox(height: 16),
+
+              // 4. Yürüyüş & Adım Takip Modülü
+              WalkingTrackerCard(
+                stepCount: log.stepCount,
+                walkingMinutes: log.walkingMinutes,
+                currentWeek: _controller.currentWeek,
+                onAddSteps: (steps, {minutes = 0}) => _controller.addSteps(steps, minutes: minutes),
+                onReset: () => _controller.resetSteps(),
+              ),
+              const SizedBox(height: 16),
+
+              // 5. Kafein Takip Modülü (200 mg sınırı ve alarmı)
+              CaffeineTrackerCard(
+                currentCaffeineMg: log.caffeineMg,
+                onAddCaffeine: (mg) => _controller.addCaffeine(mg),
+                onReset: () => _controller.resetCaffeine(),
+              ),
+              const SizedBox(height: 16),
+
+              // 6. Trimester Beslenme ve Kalori Rehberi
+              TrimesterNutritionCard(
+                currentWeek: _controller.currentWeek,
+                trimester: _controller.trimester,
+              ),
+              const SizedBox(height: 24),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

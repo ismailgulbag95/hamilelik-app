@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura Pregnancy - Claymorphism Canlı Simülatör</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Quicksand:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-tinted: #FDF7F4;
+      --bg-subtle: #F6ECE7;
+      
+      /* Clay Surface Pastels */
+      --clay-rose: #FDE8ED;
+      --clay-peach: #FEE8D6;
+      --clay-lavender: #EDE7F6;
+      --clay-mint: #E8F5E9;
+      --clay-sky: #E3F2FD;
+      --clay-cream: #FFF8E7;
+      --clay-card: #FFF5F5;
+      
+      /* Accents & Contrast */
+      --primary-pink: #D85A7F;
+      --primary-dark: #7A213D;
+      --secondary-peach: #C85A3F;
+      --accent-gold: #B37D3E;
+      --medical-red: #C62828;
+      --medical-red-bg: #FFEBEE;
+      --success-green: #2E7D32;
+      --water-blue: #1976D2;
+      
+      /* Text */
+      --text-primary: #2D232E;
+      --text-secondary: #5C4F53;
+      --text-muted: #8A7A7F;
+      
+      /* Clay Shadow Formulas */
+      --radius-card: 30px;
+      --radius-control: 26px;
+      --radius-pill: 999px;
+      
+      --clay-shadow-rose: 0 24px 40px rgba(184, 115, 130, 0.18), inset 0 -8px 16px rgba(168, 85, 105, 0.15), inset 0 8px 16px rgba(255, 255, 255, 0.55);
+      --clay-shadow-peach: 0 24px 40px rgba(200, 135, 105, 0.18), inset 0 -8px 16px rgba(180, 100, 70, 0.15), inset 0 8px 16px rgba(255, 255, 255, 0.55);
+      --clay-shadow-lavender: 0 24px 40px rgba(145, 130, 185, 0.18), inset 0 -8px 16px rgba(115, 95, 160, 0.15), inset 0 8px 16px rgba(255, 255, 255, 0.55);
+      --clay-shadow-mint: 0 24px 40px rgba(120, 175, 135, 0.18), inset 0 -8px 16px rgba(90, 145, 105, 0.15), inset 0 8px 16px rgba(255, 255, 255, 0.55);
+      --clay-shadow-sky: 0 24px 40px rgba(120, 160, 205, 0.18), inset 0 -8px 16px rgba(90, 130, 180, 0.15), inset 0 8px 16px rgba(255, 255, 255, 0.55);
+      --clay-shadow-card: 0 20px 36px rgba(160, 130, 135, 0.14), inset 0 -6px 14px rgba(140, 110, 115, 0.12), inset 0 8px 16px rgba(255, 255, 255, 0.65);
+      --clay-shadow-alarm: 0 24px 40px rgba(211, 47, 47, 0.22), inset 0 -8px 16px rgba(180, 20, 20, 0.18), inset 0 8px 16px rgba(255, 255, 255, 0.65);
+      --clay-shadow-pressed: 0 10px 18px rgba(160, 130, 135, 0.12), inset 0 -12px 20px rgba(140, 90, 105, 0.25), inset 0 10px 18px rgba(255, 255, 255, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg-tinted);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(253, 232, 237, 0.7) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(237, 231, 246, 0.7) 0px, transparent 50%);
+      color: var(--text-primary);
+      font-family: 'Outfit', 'Quicksand', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px 10px 40px 10px;
+    }
+
+    /* Üst Önizleme Kontrol Çubuğu (Studio Toolbar) */
+    .preview-header-toolbar {
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 8px 14px;
+      border-radius: 20px;
+      box-shadow: 0 10px 24px rgba(184, 115, 130, 0.12);
+      margin-bottom: 14px;
+      z-index: 150;
+    }
+
+    .preview-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+
+    .preview-badge .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success-green);
+      box-shadow: 0 0 8px var(--success-green);
+    }
+
+    .toggle-frame-btn {
+      background: var(--clay-rose);
+      border: none;
+      outline: none;
+      padding: 6px 12px;
+      border-radius: 14px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+      box-shadow: 0 4px 10px rgba(184, 115, 130, 0.18);
+    }
+    .toggle-frame-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    /* ========================================== */
+    /* MOBİL TELEFON KASASI (REALISTIC PHONE FRAME)*/
+    /* ========================================== */
+    .phone-wrapper {
+      position: relative;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: center;
+    }
+
+    .phone-frame {
+      width: 410px;
+      min-height: 840px;
+      max-height: 90vh;
+      background: #FFFFFF;
+      border: 12px solid #231C24;
+      border-radius: 50px;
+      box-shadow: 
+        0 35px 70px rgba(122, 33, 61, 0.22),
+        0 12px 28px rgba(0, 0, 0, 0.16),
+        inset 0 0 4px rgba(255, 255, 255, 0.4);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    /* Yan Tuşlar (Hardware Buttons) */
+    .phone-frame::before {
+      content: '';
+      position: absolute;
+      left: -15px;
+      top: 110px;
+      width: 4px;
+      height: 48px;
+      background: #231C24;
+      border-radius: 4px 0 0 4px;
+      box-shadow: 0 65px 0 #231C24, 0 125px 0 #231C24;
+    }
+    .phone-frame::after {
+      content: '';
+      position: absolute;
+      right: -15px;
+      top: 140px;
+      width: 4px;
+      height: 65px;
+      background: #231C24;
+      border-radius: 0 4px 4px 0;
+    }
+
+    /* Telefon Ekran Alanı (İç Scroll Edilebilir Viewport) */
+    .phone-screen {
+      flex: 1;
+      width: 100%;
+      background: var(--bg-tinted);
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      scrollbar-width: none;
+    }
+    .phone-screen::-webkit-scrollbar { display: none; }
+
+    /* Üst Durum Çubuğu (Status Bar & Dynamic Island) */
+    .phone-status-bar {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 44px;
+      background: rgba(253, 247, 244, 0.92);
+      backdrop-filter: blur(12px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      z-index: 120;
+      border-bottom: 1px solid rgba(0,0,0,0.03);
+    }
+
+    .status-time {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.2px;
+    }
+
+    .dynamic-island {
+      width: 100px;
+      height: 24px;
+      background: #000000;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+    .camera-lens {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #111;
+      border: 1.5px solid #222;
+      box-shadow: inset 0 0 2px #00e5ff;
+    }
+    .sensor-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #0d1b2a;
+    }
+
+    .status-icons {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .battery-icon {
+      width: 20px;
+      height: 10px;
+      border: 1.5px solid var(--text-primary);
+      border-radius: 3px;
+      padding: 1px;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+    .battery-icon::after {
+      content: '';
+      position: absolute;
+      right: -3.5px;
+      top: 2px;
+      width: 2px;
+      height: 4px;
+      background: var(--text-primary);
+      border-radius: 0 1px 1px 0;
+    }
+    .battery-fill {
+      height: 100%;
+      width: 80%;
+      background: var(--success-green);
+      border-radius: 1.5px;
+    }
+
+    /* Ekran İçi İçerik Konteyneri */
+    .screen-content {
+      padding: 12px 14px 90px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+    }
+
+    /* Alt Çizgi (Home Indicator) */
+    .home-indicator-bar {
+      position: sticky;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 20px;
+      background: rgba(253, 247, 244, 0.95);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 115;
+    }
+    .home-indicator {
+      width: 120px;
+      height: 4.5px;
+      background: #2D232E;
+      border-radius: 10px;
+      opacity: 0.6;
+    }
+
+    /* Çerçevesiz Tam Ekran Modu */
+    .phone-wrapper.frameless .phone-frame {
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      max-height: none;
+      min-height: 100vh;
+      width: 100%;
+      max-width: 440px;
+      background: transparent;
+    }
+    .phone-wrapper.frameless .phone-frame::before,
+    .phone-wrapper.frameless .phone-frame::after,
+    .phone-wrapper.frameless .dynamic-island {
+      display: none;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 0;
+      }
+      .preview-header-toolbar {
+        border-radius: 0;
+        margin-bottom: 0;
+      }
+      .phone-frame {
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        max-height: none;
+        min-height: 100vh;
+        width: 100%;
+      }
+      .phone-frame::before,
+      .phone-frame::after {
+        display: none;
+      }
+    }
+
+    /* Üst Hızlı Akış Seçici (Quick Switcher Bar) */
+    .flow-quick-bar {
+      display: flex;
+      background: var(--clay-lavender);
+      border-radius: 20px;
+      padding: 4px;
+      gap: 4px;
+      box-shadow: 0 4px 12px rgba(145, 130, 185, 0.15);
+      margin-bottom: 4px;
+    }
+
+    .flow-chip {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 7px 4px;
+      border-radius: 16px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .flow-chip.active {
+      background: #FFFFFF;
+      color: var(--primary-dark);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    /* Clay Cards */
+    .clay-card {
+      background: var(--clay-card);
+      box-shadow: var(--clay-shadow-card);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: all 0.25s ease;
+    }
+
+    .clay-card.rose { background: var(--clay-rose); box-shadow: var(--clay-shadow-rose); }
+    .clay-card.peach { background: var(--clay-peach); box-shadow: var(--clay-shadow-peach); }
+    .clay-card.lavender { background: var(--clay-lavender); box-shadow: var(--clay-shadow-lavender); }
+    .clay-card.mint { background: var(--clay-mint); box-shadow: var(--clay-shadow-mint); }
+    .clay-card.sky { background: var(--clay-sky); box-shadow: var(--clay-shadow-sky); }
+    .clay-card.alarm { background: var(--medical-red-bg); box-shadow: var(--clay-shadow-alarm); border: 2px solid var(--medical-red); }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Clay Buttons */
+    .clay-btn {
+      height: 52px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 800;
+      border-radius: var(--radius-control);
+      padding: 0 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+      width: 100%;
+      user-select: none;
+    }
+
+    .clay-btn.primary { background: var(--clay-rose); color: var(--primary-dark); box-shadow: var(--clay-shadow-rose); }
+    .clay-btn.peach { background: var(--clay-peach); color: var(--secondary-peach); box-shadow: var(--clay-shadow-peach); }
+    .clay-btn.mint { background: var(--clay-mint); color: var(--success-green); box-shadow: var(--clay-shadow-mint); }
+    .clay-btn.alarm { background: var(--medical-red); color: #FFF; box-shadow: var(--clay-shadow-alarm); }
+    .clay-btn.white { background: #FFF; color: var(--text-primary); box-shadow: 0 4px 8px rgba(0,0,0,0.06), inset 0 2px 4px #fff; width: auto; }
+
+    .clay-btn:hover { transform: translateY(-2px); }
+    .clay-btn:active { transform: translateY(2px); box-shadow: var(--clay-shadow-pressed) !important; }
+
+    /* Switchers & Tabs */
+    .clay-switcher {
+      background: var(--clay-lavender);
+      box-shadow: var(--clay-shadow-lavender);
+      border-radius: var(--radius-control);
+      padding: 4px;
+      display: flex;
+      gap: 4px;
+    }
+
+    .clay-tab {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 10px 8px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .clay-tab.active {
+      background: var(--clay-rose);
+      box-shadow: 0 4px 12px rgba(184, 115, 130, 0.22), inset 0 2px 4px #fff;
+      color: var(--primary-dark);
+    }
+
+    /* Timeline Strip */
+    .timeline-container {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 6px 2px 14px 2px;
+      scrollbar-width: none;
+    }
+    .timeline-container::-webkit-scrollbar { display: none; }
+
+    .timeline-chip {
+      flex: 0 0 54px;
+      height: 64px;
+      border-radius: 20px;
+      background: var(--clay-card);
+      box-shadow: 0 10px 18px rgba(160, 130, 135, 0.12), inset 0 2px 4px #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 800;
+    }
+
+    .timeline-chip.active {
+      background: var(--clay-rose);
+      box-shadow: var(--clay-shadow-rose);
+      transform: translateY(-2px);
+    }
+    .timeline-chip.active .chip-num { color: var(--primary-dark); font-size: 18px; }
+    .chip-label { font-size: 10px; color: var(--text-muted); }
+    .chip-num { font-size: 16px; color: var(--text-primary); }
+
+    /* Bottom Nav Bar (Ekranın içine sabitlenmiş) */
+    .bottom-nav {
+      position: sticky;
+      bottom: 8px;
+      left: 0;
+      right: 0;
+      width: 100%;
+      background: #FFFFFF;
+      box-shadow: 0 14px 30px rgba(160, 120, 130, 0.22), inset 0 2px 4px #fff;
+      border-radius: 26px;
+      padding: 8px 10px;
+      display: flex;
+      justify-content: space-around;
+      z-index: 100;
+      margin-top: 10px;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 6px 10px;
+      border-radius: 18px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+
+    .nav-item.active {
+      background: var(--clay-rose);
+      box-shadow: var(--clay-shadow-rose);
+      color: var(--primary-dark);
+      transform: translateY(-3px);
+    }
+
+    .nav-item.emergency.active {
+      background: var(--medical-red-bg);
+      color: var(--medical-red);
+    }
+
+    .step-bar-dot {
+      height: 6px;
+      flex: 1;
+      border-radius: 3px;
+      background: var(--bg-subtle);
+      transition: all 0.2s;
+    }
+    .step-bar-dot.active {
+      background: var(--primary-pink);
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(45, 35, 46, 0.6);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 200;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Üst Studio Toolbar -->
+  <div class="preview-header-toolbar">
+    <div class="preview-badge">
+      <span class="dot"></span>
+      <span>Aura Mobile Simulator</span>
+    </div>
+    <button class="toggle-frame-btn" id="toggle-view-btn" onclick="toggleDeviceFrame()">
+      📱 Mobil Çerçeveyi Aç/Kapat
+    </button>
+  </div>
+
+  <!-- Mobil Telefon Kasası & Viewport -->
+  <div class="phone-wrapper" id="phone-wrapper">
+    <div class="phone-frame">
+      
+      <!-- Üst Durum Çubuğu (Status Bar & Dynamic Island) -->
+      <div class="phone-status-bar">
+        <span class="status-time" id="live-clock">09:41</span>
+        <div class="dynamic-island">
+          <div class="sensor-dot"></div>
+          <div class="camera-lens"></div>
+        </div>
+        <div class="status-icons">
+          <span>5G</span>
+          <span>📶</span>
+          <div class="battery-icon">
+            <div class="battery-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ekran İçeriği -->
+      <div class="phone-screen" id="phone-screen-viewport">
+        <div class="screen-content">
+          
+          <!-- Üst Akış Seçici -->
+          <div class="flow-quick-bar">
+            <button class="flow-chip active" id="chip-welcome" onclick="openFlow('welcome')">1. Tebrikler</button>
+            <button class="flow-chip" id="chip-guide" onclick="openFlow('guide')">2. Rehber</button>
+            <button class="flow-chip" id="chip-onboarding" onclick="openFlow('onboarding')">3. Onboarding</button>
+            <button class="flow-chip" id="chip-app" onclick="openFlow('app')">4. Dashboard 🚀</button>
+          </div>
+
+  <!-- ========================================== -->
+  <!-- 1. AKIŞ: HOŞ GELDİNİZ & TEBRİKLER EKRANI   -->
+  <!-- ========================================== -->
+  <div id="flow-welcome" style="display: flex; flex-direction: column; justify-content: space-between; min-height: 76vh; gap: 16px;">
+    <div>
+      <div style="text-align: center; margin-top: 14px;">
+        <div style="width: 90px; height: 90px; background: var(--clay-rose); box-shadow: var(--clay-shadow-rose); border-radius: 45px; display: inline-flex; align-items: center; justify-content: center; font-size: 44px;">
+          🌸
+        </div>
+        <h1 style="font-size: 25px; font-weight: 800; color: var(--primary-dark); margin-top: 16px; letter-spacing: -0.5px;">
+          Tebrikler Anne Adayı! 🎉
+        </h1>
+        <div style="font-size: 15px; font-weight: 700; color: var(--secondary-peach); margin-top: 6px;">
+          Hayatının en mucizevi yolculuğuna hoş geldin.
+        </div>
+      </div>
+
+      <div class="clay-card" style="background: #FFF; margin-top: 18px;">
+        <p style="font-size: 13.5px; font-weight: 600; color: var(--text-primary); text-align: center; line-height: 1.55;">
+          Aura Pregnancy; 40 haftalık gebelik sürecinizde bebeğinizin gelişimini uzman tıbbi kılavuzlarla takip etmeniz, sağlığınızı güvenle korumanız ve unutulmaz romantik anılar biriktirmeniz için sevgiyle hazırlandı.
+        </p>
+        <div style="display: flex; justify-content: center; gap: 16px; margin-top: 6px; font-size: 12px; font-weight: 800;">
+          <span style="color: var(--primary-pink);">✨ Sevgiyle Tasarlandı</span>
+          <span style="color: var(--water-blue);">🩺 Tıbbi Doğruluk</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <button class="clay-btn primary" onclick="openFlow('guide')">
+        <span>Uygulama Rehberini İncele ✨</span>
+      </button>
+      <button class="clay-btn mint" style="height: 48px; font-size: 14px;" onclick="openFlow('app')">
+        <span>Doğrudan Uygulamaya Başla 🚀</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 2. AKIŞ: UYGULAMA REHBERİ (5 ADIMLI TUR)    -->
+  <!-- ========================================== -->
+  <div id="flow-guide" style="display: none; flex-direction: column; gap: 14px;">
+    <!-- Üst Başlık ve Doğrudan Atla Butonu -->
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h2 style="font-size: 18px; font-weight: 800; color: var(--primary-dark);">Uygulama Rehberi</h2>
+      <button class="clay-btn white" style="height: 36px; font-size: 13px; padding: 0 14px; font-weight: 800; color: var(--primary-pink);" onclick="openFlow('onboarding')">
+        Atla (Profilini Oluştur) ➔
+      </button>
+    </div>
+
+    <!-- Adım Çubukları -->
+    <div style="display: flex; gap: 6px;">
+      <div class="step-bar-dot active" id="g-dot-0"></div>
+      <div class="step-bar-dot" id="g-dot-1"></div>
+      <div class="step-bar-dot" id="g-dot-2"></div>
+      <div class="step-bar-dot" id="g-dot-3"></div>
+      <div class="step-bar-dot" id="g-dot-4"></div>
+    </div>
+
+    <!-- Dinamik Rehber Kartı -->
+    <div class="clay-card rose" id="guide-card">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="font-size: 34px;" id="guide-emoji">🌸</span>
+        <div>
+          <div style="font-size: 16px; font-weight: 800; color: var(--primary-dark);" id="guide-title">1. Kişisel Gebelik Takibi</div>
+          <div style="font-size: 12px; font-weight: 700; color: var(--secondary-peach);" id="guide-subtitle">SAT ve VKİ Analiziniz</div>
+        </div>
+      </div>
+      <p style="font-size: 13px; font-weight: 600; line-height: 1.45;" id="guide-desc">
+        Son Adet Tarihinizi girerek güncel haftanızı öğrenin ve IOM standartlarında ideal kilo artış hedefinizi takip edin.
+      </p>
+    </div>
+
+    <!-- Özellikler Kontrol Listesi -->
+    <div class="clay-card" style="background: #FFF;">
+      <div style="font-size: 13px; font-weight: 800; color: var(--primary-dark); margin-bottom: 4px;">Önemli Özellikler:</div>
+      <div style="font-size: 12px; font-weight: 600; display: flex; flex-direction: column; gap: 6px;" id="guide-highlights">
+        <div>✓ Naegele Kuralı ile kesin doğum tarihi hesabı</div>
+        <div>✓ Vücut Kitle İndeksi (VKİ) ve ideal kilo artış tablosu</div>
+        <div>✓ Bebeğin haftalık meyve ve milimetrik boyutları</div>
+      </div>
+    </div>
+
+    <!-- İlerle / Başla Butonları -->
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <button class="clay-btn primary" id="btn-guide-action" onclick="handleGuideStepClick()">
+        <span>Sonraki Özellik →</span>
+      </button>
+      <button class="clay-btn mint" style="height: 48px; font-size: 14px;" onclick="openFlow('onboarding')">
+        <span>✨ Profilini Oluştur ve Başla 🚀</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 3. AKIŞ: ONBOARDING (PROFİL OLUŞTURMA)    -->
+  <!-- ========================================== -->
+  <div id="flow-onboarding" style="display: none; flex-direction: column; gap: 14px;">
+    <!-- Üst Başlık -->
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h2 style="font-size: 18px; font-weight: 800; color: var(--primary-dark);">Profilinizi Oluşturun</h2>
+      <span style="font-size: 12px; font-weight: 800; color: var(--primary-pink);" id="onboard-step-badge">Adım 1/3</span>
+    </div>
+
+    <!-- ONBOARDING AŞAMA 1: SAT / Doğum Tarihi -->
+    <div id="onboard-page-1" style="display: flex; flex-direction: column; gap: 14px;">
+      <div class="clay-card rose">
+        <div class="card-title">
+          <span>🌸 Hamilelik Başlangıcı</span>
+        </div>
+        <p style="font-size: 13px; font-weight: 600; color: var(--text-secondary);">
+          Son Adet Tarihinizi (SAT) veya tahmini doğum gününüzü seçin:
+        </p>
+
+        <div class="clay-switcher">
+          <button class="clay-tab active" id="tab-lmp" onclick="setOnboardMode('lmp')">Son Adet Tarihi (SAT)</button>
+          <button class="clay-tab" id="tab-due" onclick="setOnboardMode('due')">Doğum Tarihi</button>
+        </div>
+
+        <div style="background: #FFF; padding: 12px 16px; border-radius: 20px; border: 2px solid var(--primary-pink); display: flex; flex-direction: column; gap: 4px;">
+          <label style="font-size: 11px; font-weight: 700; color: var(--text-secondary);" id="label-date">Son Adet Tarihi (SAT):</label>
+          <input type="date" id="input-date" style="font-size: 16px; font-weight: 800; border: none; outline: none; background: transparent; font-family: inherit; color: var(--primary-dark);" onchange="calcOnboardDates()">
+        </div>
+
+        <div class="clay-card mint" style="padding: 14px; margin-top: 4px;">
+          <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary);">HESAPLANAN GEBELİK DURUMU:</div>
+          <div style="font-size: 18px; font-weight: 800; color: var(--success-green); margin-top: 2px;" id="onboard-calc-week">12. Hafta (1. Trimester)</div>
+          <div style="font-size: 12px; font-weight: 700; color: var(--text-primary); margin-top: 2px;" id="onboard-calc-due">Tahmini Doğum: 8 Ekim 2026</div>
+        </div>
+      </div>
+
+      <button class="clay-btn primary" onclick="goToOnboardStep(2)">
+        <span>Boy & Kilo Bilgilerine Geç →</span>
+      </button>
+    </div>
+
+    <!-- ONBOARDING AŞAMA 2: Boy, Kilo ve Canlı VKİ -->
+    <div id="onboard-page-2" style="display: none; flex-direction: column; gap: 14px;">
+      <div class="clay-card peach">
+        <div class="card-title">
+          <span>⚖️ Boy, Kilo ve VKİ Analizi</span>
+        </div>
+        <p style="font-size: 13px; font-weight: 600; color: var(--text-secondary);">
+          Hamilelik öncesi boy ve kilonuza göre sağlıklı kilo artış aralığı hesaplanır:
+        </p>
+
+        <div style="background: #FFF; padding: 14px; border-radius: 20px; display: flex; flex-direction: column; gap: 6px;">
+          <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 14px;">
+            <span>Boyunuz:</span>
+            <strong id="val-height" style="color: var(--primary-dark); font-size: 16px;">165 cm</strong>
+          </div>
+          <input type="range" id="range-height" min="140" max="200" value="165" style="accent-color: var(--primary-pink); cursor: pointer;" oninput="calcOnboardBmi()">
+        </div>
+
+        <div style="background: #FFF; padding: 14px; border-radius: 20px; display: flex; flex-direction: column; gap: 6px;">
+          <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 14px;">
+            <span>Hamilelik Öncesi Kilo:</span>
+            <strong id="val-weight" style="color: var(--secondary-peach); font-size: 16px;">60.0 kg</strong>
+          </div>
+          <input type="range" id="range-weight" min="40" max="130" step="0.5" value="60" style="accent-color: var(--secondary-peach); cursor: pointer;" oninput="calcOnboardBmi()">
+        </div>
+
+        <div class="clay-card sky" style="padding: 14px;">
+          <div style="font-size: 13px; font-weight: 800; color: var(--water-blue);" id="onboard-vki-badge">VKİ: 22.0 (Normal Kilo)</div>
+          <div style="font-size: 14px; font-weight: 800; margin-top: 4px;" id="onboard-vki-range">🎯 Toplam İdeal Kilo Alımı: 11.5 - 16.0 kg</div>
+          <div style="font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-top: 2px;" id="onboard-vki-weekly">Haftalık İdeal Artış: ~0.42 kg/hafta</div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 8px;">
+        <button class="clay-btn white" style="flex: 1;" onclick="goToOnboardStep(1)">← Geri</button>
+        <button class="clay-btn primary" style="flex: 2;" onclick="goToOnboardStep(3)">Özeti İncele →</button>
+      </div>
+    </div>
+
+    <!-- ONBOARDING AŞAMA 3: Özet ve Kayıt -->
+    <div id="onboard-page-3" style="display: none; flex-direction: column; gap: 14px;">
+      <div class="clay-card lavender">
+        <div style="text-align: center;">
+          <span style="font-size: 36px;">🎉</span>
+          <div style="font-size: 18px; font-weight: 800; color: var(--primary-dark); margin-top: 4px;">Aura Yolculuğunuz Başlıyor!</div>
+          <div style="font-size: 12px; font-weight: 600; color: var(--text-secondary);">Profiliniz kaydedilmeye hazır:</div>
+        </div>
+
+        <div style="background: #FFF; padding: 14px; border-radius: 18px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; margin-top: 6px;">
+          <div style="display: flex; justify-content: space-between;"><span>Gebelik Haftası:</span><strong id="sum-wk">12. Hafta</strong></div>
+          <div style="display: flex; justify-content: space-between;"><span>Tahmini Doğum:</span><strong id="sum-due-dt">8 Ekim 2026</strong></div>
+          <div style="display: flex; justify-content: space-between;"><span>VKİ ve Kategori:</span><strong id="sum-vki-cat">22.0 (Normal)</strong></div>
+          <div style="display: flex; justify-content: space-between;"><span>Hedef Kilo Alımı:</span><strong id="sum-target-kg">11.5 - 16.0 kg</strong></div>
+        </div>
+      </div>
+
+      <button class="clay-btn mint" onclick="saveAndEnterApp()">
+        <span>✨ Profili Kaydet ve Uygulamaya Başla 🚀</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 4. AKIŞ: ANA UYGULAMA (5 SEKME DASHBOARD)  -->
+  <!-- ========================================== -->
+  <div id="flow-main-app" style="display: none; flex-direction: column; gap: 14px;">
+    
+    <!-- TAB 1: ANA SAYFA (DASHBOARD) -->
+    <div id="tab-dashboard" style="display: flex; flex-direction: column; gap: 14px;">
+      <!-- Top Header -->
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 6px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 28px;">✨</span>
+          <div>
+            <h1 style="font-size: 19px; font-weight: 800; color: var(--primary-dark);">Aura Pregnancy</h1>
+            <div style="font-size: 11px; font-weight: 600; color: var(--text-secondary);">Romantik Anı & Tıbbi Takip</div>
+          </div>
+        </div>
+        <button class="clay-btn alarm" style="height: 36px; padding: 0 12px; font-size: 11px; width: auto;" onclick="goToTab(4)">
+          🚨 Kırmızı Alarm
+        </button>
+      </div>
+
+      <!-- 1. Hero Hafta Kartı -->
+      <div class="clay-card rose" onclick="goToTab(1)">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <div style="font-size: 26px; font-weight: 800; color: var(--primary-dark);" id="hero-week-title">12. Hafta</div>
+            <div style="font-size: 14px; font-weight: 700; color: var(--secondary-peach); margin-top: 2px;">🍑 Bebeğiniz: Şeftali Tomurcuğu</div>
+          </div>
+          <div style="background: rgba(255,255,255,0.85); padding: 8px 12px; border-radius: 16px; text-align: center;">
+            <div style="font-size: 10px; font-weight: 700; color: var(--text-secondary);">Doğuma</div>
+            <div style="font-size: 15px; font-weight: 800; color: var(--primary-dark);">196 Gün</div>
+          </div>
+        </div>
+
+        <div style="background: #FFF; border-radius: 16px; padding: 10px 14px; display: flex; justify-content: space-around; margin-top: 4px;">
+          <span style="font-size: 13px; font-weight: 800;">📏 Boy: 5.4 cm</span>
+          <span style="color: #DDD;">|</span>
+          <span style="font-size: 13px; font-weight: 800;">⚖️ Ağırlık: 14 gr</span>
+        </div>
+      </div>
+
+      <!-- 2. Kritik Tıbbi Tarama Bildirimi -->
+      <div class="clay-card sky" onclick="goToTab(1)">
+        <div class="card-title">
+          <span style="color: var(--water-blue); font-size: 15px;">🩺 12. Hafta İkili Tarama Dönemi</span>
+          <span style="font-size: 11px; font-weight: 800; background: #FFF; padding: 3px 8px; border-radius: 10px; color: var(--water-blue);">Kritik</span>
+        </div>
+        <p style="font-size: 12px; font-weight: 600; line-height: 1.4;">Ense kalınlığı (NT) ölçümü ve kan testi bu hafta uygulanmalıdır. Detaylar için dokunun →</p>
+      </div>
+
+      <!-- 3. Günlük Takip Özet Kartı -->
+      <div class="clay-card peach" onclick="goToTab(2)">
+        <div class="card-title">
+          <span style="color: var(--secondary-peach); font-size: 15px;">💧 Bugünkü Takipleriniz</span>
+          <span style="font-size: 11px; font-weight: 800;">Detaylar →</span>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <div style="flex: 1; background: var(--clay-sky); padding: 10px; border-radius: 16px;">
+            <div style="font-size: 11px; font-weight: 700; color: var(--water-blue);">💧 Su</div>
+            <div style="font-size: 14px; font-weight: 800; margin-top: 2px;" id="dash-water">1500 / 2500 ml</div>
+          </div>
+          <div style="flex: 1; background: #FFF; padding: 10px; border-radius: 16px;">
+            <div style="font-size: 11px; font-weight: 700; color: var(--secondary-peach);">☕ Kafein</div>
+            <div style="font-size: 14px; font-weight: 800; margin-top: 2px;" id="dash-caffeine">95 / 200 mg</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Günün Romantik Anısı -->
+      <div class="clay-card lavender" onclick="goToTab(3)">
+        <div class="card-title">
+          <span style="color: var(--primary-dark); font-size: 15px;">📖 Aura Anı Günlüğü</span>
+          <span style="font-size: 11px; font-weight: 800; color: var(--primary-pink);">Anı Ekle +</span>
+        </div>
+        <p style="font-size: 13px; font-weight: 600; line-height: 1.4;">"Bugün ilk defa ultrason görüntünde ellerini kıpırdattığını gördük bebeğim. Hayatımızın en güzel anıydı..." ✨</p>
+      </div>
+    </div>
+
+    <!-- TAB 2: HAFTA HAFTA (WEEKLY) -->
+    <div id="tab-weekly" style="display: none; flex-direction: column; gap: 14px;">
+      <div class="timeline-container" id="timeline-strip-mvp"></div>
+
+      <div class="clay-card sky" id="weekly-test-card">
+        <div class="card-title">
+          <span id="mvp-test-title" style="color: var(--water-blue); font-size: 15px;">🧬 Tıbbi Tarama</span>
+          <span style="font-size: 11px; font-weight: 800; background: #FFF; padding: 4px 10px; border-radius: 12px; color: var(--water-blue);">Kontrol Listesi</span>
+        </div>
+        <p style="font-size: 13px; font-weight: 600; line-height: 1.4;" id="mvp-test-desc">...</p>
+      </div>
+
+      <div class="clay-card peach">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div style="width: 56px; height: 56px; background: var(--clay-rose); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 28px;" id="mvp-fruit-icon">🍑</div>
+          <div>
+            <div style="font-size: 12px; font-weight: 700; color: var(--secondary-peach);" id="mvp-week-label">12. Hafta:</div>
+            <div style="font-size: 17px; font-weight: 800; color: var(--primary-dark);" id="mvp-fruit-name">Şeftali Tomurcuğu</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px; margin-top: 4px;">
+          <div style="flex: 1; background: #FFF; padding: 8px; border-radius: 14px; text-align: center;">
+            <div style="font-size: 10px; color: var(--text-secondary); font-weight: 700;">Boy</div>
+            <div style="font-size: 15px; font-weight: 800;" id="mvp-length">5.4 cm</div>
+          </div>
+          <div style="flex: 1; background: #FFF; padding: 8px; border-radius: 14px; text-align: center;">
+            <div style="font-size: 10px; color: var(--text-secondary); font-weight: 700;">Ağırlık</div>
+            <div style="font-size: 15px; font-weight: 800;" id="mvp-weight">14 gr</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="clay-card" style="background: #FFF;">
+        <div style="font-size: 14px; font-weight: 800;">👶 Bebeğin Gelişimi</div>
+        <p style="font-size: 13px; font-weight: 600; color: var(--text-secondary); line-height: 1.4;" id="mvp-baby-dev">Refleksleri gelişiyor, parmaklarını açıp kapayabiliyor.</p>
+      </div>
+
+      <div class="clay-card lavender">
+        <div style="font-size: 14px; font-weight: 800; color: var(--primary-dark);">🌸 Annede Değişimler</div>
+        <p style="font-size: 13px; font-weight: 600; color: var(--text-primary); line-height: 1.4;" id="mvp-mother-dev">Rahim pelvis dışına çıkar, idrara çıkma sıklığı azalır.</p>
+      </div>
+    </div>
+
+    <!-- TAB 3: GÜNLÜK TAKİP (DAILY TRACKER) -->
+    <div id="tab-tracker" style="display: none; flex-direction: column; gap: 14px;">
+      <!-- Su -->
+      <div class="clay-card sky">
+        <div class="card-title">
+          <span style="color: var(--water-blue);">💧 Su Takip Modülü</span>
+          <button class="clay-btn white" style="height: 30px; padding: 0 8px; font-size: 11px;" onclick="resetMvpWater()">Sıfırla</button>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+          <span style="font-size: 22px; font-weight: 800;" id="mvp-water-val">1500 / 2500 ml</span>
+          <span style="font-size: 16px; font-weight: 800; color: var(--water-blue);" id="mvp-water-pct">%60</span>
+        </div>
+        <div style="height: 16px; background: rgba(255,255,255,0.85); border-radius: 10px; overflow: hidden;">
+          <div id="mvp-water-bar" style="height: 100%; width: 60%; background: linear-gradient(90deg, #64B5F6, #1E88E5);"></div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="clay-btn white" style="flex: 1;" onclick="addMvpWater(250)">🥛 +250 ml</button>
+          <button class="clay-btn white" style="flex: 1;" onclick="addMvpWater(500)">🍶 +500 ml</button>
+        </div>
+      </div>
+
+      <!-- Kafein -->
+      <div class="clay-card peach" id="mvp-caffeine-card">
+        <div class="card-title">
+          <span id="mvp-caff-title" style="color: var(--secondary-peach);">☕ Kafein Takip (Maks 200mg)</span>
+          <button class="clay-btn white" style="height: 30px; padding: 0 8px; font-size: 11px;" onclick="resetMvpCaff()">Sıfırla</button>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 22px; font-weight: 800;" id="mvp-caff-val">95 / 200 mg</span>
+          <span style="font-size: 12px; font-weight: 800; background: #FFF; padding: 4px 8px; border-radius: 10px;" id="mvp-caff-badge">Kalan: 105 mg</span>
+        </div>
+        <div id="mvp-caff-alarm" style="display: none; background: #FFF; border: 2px solid var(--medical-red); border-radius: 14px; padding: 10px; font-size: 12px; font-weight: 700; color: var(--medical-red);">
+          🚨 Tıbbi Güvenlik Uyarısı: 200 mg kafein sınırı aşıldı!
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+          <button class="clay-btn white" onclick="addMvpCaff(60)">☕ Türk Kahvesi (+60mg)</button>
+          <button class="clay-btn white" onclick="addMvpCaff(95)">☕ Filtre Kahve (+95mg)</button>
+          <button class="clay-btn white" onclick="addMvpCaff(40)">🫖 Siyah Çay (+40mg)</button>
+          <button class="clay-btn white" onclick="addMvpCaff(25)">🍵 Yeşil Çay (+25mg)</button>
+        </div>
+      </div>
+
+      <!-- Trimester Beslenme -->
+      <div class="clay-card lavender">
+        <div class="card-title"><span style="color: var(--primary-dark);">🥗 2. Trimester Beslenme</span></div>
+        <div style="background: #FFF; padding: 8px 12px; border-radius: 12px; font-size: 13px; font-weight: 800;">
+          ⚡ Ek Enerji: +340 kkal/gün
+        </div>
+        <div style="font-size: 12px; font-weight: 600; line-height: 1.4;">
+          • Protein: Yumurta, et ve baklagiller.<br>
+          • Kalsiyum: Süt, yoğurt ve peynir.<br>
+          • Omega-3 & Demir takviyesi.
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: AURA JOURNAL (ANI GÜNLÜĞÜ) -->
+    <div id="tab-journal" style="display: none; flex-direction: column; gap: 14px;">
+      <div class="clay-card lavender">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: 15px; font-weight: 800; color: var(--primary-dark);">🎬 Time-Lapse Videosu</div>
+            <div style="font-size: 11px; font-weight: 600; color: var(--text-secondary);">FFmpeg & Romantik Melodi</div>
+          </div>
+          <button class="clay-btn primary" style="height: 38px; width: auto;" onclick="openVideoDialog()">Render Başlat ✨</button>
+        </div>
+      </div>
+
+      <!-- Günlük Girişleri -->
+      <div class="clay-card rose">
+        <div class="card-title">
+          <span>✨ 12. Hafta Anısı (Bugün)</span>
+          <span style="font-size: 10px; font-weight: 800; background: var(--primary-pink); color: #FFF; padding: 2px 8px; border-radius: 8px;">Özel An</span>
+        </div>
+        <p style="font-size: 13px; font-weight: 600; line-height: 1.45;">
+          "Bugün ilk defa ultrason görüntünde ellerini kıpırdattığını gördük bebeğim. O kadar minik ve masumdun ki... Hayatımızın en güzel anıydı."
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 5: ACİL DURUM (KIRMIZI ALARM) -->
+    <div id="tab-emergency" style="display: none; flex-direction: column; gap: 14px;">
+      <div class="clay-card alarm">
+        <div class="card-title">
+          <span style="color: var(--medical-red);">🚨 Acil Tehlike İşaretleri (8)</span>
+        </div>
+        <div style="font-size: 12px; font-weight: 600; color: var(--text-primary); display: flex; flex-direction: column; gap: 6px;">
+          <div>1. 🔴 Şiddetli ani karın / kasık ağrısı</div>
+          <div>2. 🔴 Vajinal kanama veya lekelenme</div>
+          <div>3. 🔴 Şiddetli baş ağrısı & görme bozukluğu</div>
+          <div>4. 🔴 Yüzde/ellerde ani aşırı şişme (ödem)</div>
+          <div>5. 🔴 Bebek hareketlerinde belirgin azalma</div>
+          <div>6. 🔴 38°C ve üzeri yüksek ateş veya titreme</div>
+          <div>7. 🔴 Erken su gelmesi (amniyotik sıvı)</div>
+          <div>8. 🔴 Sıvı tutamayacak kadar şiddetli kusma</div>
+        </div>
+      </div>
+
+      <button class="clay-btn alarm" style="height: 52px; font-size: 16px;" onclick="alert('🚨 112 Acil Yardım veya Doktorunuz Aranıyor...')">
+        📞 112 Acil Çağrı / Doktoru Ara
+      </button>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+      <div class="nav-item active" id="nav-0" onclick="goToTab(0)">
+        <span style="font-size: 18px;">🏠</span>
+        <span>Ana Sayfa</span>
+      </div>
+      <div class="nav-item" id="nav-1" onclick="goToTab(1)">
+        <span style="font-size: 18px;">📅</span>
+        <span>Haftalık</span>
+      </div>
+      <div class="nav-item" id="nav-2" onclick="goToTab(2)">
+        <span style="font-size: 18px;">💧</span>
+        <span>Takip</span>
+      </div>
+      <div class="nav-item" id="nav-3" onclick="goToTab(3)">
+        <span style="font-size: 18px;">📖</span>
+        <span>Günlük</span>
+      </div>
+      <div class="nav-item emergency" id="nav-4" onclick="goToTab(4)">
+        <span style="font-size: 18px;">🚨</span>
+        <span>Acil</span>
+      </div>
+    </nav>
+  </div> <!-- /flow-main-app -->
+
+        </div> <!-- /screen-content -->
+      </div> <!-- /phone-screen -->
+
+      <!-- Home Indicator -->
+      <div class="home-indicator-bar">
+        <div class="home-indicator"></div>
+      </div>
+
+    </div> <!-- /phone-frame -->
+  </div> <!-- /phone-wrapper -->
+
+<!-- Video Dialog Modal -->
+<div class="modal-overlay" id="video-modal">
+  <div class="clay-card rose" style="max-width: 380px; width: 100%;">
+    <div style="text-align: center; font-size: 36px;">🎬</div>
+    <div style="font-size: 18px; font-weight: 800; text-align: center; color: var(--primary-dark);">Aura Yolculuk Videosu</div>
+    <div style="font-size: 12px; text-align: center; color: var(--text-secondary);">FFmpeg Motoru • Aura_Lullaby.mp3</div>
+    
+    <div style="display: flex; gap: 8px; margin-top: 8px;">
+      <button class="clay-btn white" style="flex: 1;" onclick="closeVideoDialog()">Kapat</button>
+      <button class="clay-btn mint" style="flex: 1;" onclick="alert('Render Başlatıldı ✨')">Başlat 🚀</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ==========================================
+  // DOĞRUDAN VE KUSURSUZ AKIŞ AÇICI (openFlow)
+  // ==========================================
+  function openFlow(target) {
+    const screens = {
+      'welcome': 'flow-welcome',
+      'guide': 'flow-guide',
+      'onboarding': 'flow-onboarding',
+      'app': 'flow-main-app'
+    };
+
+    // Tüm ekranları gizle, hedefi aç
+    for (const key in screens) {
+      const el = document.getElementById(screens[key]);
+      const chip = document.getElementById('chip-' + key);
+      if (el) {
+        el.style.display = (key === target) ? 'flex' : 'none';
+      }
+      if (chip) {
+        chip.classList.toggle('active', key === target);
+      }
+    }
+
+    if (target === 'guide') {
+      renderGuideStep(0);
+    } else if (target === 'onboarding') {
+      goToOnboardStep(1);
+      initOnboardDates();
+    } else if (target === 'app') {
+      renderMvpTimeline();
+      selectMvpWeek(12);
+      goToTab(0);
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ==========================================
+  // REHBER (GUIDE) MANTIĞI
+  // ==========================================
+  let currentGuideStep = 0;
+  const guideData = [
+    {
+      emoji: '🌸', color: 'var(--clay-rose)', title: '1. Kişisel Gebelik Takibi', subtitle: 'SAT ve VKİ Analiziniz',
+      desc: 'Son Adet Tarihinizi girerek güncel haftanızı öğrenin ve IOM standartlarında ideal kilo artış hedefinizi takip edin.',
+      highlights: ['Naegele Kuralı ile kesin doğum tarihi hesabı', 'Vücut Kitle İndeksi (VKİ) ve ideal kilo artış tablosu', 'Bebeğin haftalık meyve ve milimetrik boyutları']
+    },
+    {
+      emoji: '🩺', color: 'var(--clay-sky)', title: '2. Kritik Tıbbi Tarama & Testler', subtitle: 'Hangi Hafta Hangi Test?',
+      desc: 'Bebeğinizin sağlığı için hiçbir taramayı kaçırmayın. Kritik haftalarda uygulama otomatik test kartları üretir.',
+      highlights: ['10. Hafta: NIPT Kromozom Taraması', '11-13. Hafta: Ense Kalınlığı (NT) & İkili Tarama', '20-22. Hafta: Ayrıntılı Ultrason Morfoloji Taraması']
+    },
+    {
+      emoji: '💧', color: 'var(--clay-peach)', title: '3. Günlük Sağlık & 200 mg Kafein Alarmı', subtitle: 'Su, Beslenme ve Güvenlik',
+      desc: 'Anne ve bebeğin sıvı dengesi için 2.5 Litre su takip modülü ve aşırı kafein alımını önleyen tıbbi güvenlik alarmı.',
+      highlights: ['Hızlı bardak (+250 ml) ve şişe (+500 ml) su kaydı', 'Günlük 200 mg kafein sınırı aşıldığında kırmızı alarm uyarısı', 'Trimester ek enerji (+340 kkal) tavsiyeleri']
+    },
+    {
+      emoji: '📖', color: 'var(--clay-lavender)', title: '4. Aura Journal & Yolculuk Videosu', subtitle: 'Romantik Anılar ve Mektuplar',
+      desc: 'Bebeğinize hissettiğiniz duyguları ve fotoğrafları kaydedin. Doğum anında Time-Lapse Yolculuk Videosuna dönüştürün.',
+      highlights: ['5 Seviyeli Günlük Ruh Hali (Mood) Takibi', 'Ultrason fotoğrafları ve sesli mektup kayıtları', 'Romantik melodi (Aura_Lullaby.mp3) ile otomatik video']
+    },
+    {
+      emoji: '🚨', color: 'var(--medical-red-bg)', title: '5. Kırmızı Alarm & Acil Durum Kartı', subtitle: 'Beklenmedik Anlarda Güvence',
+      desc: 'Gebelikte acil hekim başvurusu gerektiren 8 tehlike işareti ve acil serviste hekime gösterilecek Acil Tıbbi Kart.',
+      highlights: ['8 Kritik tehlike işareti ve açıklamaları', 'Kan grubu, alerji, ilaç bilgilerini içeren acil kart', 'Tek dokunuşla 112 Acil Yardım veya Doktoru arama']
+    }
+  ];
+
+  function renderGuideStep(idx) {
+    currentGuideStep = idx;
+    const step = guideData[idx];
+    const card = document.getElementById('guide-card');
+    if (card) card.style.background = step.color;
+
+    document.getElementById('guide-emoji').innerText = step.emoji;
+    document.getElementById('guide-title').innerText = step.title;
+    document.getElementById('guide-subtitle').innerText = step.subtitle;
+    document.getElementById('guide-desc').innerText = step.desc;
+
+    let htm = '';
+    step.highlights.forEach(h => { htm += `<div>✓ ${h}</div>`; });
+    document.getElementById('guide-highlights').innerHTML = htm;
+
+    for (let i = 0; i < 5; i++) {
+      const dot = document.getElementById('g-dot-' + i);
+      if (dot) dot.classList.toggle('active', i <= idx);
+    }
+
+    const btn = document.getElementById('btn-guide-action');
+    if (btn) {
+      if (idx === guideData.length - 1) {
+        btn.innerHTML = '<span>✨ Profilini Oluştur ve Başla 🚀</span>';
+        btn.style.background = 'var(--clay-mint)';
+        btn.style.color = 'var(--success-green)';
+      } else {
+        btn.innerHTML = '<span>Sonraki Özellik →</span>';
+        btn.style.background = 'var(--clay-rose)';
+        btn.style.color = 'var(--primary-dark)';
+      }
+    }
+  }
+
+  function handleGuideStepClick() {
+    if (currentGuideStep < guideData.length - 1) {
+      renderGuideStep(currentGuideStep + 1);
+    } else {
+      // 5. adımda tıklandığında Onboarding Profil oluşturmaya geç!
+      openFlow('onboarding');
+    }
+  }
+
+  // ==========================================
+  // ONBOARDING (PROFİL OLUŞTURMA)
+  // ==========================================
+  let onboardMode = 'lmp';
+  let calculatedWeekVal = 12;
+  let calculatedDueStr = '8 Ekim 2026';
+  let calculatedVkiVal = 22.0;
+  let calculatedVkiCatStr = 'Normal Kilo';
+  let calculatedRangeStr = '11.5 - 16.0 kg';
+
+  function initOnboardDates() {
+    const inputDate = document.getElementById('input-date');
+    if (inputDate && !inputDate.value) {
+      const d = new Date();
+      d.setDate(d.getDate() - 84); // ~12. Hafta
+      inputDate.value = d.toISOString().split('T')[0];
+    }
+    calcOnboardDates();
+    calcOnboardBmi();
+  }
+
+  function setOnboardMode(mode) {
+    onboardMode = mode;
+    document.getElementById('tab-lmp').classList.toggle('active', mode === 'lmp');
+    document.getElementById('tab-due').classList.toggle('active', mode === 'due');
+    document.getElementById('label-date').innerText = mode === 'lmp' ? 'Son Adet Tarihi (SAT):' : 'Tahmini Doğum Tarihi:';
+    calcOnboardDates();
+  }
+
+  function calcOnboardDates() {
+    const val = document.getElementById('input-date').value;
+    if (!val) return;
+    const selected = new Date(val);
+    let lmpDate, dueDate;
+
+    if (onboardMode === 'lmp') {
+      lmpDate = selected;
+      dueDate = new Date(selected);
+      dueDate.setDate(dueDate.getDate() + 280);
+    } else {
+      dueDate = selected;
+      lmpDate = new Date(selected);
+      lmpDate.setDate(lmpDate.getDate() - 280);
+    }
+
+    const today = new Date();
+    const diffDays = Math.floor((today - lmpDate) / (1000 * 60 * 60 * 24));
+    const week = Math.min(42, Math.max(1, Math.floor(diffDays / 7) + 1));
+    const trimester = week <= 13 ? 1 : (week <= 27 ? 2 : 3);
+
+    calculatedWeekVal = week;
+    calculatedDueStr = dueDate.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    document.getElementById('onboard-calc-week').innerText = `${week}. Hafta (${trimester}. Trimester)`;
+    document.getElementById('onboard-calc-due').innerText = `Tahmini Doğum: ${calculatedDueStr}`;
+  }
+
+  function calcOnboardBmi() {
+    const h = parseFloat(document.getElementById('range-height').value) || 165;
+    const w = parseFloat(document.getElementById('range-weight').value) || 60;
+    document.getElementById('val-height').innerText = `${h} cm`;
+    document.getElementById('val-weight').innerText = `${w.toFixed(1)} kg`;
+
+    const hM = h / 100;
+    const vki = +(w / (hM * hM)).toFixed(1);
+    let cat = 'Normal Kilo';
+    let range = '11.5 - 16.0 kg';
+    let weekly = '0.42 kg/hafta';
+
+    if (vki < 18.5) { cat = 'Zayıf'; range = '12.5 - 18.0 kg'; weekly = '0.51 kg/hafta'; }
+    else if (vki < 25.0) { cat = 'Normal Kilo'; range = '11.5 - 16.0 kg'; weekly = '0.42 kg/hafta'; }
+    else if (vki < 30.0) { cat = 'Kilolu'; range = '7.0 - 11.5 kg'; weekly = '0.28 kg/hafta'; }
+    else { cat = 'Obez'; range = '5.0 - 9.0 kg'; weekly = '0.22 kg/hafta'; }
+
+    calculatedVkiVal = vki;
+    calculatedVkiCatStr = cat;
+    calculatedRangeStr = range;
+
+    document.getElementById('onboard-vki-badge').innerText = `VKİ: ${vki} (${cat})`;
+    document.getElementById('onboard-vki-range').innerText = `🎯 Toplam İdeal Kilo Alımı: ${range}`;
+    document.getElementById('onboard-vki-weekly').innerText = `Haftalık İdeal Artış: ~${weekly}`;
+  }
+
+  function goToOnboardStep(step) {
+    document.getElementById('onboard-page-1').style.display = step === 1 ? 'flex' : 'none';
+    document.getElementById('onboard-page-2').style.display = step === 2 ? 'flex' : 'none';
+    document.getElementById('onboard-page-3').style.display = step === 3 ? 'flex' : 'none';
+    document.getElementById('onboard-step-badge').innerText = `Adım ${step}/3`;
+
+    if (step === 3) {
+      document.getElementById('sum-wk').innerText = `${calculatedWeekVal}. Hafta`;
+      document.getElementById('sum-due-dt').innerText = calculatedDueStr;
+      document.getElementById('sum-vki-cat').innerText = `${calculatedVkiVal} (${calculatedVkiCatStr})`;
+      document.getElementById('sum-target-kg').innerText = calculatedRangeStr;
+    }
+    const vp = document.getElementById('phone-screen-viewport');
+    if (vp) vp.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ==========================================
+  // ANA UYGULAMA (DASHBOARD & SEKME MANTIĞI)
+  // ==========================================
+  let currentTab = 0;
+  let mvpWater = 1500;
+  let mvpCaff = 95;
+  let activeWk = 12;
+
+  function saveAndEnterApp() {
+    activeWk = calculatedWeekVal || 12;
+    // Hero kartını seçilen haftaya göre güncelle
+    const heroTitle = document.getElementById('hero-week-title');
+    if (heroTitle) heroTitle.innerText = `${activeWk}. Hafta`;
+    
+    // Uygulama akışını aç ve Dashboard'a odaklan
+    openFlow('app');
+    selectMvpWeek(activeWk);
+    goToTab(0);
+  }
+
+  function goToTab(tabIdx) {
+    currentTab = tabIdx;
+    const tabs = ['tab-dashboard', 'tab-weekly', 'tab-tracker', 'tab-journal', 'tab-emergency'];
+    tabs.forEach((id, i) => {
+      const el = document.getElementById(id);
+      const nav = document.getElementById('nav-' + i);
+      if (el) el.style.display = i === tabIdx ? 'flex' : 'none';
+      if (nav) nav.classList.toggle('active', i === tabIdx);
+    });
+    const vp = document.getElementById('phone-screen-viewport');
+    if (vp) vp.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  const mvpWeeklyData = {
+    10: { fruit: '🍓', name: 'Çilek', len: '3.1 cm', w: '4 gr', dev: 'Embriyonik dönem tamamlandı, fetüs evresi başladı.', mom: 'Rahim portakal büyüklüğüne ulaştı.', test: { title: '🧬 NIPT (Kromozomal Tarama)', desc: 'Anne kanındaki fetal DNA ile %99 doğrulukta genetik tarama.' } },
+    11: { fruit: '🍋', name: 'Misket Limonu', len: '4.1 cm', w: '7 gr', dev: 'Kemikler sertleşiyor, tırnak yatakları oluşuyor.', mom: 'Bulantılar hafiflemeye başlar.', test: { title: '🩺 İkili Tarama Başlangıcı', desc: 'Ense kalınlığı (NT) ultrason randevunuzu planlayın.' } },
+    12: { fruit: '🍑', name: 'Şeftali Tomurcuğu', len: '5.4 cm', w: '14 gr', dev: 'Refleksler gelişiyor, parmaklarını oynatabiliyor.', mom: 'Rahim pelvis dışına çıkar.', test: { title: '📋 İkili Tarama Testi ve NT', desc: 'En kritik 1. trimester ikili taraması bu hafta uygulanmalıdır.' } },
+    16: { fruit: '🥑', name: 'Avokado', len: '11.6 cm', w: '100 gr', dev: 'Gözler ışığa duyarlı, bacaklar uzadı.', mom: 'İlk minik seğirmeler hissedilebilir.', test: { title: '🧪 Üçlü / Dörtlü Tarama', desc: 'AFP ve estriol taraması planlanır.' } },
+    20: { fruit: '🍌', name: 'Muz', len: '25.6 cm', w: '300 gr', dev: 'Yolun yarısı! Verniks tabakası ile kaplanıyor.', mom: 'Bebek tekmeleri net hissedilir.', test: { title: '🔍 Ayrıntılı Ultrason (2. Trimester)', desc: 'Bebeğin tüm organları detaylı incelenir.' } },
+    24: { fruit: '🌽', name: 'Mısır Koçanı', len: '30.0 cm', w: '600 gr', dev: 'Sürfaktan maddesi üretilmeye başlandı.', mom: 'Ciltte gerilme hissedilebilir.', test: { title: '🩸 Gestasyonel Diyabet Taraması', desc: '50 gr glukoz yükleme testi bu haftalarda uygulanır.' } },
+    28: { fruit: '🍆', name: 'Büyük Patlıcan', len: '37.6 cm', w: '1000 gr', dev: '3. Trimester başladı! REM uykusunda rüya görüyor.', mom: 'Ayak bileklerinde hafif ödem.', test: { title: '💉 Anti-D İğnesi & NST Kontrolleri', desc: 'Rh (-) negatif annelerde kan uyuşmazlığı iğnesi değerlendirilir.' } }
+  };
+
+  function renderMvpTimeline() {
+    const strip = document.getElementById('timeline-strip-mvp');
+    if (!strip) return;
+    strip.innerHTML = '';
+    for (let w = 1; w <= 40; w++) {
+      const chip = document.createElement('div');
+      chip.className = `timeline-chip ${w === activeWk ? 'active' : ''}`;
+      chip.onclick = () => selectMvpWeek(w);
+      chip.innerHTML = `<span class="chip-label">Hafta</span><span class="chip-num">${w}</span>`;
+      strip.appendChild(chip);
+    }
+  }
+
+  function selectMvpWeek(w) {
+    activeWk = w;
+    renderMvpTimeline();
+    const data = mvpWeeklyData[w] || {
+      fruit: '✨', name: `${w}. Hafta Gelişimi`, len: `${(w * 1.25).toFixed(1)} cm`, w: `${w * 85} gr`,
+      dev: `${w}. haftada bebeğinizin organ sistemleri gelişimini sürdürüyor.`, mom: `${w}. haftaya özel hormonal adaptasyon devam ediyor.`
+    };
+
+    document.getElementById('mvp-week-label').innerText = `${w}. Hafta:`;
+    document.getElementById('mvp-fruit-name').innerText = data.name;
+    document.getElementById('mvp-fruit-icon').innerText = data.fruit;
+    document.getElementById('mvp-length').innerText = data.len;
+    document.getElementById('mvp-weight').innerText = data.w;
+    document.getElementById('mvp-baby-dev').innerText = data.dev;
+    document.getElementById('mvp-mother-dev').innerText = data.mom;
+
+    const testCard = document.getElementById('weekly-test-card');
+    if (data.test) {
+      testCard.style.display = 'flex';
+      document.getElementById('mvp-test-title').innerText = data.test.title;
+      document.getElementById('mvp-test-desc').innerText = data.test.desc;
+    } else {
+      testCard.style.display = 'none';
+    }
+  }
+
+  function addMvpWater(ml) {
+    mvpWater += ml;
+    document.getElementById('mvp-water-val').innerText = `${mvpWater} / 2500 ml`;
+    document.getElementById('dash-water').innerText = `${mvpWater} / 2500 ml`;
+  }
+  function resetMvpWater() {
+    mvpWater = 0;
+    addMvpWater(0);
+  }
+
+  function addMvpCaff(mg) {
+    mvpCaff += mg;
+    document.getElementById('mvp-caff-val').innerText = `${mvpCaff} / 200 mg`;
+    document.getElementById('dash-caffeine').innerText = `${mvpCaff} / 200 mg`;
+  }
+  function resetMvpCaff() {
+    mvpCaff = 0;
+    addMvpCaff(0);
+  }
+
+  function openVideoDialog() { document.getElementById('video-modal').style.display = 'flex'; }
+  function closeVideoDialog() { document.getElementById('video-modal').style.display = 'none'; }
+
+  // Mobil Çerçeveyi Aç/Kapat
+  let isFrameless = false;
+  function toggleDeviceFrame() {
+    isFrameless = !isFrameless;
+    const wrapper = document.getElementById('phone-wrapper');
+    const btn = document.getElementById('toggle-view-btn');
+    if (wrapper) wrapper.classList.toggle('frameless', isFrameless);
+    if (btn) {
+      btn.innerText = isFrameless ? '📱 Mobil Çerçeveyi Aç' : '💻 Tam Genişlik Modu';
+    }
+  }
+
+  // Canlı Saat Güncelleyici
+  function updateLiveClock() {
+    const clockEl = document.getElementById('live-clock');
+    if (clockEl) {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      clockEl.innerText = `${h}:${m}`;
+    }
+  }
+  setInterval(updateLiveClock, 1000);
+  updateLiveClock();
+
+  // Ekran geçişlerinde iç scrollu en üste sar
+  const origOpenFlow = openFlow;
+  openFlow = function(target) {
+    origOpenFlow(target);
+    const viewport = document.getElementById('phone-screen-viewport');
+    if (viewport) viewport.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Başlangıç ekranını yükle
+  openFlow('welcome');
+</script>
+
+</body>
+</html>
