@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:sqflite/sqflite.dart' if (dart.library.html) 'database_stubs.dart';
 import '../models/profile_model.dart';
 import '../models/diary_model.dart';
 import '../models/daily_log_model.dart';
