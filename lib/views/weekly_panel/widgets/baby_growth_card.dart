@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/clay_theme.dart';
+import '../../../core/widgets/fruit_3d_widget.dart';
 
 /// Claymorphic Bebek Büyüklük ve Gelişim Kartı
 class BabyGrowthCard extends StatelessWidget {
@@ -34,17 +35,11 @@ class BabyGrowthCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  // Meyve İkon Alanı
-                  Container(
-                    width: 64,
-                    height: 64,
-                    decoration: ClayTheme.clayDecoration(
-                      color: AppColors.clayRose,
-                      borderRadius: 20,
-                    ),
-                    child: Center(
-                      child: Icon(fruitIcon, size: 30, color: AppColors.secondaryPeach),
-                    ),
+                  // 3D Meyve Görsel Alanı
+                  Fruit3DWidget(
+                    week: week,
+                    size: 68,
+                    borderRadius: 20,
                   ),
                   const SizedBox(width: 16),
                   Expanded(

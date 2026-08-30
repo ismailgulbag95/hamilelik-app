@@ -10,6 +10,7 @@ import '../../models/daily_log_model.dart';
 import '../../utils/date_utils.dart';
 import 'widgets/profile_edit_sheet.dart';
 import 'widgets/interactive_3d_fetus_widget.dart';
+import '../../core/widgets/fruit_3d_widget.dart';
 
 /// Aura Pregnancy - Sade, Ferah & Romantik Ana Sayfa (Dashboard)
 class DashboardScreen extends StatefulWidget {
@@ -271,24 +272,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Container(
-                              width: 28,
-                              height: 28,
-                              decoration: ClayTheme.clayDecoration(
-                                color: AppColors.clayRose,
-                                borderRadius: 8,
-                              ),
-                              child: Center(
-                                child: Icon(fruitIcon, size: 16, color: AppColors.secondaryPeach),
-                              ),
+                            Fruit3DWidget(
+                              week: weekNumber,
+                              size: 34,
+                              borderRadius: 10,
                             ),
                             const SizedBox(width: 8),
-                            Text(
-                              'Bebeğiniz bu hafta $fruitName boyutunda',
-                              style: const TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w800,
-                                color: AppColors.primaryDark,
+                            Flexible(
+                              child: Text(
+                                'Bebeğiniz bu hafta $fruitName boyutunda',
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w800,
+                                  color: AppColors.primaryDark,
+                                ),
                               ),
                             ),
                           ],

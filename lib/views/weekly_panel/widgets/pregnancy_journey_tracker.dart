@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/constants/app_colors.dart';
-import '../../../core/theme/clay_theme.dart';
+import '../../../core/widgets/fruit_3d_widget.dart';
 import 'ad_reward_dialog.dart';
 
 /// Gebelik Gelişim Aşaması Bilgi Modeli
@@ -26,17 +26,15 @@ class JourneyStageData {
 }
 
 /// Dribbble Aesthetic - Claymorphism 3D Fetal Journey Tracker
-/// Bulunulan haftanın meyvesinden sonraki meyveler gizlenir; yalnızca tek bir soru işareti kutusu gösterilir ve reklam izlenerek açılır.
+/// Evre butonları tıklanamaz (serüven göstergesi); daima mevcut haftanın evre bilgisini sunar.
 class PregnancyJourneyTracker extends StatefulWidget {
   final int currentWeek;
   final int initialIndex;
-  final Function(int)? onStageSelected;
 
   const PregnancyJourneyTracker({
     super.key,
     this.currentWeek = 12,
     this.initialIndex = 3,
-    this.onStageSelected,
   });
 
   @override
@@ -44,7 +42,6 @@ class PregnancyJourneyTracker extends StatefulWidget {
 }
 
 class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
-  late int _activeIndex;
   late int _maxUnlockedIndex;
   late ScrollController _scrollController;
 
@@ -153,8 +150,6 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
   @override
   void initState() {
     super.initState();
-    _activeIndex = widget.initialIndex.clamp(0, stages.length - 1);
-    // Başlangıçta bulunulan haftanın evresine kadar açık tutulur
     _maxUnlockedIndex = widget.initialIndex.clamp(0, stages.length - 1);
     _scrollController = ScrollController();
     WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToActive());
@@ -162,10 +157,11 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
 
   void _scrollToActive() {
     if (_scrollController.hasClients) {
-      final targetOffset = (_activeIndex * 84.0) - 60.0;
+      final activeIndex = widget.initialIndex.clamp(0, stages.length - 1);
+      final targetOffset = (activeIndex * 84.0) - 60.0;
       _scrollController.animateTo(
         targetOffset.clamp(0.0, _scrollController.position.maxScrollExtent),
-        duration: const Duration(milliseconds: 400),
+        duration: const Duration(milliseconds: 350),
         curve: Curves.easeOutCubic,
       );
     }
@@ -175,12 +171,11 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
   void didUpdateWidget(covariant PregnancyJourneyTracker oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.initialIndex != widget.initialIndex) {
-      setState(() {
-        if (widget.initialIndex > _maxUnlockedIndex) {
+      if (widget.initialIndex > _maxUnlockedIndex) {
+        setState(() {
           _maxUnlockedIndex = widget.initialIndex.clamp(0, stages.length - 1);
-        }
-        _activeIndex = widget.initialIndex.clamp(0, stages.length - 1);
-      });
+        });
+      }
       _scrollToActive();
     }
   }
@@ -205,9 +200,7 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
       onRewardEarned: () {
         setState(() {
           _maxUnlockedIndex = nextIndex;
-          _activeIndex = nextIndex;
         });
-        widget.onStageSelected?.call(nextIndex);
         WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToActive());
       },
     );
@@ -215,8 +208,8 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
 
   @override
   Widget build(BuildContext context) {
-    final activeStage = stages[_activeIndex];
-    // Görüntülenecek öğe sayısı: Açık olanlar (0'dan _maxUnlockedIndex'e kadar) + eğer son evreye gelinmediyse 1 tane Soru İşareti Gizem Kutusu
+    final activeIndex = widget.initialIndex.clamp(0, stages.length - 1);
+    final activeStage = stages[activeIndex];
     final hasMysteryBox = _maxUnlockedIndex < stages.length - 1;
     final displayItemCount = (_maxUnlockedIndex + 1) + (hasMysteryBox ? 1 : 0);
 
@@ -256,7 +249,7 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      'Meyve & Boyut Karşılaştırmaları (${_activeIndex + 1}/${stages.length})',
+                      'Meyve & Boyut Karşılaştırmaları (${activeIndex + 1}/${stages.length})',
                       style: GoogleFonts.quicksand(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
@@ -299,15 +292,15 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
           ),
           const SizedBox(height: 20),
 
-          // 2. Yatay 3D Claymorphic Butonlar (Yalnızca Mevcut/Açılmış Meyveler + Tek Soru İşareti Kutucuğu)
+          // 2. Yatay 3D Meyve Serüveni Şeridi (Tıklanamaz - Sadece İzleme & Soru İşareti Reklam Kutusu)
           SizedBox(
-            height: 128,
+            height: 124,
             child: Stack(
               alignment: Alignment.center,
               children: [
                 // Arka plandaki bağlantı şeridi
                 Positioned(
-                  top: 38,
+                  top: 36,
                   left: 20,
                   right: 20,
                   child: Container(
@@ -336,12 +329,10 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               // 3D Soru İşareti Küresi (Mystery Clay Box)
-                              AnimatedContainer(
-                                duration: const Duration(milliseconds: 320),
-                                width: 62,
-                                height: 62,
+                              Container(
+                                width: 58,
+                                height: 58,
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFFF5E6CA), // Krem altın puf
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
@@ -364,15 +355,12 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
                                     ],
                                   ),
                                 ),
-                                child: const Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.help_outline_rounded,
-                                      size: 30,
-                                      color: Color(0xFF8C5319),
-                                    ),
-                                  ],
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.help_outline_rounded,
+                                    size: 28,
+                                    color: Color(0xFF8C5319),
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 8),
@@ -390,95 +378,41 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
                       );
                     }
 
-                    // Normal Açık Evre
-                    final isSelected = index == _activeIndex;
+                    // Normal Açık Evre (Tıklanamaz, sabit serüven vitrini)
+                    final isCurrent = index == activeIndex;
                     final stage = stages[index];
 
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() => _activeIndex = index);
-                        widget.onStageSelected?.call(index);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            // 3D Clay Küre / Buton
-                            AnimatedContainer(
-                              duration: const Duration(milliseconds: 320),
-                              curve: Curves.easeOutBack,
-                              width: isSelected ? 76 : 60,
-                              height: isSelected ? 76 : 60,
-                              decoration: BoxDecoration(
-                                color: isSelected ? const Color(0xFFD4EBD6) : const Color(0xFFFEE6E0),
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: isSelected
-                                        ? const Color(0xFF4E8D55).withOpacity(0.28)
-                                        : const Color(0xFF9E7B83).withOpacity(0.18),
-                                    offset: Offset(0, isSelected ? 12 : 8),
-                                    blurRadius: isSelected ? 22 : 14,
-                                  ),
-                                  BoxShadow(
-                                    color: const Color(0xFF7A6E78).withOpacity(isSelected ? 0.22 : 0.14),
-                                    offset: const Offset(0, 4),
-                                    blurRadius: 8,
-                                  ),
-                                ],
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: isSelected
-                                      ? [
-                                          Colors.white.withOpacity(0.70),
-                                          const Color(0xFFD4EBD6),
-                                          const Color(0xFFBFDEC2),
-                                        ]
-                                      : [
-                                          Colors.white.withOpacity(0.60),
-                                          const Color(0xFFFEE6E0),
-                                          const Color(0xFFECD0CA),
-                                        ],
-                                  stops: const [0.0, 0.45, 1.0],
-                                ),
-                              ),
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  Positioned(
-                                    top: isSelected ? 8 : 6,
-                                    child: Container(
-                                      width: isSelected ? 34 : 24,
-                                      height: isSelected ? 12 : 8,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white.withOpacity(0.55),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                  ),
-                                  Icon(
-                                    stage.icon,
-                                    size: isSelected ? 28 : 22,
-                                    color: isSelected ? const Color(0xFF2E6135) : stage.themeColor,
-                                  ),
-                                ],
-                              ),
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // 3D Meyve Görseli
+                          Container(
+                            padding: EdgeInsets.all(isCurrent ? 3.0 : 0),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: isCurrent
+                                  ? Border.all(color: const Color(0xFF4E8D55), width: 2.5)
+                                  : null,
                             ),
-                            const SizedBox(height: 8),
+                            child: Fruit3DWidget(
+                              stageIndex: index,
+                              size: isCurrent ? 64 : 54,
+                              borderRadius: isCurrent ? 32 : 27,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
 
-                            AnimatedDefaultTextStyle(
-                              duration: const Duration(milliseconds: 200),
-                              style: GoogleFonts.nunito(
-                                fontSize: isSelected ? 12 : 10.5,
-                                fontWeight: isSelected ? FontWeight.w900 : FontWeight.w700,
-                                color: isSelected ? const Color(0xFF2E6135) : const Color(0xFF5C4F53),
-                              ),
-                              child: Text(stage.fruitComparison),
+                          Text(
+                            stage.fruitComparison,
+                            style: GoogleFonts.nunito(
+                              fontSize: isCurrent ? 11.5 : 10.0,
+                              fontWeight: isCurrent ? FontWeight.w900 : FontWeight.w700,
+                              color: isCurrent ? const Color(0xFF2E6135) : const Color(0xFF5C4F53),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     );
                   },
@@ -488,101 +422,100 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
           ),
           const SizedBox(height: 16),
 
-          // 3. Seçilen Aşama İçin 3D Detay Kartı
-          AnimatedSwitcher(
-            duration: const Duration(milliseconds: 300),
-            child: Container(
-              key: ValueKey<int>(_activeIndex),
-              padding: const EdgeInsets.all(18),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(26),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFF9E7B83).withOpacity(0.08),
-                    offset: const Offset(0, 8),
-                    blurRadius: 20,
-                  ),
-                ],
-                border: Border.all(
-                  color: const Color(0xFFD4EBD6).withOpacity(0.6),
-                  width: 1.5,
+          // 3. Mevcut Aşama İçin 3D Detay Kartı (Daima seçili/aktif haftanın evresini sunar)
+          Container(
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(26),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFF9E7B83).withOpacity(0.08),
+                  offset: const Offset(0, 8),
+                  blurRadius: 20,
                 ),
+              ],
+              border: Border.all(
+                color: const Color(0xFFD4EBD6).withOpacity(0.6),
+                width: 1.5,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Row(
                         children: [
-                          Container(
-                            width: 40,
-                            height: 40,
-                            decoration: ClayTheme.clayDecoration(
-                              color: const Color(0xFFFEE6E0),
-                              borderRadius: 14,
-                            ),
-                            child: Center(
-                              child: Icon(activeStage.icon, color: activeStage.themeColor, size: 22),
-                            ),
+                          Fruit3DWidget(
+                            stageIndex: activeIndex,
+                            size: 48,
+                            borderRadius: 16,
                           ),
                           const SizedBox(width: 10),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                activeStage.title,
-                                style: GoogleFonts.nunito(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w900,
-                                  color: const Color(0xFF2D232E),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  activeStage.title,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w900,
+                                    color: const Color(0xFF2D232E),
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                '${activeStage.weekRange} • ${activeStage.fruitComparison}',
-                                style: GoogleFonts.quicksand(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w700,
-                                  color: const Color(0xFF7A6E78),
+                                Text(
+                                  '${activeStage.weekRange} • ${activeStage.fruitComparison}',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.quicksand(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w700,
+                                    color: const Color(0xFF7A6E78),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ],
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFFDF7F4),
-                          borderRadius: BorderRadius.circular(14),
-                          border: Border.all(color: const Color(0xFFE8D7DC)),
-                        ),
-                        child: Text(
-                          activeStage.sizeInfo,
-                          style: GoogleFonts.nunito(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w800,
-                            color: const Color(0xFF2D232E),
-                          ),
+                    ),
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFDF7F4),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(color: const Color(0xFFE8D7DC)),
+                      ),
+                      child: Text(
+                        activeStage.sizeInfo,
+                        style: GoogleFonts.nunito(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w800,
+                          color: const Color(0xFF2D232E),
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-
-                  Text(
-                    activeStage.description,
-                    style: GoogleFonts.quicksand(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF5C4F53),
-                      height: 1.45,
                     ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+
+                Text(
+                  activeStage.description,
+                  style: GoogleFonts.quicksand(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: const Color(0xFF5C4F53),
+                    height: 1.45,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],

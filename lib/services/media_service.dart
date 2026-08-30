@@ -52,7 +52,7 @@ class MediaService {
 
               const Row(
                 children: [
-                  Text('📷', style: TextStyle(fontSize: 24)),
+                  Icon(Icons.camera_alt_rounded, color: AppColors.primaryPink, size: 24),
                   SizedBox(width: 8),
                   Text(
                     'Fotoğraf Ekle',
@@ -66,7 +66,7 @@ class MediaService {
               ),
               const SizedBox(height: 6),
               const Text(
-                'Galerinizden bebeğinizin ultrasonunu seçin veya yeni bir fotoğraf çekin ✨',
+                'Galerinizden bebeğinizin ultrasonunu seçin veya yeni bir fotoğraf çekin',
                 style: TextStyle(fontSize: 12, color: AppColors.textSecondary, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 18),
@@ -377,6 +377,8 @@ class MediaService {
         fit: fit,
         errorBuilder: (ctx, err, stack) => _buildPlaceholder(width, height),
       );
+    } else if (kIsWeb) {
+      imageContent = _buildPlaceholder(width, height);
     } else {
       final file = File(photoPath);
       if (file.existsSync()) {
