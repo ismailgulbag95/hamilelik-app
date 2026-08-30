@@ -383,7 +383,7 @@ class MediaService {
       final file = File(photoPath);
       if (file.existsSync()) {
         imageContent = Image.file(
-          file,
+          file as dynamic,
           width: width,
           height: height,
           fit: fit,
