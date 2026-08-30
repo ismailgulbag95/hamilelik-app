@@ -25,6 +25,8 @@ class JourneyStageData {
   });
 }
 
+import '../../../core/constants/weekly_medical_data.dart';
+
 /// Dribbble Aesthetic - Claymorphism 3D Fetal Journey Tracker
 /// Evre butonları tıklanamaz (serüven göstergesi); daima mevcut haftanın evre bilgisini sunar.
 class PregnancyJourneyTracker extends StatefulWidget {
@@ -44,115 +46,38 @@ class PregnancyJourneyTracker extends StatefulWidget {
 class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
   late int _maxUnlockedIndex;
   late ScrollController _scrollController;
-
-  static const List<JourneyStageData> stages = [
-    JourneyStageData(
-      title: 'Yaşamın Tohumu',
-      fruitComparison: 'Haşhaş Tohumu',
-      weekRange: '4 - 5. Hafta',
-      sizeInfo: '~1.5 mm • < 1 gr',
-      description: 'Mucizevi yolculuğun başlangıcı! Döllenmiş minik hücre rahme güvenle tutundu ve ilk kalp tüpü şekillenmeye başladı.',
-      icon: Icons.spa_rounded,
-      themeColor: Color(0xFF4E8D55),
-    ),
-    JourneyStageData(
-      title: 'İlk Kalp Pırıltısı',
-      fruitComparison: 'Yaban Mersini',
-      weekRange: '6 - 8. Hafta',
-      sizeInfo: '~1.5 cm • ~1.5 gr',
-      description: 'Minik kalbi dakikada 160 kez atıyor! Göz ve kulak kabarcıkları beliriyor, el ve ayak tomurcukları hızla uzuyor.',
-      icon: Icons.bubble_chart_rounded,
-      themeColor: Color(0xFF5C6BC0),
-    ),
-    JourneyStageData(
-      title: 'Minik Parmaklar',
-      fruitComparison: 'Çilek / Zeytin',
-      weekRange: '9 - 10. Hafta',
-      sizeInfo: '~3.2 cm • ~5 gr',
-      description: 'Artık bir embriyo değil, resmi olarak bir fetüs! Parmaklarındaki perdeler eriyor, dirsek ve diz eklemleri bükülüyor.',
-      icon: Icons.eco_rounded,
-      themeColor: Color(0xFFE57373),
-    ),
-    JourneyStageData(
-      title: 'İlk Trimester Zaferi',
-      fruitComparison: 'Limon / İncir',
-      weekRange: '11 - 13. Hafta',
-      sizeInfo: '~7.5 cm • ~25 gr',
-      description: 'Kritik organ oluşumu tamamlandı! Minik tırnaklar çıkıyor, yutkunma refleksleri başlıyor ve ultrasonda taklalar atıyor.',
-      icon: Icons.wb_sunny_rounded,
-      themeColor: Color(0xFFFBC02D),
-    ),
-    JourneyStageData(
-      title: 'Kıvrık Fetüs & Mimikler',
-      fruitComparison: 'Avokado',
-      weekRange: '14 - 16. Hafta',
-      sizeInfo: '~12 cm • ~100 gr',
-      description: 'Kaşlarını çatabiliyor, gülümseyebiliyor ve sesinizi duyabiliyor! İncecik ipeksi lanugo tüyleri cildini korumaya başladı.',
-      icon: Icons.nature_rounded,
-      themeColor: Color(0xFF689F38),
-    ),
-    JourneyStageData(
-      title: 'İlk Tekmeler & Merhaba',
-      fruitComparison: 'Muz / Mango',
-      weekRange: '17 - 20. Hafta',
-      sizeInfo: '~25 cm • ~300 gr',
-      description: 'Yolun yarısı! Bebeğiniz başparmağını emiyor ve annesine ilk kıpırtılarıyla "Buradayım!" diye hafif tekmeler atıyor.',
-      icon: Icons.motion_photos_on_rounded,
-      themeColor: Color(0xFFFFA000),
-    ),
-    JourneyStageData(
-      title: 'Göz Kırpma & Tat Alma',
-      fruitComparison: 'Patlıcan / Mısır',
-      weekRange: '21 - 24. Hafta',
-      sizeInfo: '~30 cm • ~600 gr',
-      description: 'Tat alma duyusu gelişti; yediğiniz tatlıların lezzetini alabiliyor! Göz kapakları açılıp kapanıyor ve ritmik hıçkırıklar başlıyor.',
-      icon: Icons.grass_rounded,
-      themeColor: Color(0xFF7B1FA2),
-    ),
-    JourneyStageData(
-      title: 'Büyüyen Akciğerler',
-      fruitComparison: 'Hindistan Cevizi',
-      weekRange: '25 - 27. Hafta',
-      sizeInfo: '~36 cm • ~1.0 kg',
-      description: '2. Trimester bitti! Akciğerlerinde nefes almayı sağlayan sürfaktan maddesi üretiliyor, babasının sesine tepki verip tekmeliyor.',
-      icon: Icons.air_rounded,
-      themeColor: Color(0xFF8D6E63),
-    ),
-    JourneyStageData(
-      title: 'Rüyalar & REM Uykusu',
-      fruitComparison: 'Ananas / Lahana',
-      weekRange: '28 - 32. Hafta',
-      sizeInfo: '~42 cm • ~1.8 kg',
-      description: '3. Trimesterdayız! Beyin dalgaları artık rüya gördüğünü gösteriyor. Kemikleri güçleniyor ve göz bebekleri ışığa tepki veriyor.',
-      icon: Icons.bedtime_rounded,
-      themeColor: Color(0xFFFFB300),
-    ),
-    JourneyStageData(
-      title: 'Doğum Pozisyonu & Güç',
-      fruitComparison: 'Kavun / Kereviz',
-      weekRange: '33 - 36. Hafta',
-      sizeInfo: '~47 cm • ~2.7 kg',
-      description: 'Bebeğiniz doğum için baş aşağı pozisyonunu alıyor. Cilt altı yağ dokusu doluyor, anneden gelen koruyucu antikorlarla güçleniyor.',
-      icon: Icons.shield_rounded,
-      themeColor: Color(0xFF43A047),
-    ),
-    JourneyStageData(
-      title: 'Kollara Hazır Melek',
-      fruitComparison: 'Balkabağı / Bebek',
-      weekRange: '37 - 40. Hafta',
-      sizeInfo: '~51 cm • ~3.4 kg',
-      description: 'Tüm hazırlıklar tamamlandı! Dünyaya gözlerini açıp annenizin ve babanızın sıcak kucağına gelmek için sabırsızlanıyor.',
-      icon: Icons.face_retouching_natural_rounded,
-      themeColor: Color(0xFFE91E63),
-    ),
-  ];
+  late List<JourneyStageData> stages;
 
   @override
   void initState() {
     super.initState();
+    stages = List.generate(40, (index) {
+      final week = index + 1;
+      final data = WeeklyMedicalData.getInfoForWeek(week);
+      return JourneyStageData(
+        title: '$week. Hafta Serüveni',
+        fruitComparison: data['fruit_name'] as String,
+        weekRange: '$week. Hafta',
+        sizeInfo: '${data['length']} • ${data['weight']}',
+        description: data['baby_dev'] as String,
+        icon: data['icon'] as IconData,
+        themeColor: _getThemeColorForWeek(week),
+      );
+    });
+    
     _maxUnlockedIndex = widget.initialIndex.clamp(0, stages.length - 1);
     _scrollController = ScrollController();
     WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToActive());
+  }
+
+  Color _getThemeColorForWeek(int week) {
+    final colors = [
+      const Color(0xFF4E8D55), const Color(0xFF5C6BC0), const Color(0xFFE57373),
+      const Color(0xFFFBC02D), const Color(0xFF689F38), const Color(0xFFFFA000),
+      const Color(0xFF7B1FA2), const Color(0xFF8D6E63), const Color(0xFFFFB300),
+      const Color(0xFF43A047), const Color(0xFFE91E63)
+    ];
+    return colors[(week - 1) % colors.length];
   }
 
   void _scrollToActive() {
@@ -397,7 +322,7 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
                                   : null,
                             ),
                             child: Fruit3DWidget(
-                              stageIndex: index,
+                              week: index + 1,
                               size: isCurrent ? 64 : 54,
                               borderRadius: isCurrent ? 32 : 27,
                             ),
@@ -450,7 +375,7 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
                       child: Row(
                         children: [
                           Fruit3DWidget(
-                            stageIndex: activeIndex,
+                            week: activeIndex + 1,
                             size: 48,
                             borderRadius: 16,
                           ),

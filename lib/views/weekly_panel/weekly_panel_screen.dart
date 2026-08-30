@@ -40,20 +40,6 @@ class _WeeklyPanelScreenState extends State<WeeklyPanelScreen> {
     super.dispose();
   }
 
-  int _getStageIndexForWeek(int week) {
-    if (week <= 5) return 0;   // Haşhaş Tohumu (4-5. Hafta)
-    if (week <= 8) return 1;   // Yaban Mersini (6-8. Hafta)
-    if (week <= 10) return 2;  // Çilek / Zeytin (9-10. Hafta)
-    if (week <= 13) return 3;  // Limon / İncir (11-13. Hafta)
-    if (week <= 16) return 4;  // Avokado (14-16. Hafta)
-    if (week <= 20) return 5;  // Muz / Mango (17-20. Hafta)
-    if (week <= 24) return 6;  // Patlıcan / Mısır (21-24. Hafta)
-    if (week <= 27) return 7;  // Hindistan Cevizi (25-27. Hafta)
-    if (week <= 32) return 8;  // Ananas / Lahana (28-32. Hafta)
-    if (week <= 36) return 9;  // Kavun / Kereviz (33-36. Hafta)
-    return 10;                 // Bal Kabağı / Bebek (37-40. Hafta)
-  }
-
   void _handleLockedWeekTapped(int week) {
     AdRewardDialog.show(
       context: context,
@@ -77,7 +63,7 @@ class _WeeklyPanelScreenState extends State<WeeklyPanelScreen> {
 
     final data = _controller.currentWeekData;
     final milestoneTest = data['milestone_test'] as Map<String, dynamic>?;
-    final stageIndex = _getStageIndexForWeek(_controller.selectedWeek);
+    final stageIndex = (_controller.selectedWeek - 1).clamp(0, 39);
     final babyDisplayName = _controller.profile?.babyDisplayName;
 
     return Scaffold(

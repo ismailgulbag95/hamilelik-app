@@ -65,13 +65,10 @@ class Fruit3DWidget extends StatelessWidget {
             return Container(
               color: _getFruitBgColor(key),
               child: Center(
-                child: Container(
-                  width: size * 0.45,
-                  height: size * 0.45,
-                  decoration: BoxDecoration(
-                    color: _getFruitShadowColor(key).withOpacity(0.2),
-                    shape: BoxShape.circle,
-                  ),
+                child: Icon(
+                  _getFruitIcon(key),
+                  size: size * 0.45,
+                  color: _getFruitShadowColor(key).withOpacity(0.65),
                 ),
               ),
             );
@@ -79,6 +76,26 @@ class Fruit3DWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  static IconData _getFruitIcon(String key) {
+    switch (key) {
+      case 'carrot': return Icons.eco_rounded;
+      case 'papaya': return Icons.circle_rounded;
+      case 'cauliflower': return Icons.nature_people_rounded;
+      case 'zucchini': return Icons.yard_rounded;
+      case 'broccoli': return Icons.park_rounded;
+      case 'squash': return Icons.eco_rounded;
+      case 'butternut_squash': return Icons.circle_rounded;
+      case 'cabbage': return Icons.filter_vintage_rounded;
+      case 'bok_choy': return Icons.eco_rounded;
+      case 'pumpkin': return Icons.circle_rounded;
+      case 'lettuce': return Icons.yard_rounded;
+      case 'swiss_chard': return Icons.grass_rounded;
+      case 'celery': return Icons.spa_rounded;
+      case 'mini_watermelon': return Icons.circle_rounded;
+      default: return Icons.eco_rounded;
+    }
   }
 
   static Color _getFruitBgColor(String key) {
@@ -96,6 +113,20 @@ class Fruit3DWidget extends StatelessWidget {
       case 'coconut': return const Color(0xFFF4ECE8);
       case 'melon': return const Color(0xFFFFF3E0);
       case 'seed': return const Color(0xFFEAF5EA);
+      case 'carrot': return const Color(0xFFFFF0E6);
+      case 'papaya': return const Color(0xFFFFF3E0);
+      case 'cauliflower': return const Color(0xFFF4ECE8);
+      case 'zucchini': return const Color(0xFFEAF5EA);
+      case 'broccoli': return const Color(0xFFEAF5EA);
+      case 'squash': return const Color(0xFFFFF3E0);
+      case 'butternut_squash': return const Color(0xFFFFF5D9);
+      case 'cabbage': return const Color(0xFFEBF8EC);
+      case 'bok_choy': return const Color(0xFFEAF5EA);
+      case 'pumpkin': return const Color(0xFFFFF0E6);
+      case 'lettuce': return const Color(0xFFEAF5EA);
+      case 'swiss_chard': return const Color(0xFFEBF8EC);
+      case 'celery': return const Color(0xFFEAF5EA);
+      case 'mini_watermelon': return const Color(0xFFEBF8EC);
       default: return const Color(0xFFFEE6E0);
     }
   }
@@ -115,6 +146,20 @@ class Fruit3DWidget extends StatelessWidget {
       case 'coconut': return const Color(0xFF5D4037);
       case 'melon': return const Color(0xFFEF6C00);
       case 'seed': return const Color(0xFF4E8D55);
+      case 'carrot': return const Color(0xFFE64A19);
+      case 'papaya': return const Color(0xFFEF6C00);
+      case 'cauliflower': return const Color(0xFF5D4037);
+      case 'zucchini': return const Color(0xFF388E3C);
+      case 'broccoli': return const Color(0xFF2E7D32);
+      case 'squash': return const Color(0xFFEF6C00);
+      case 'butternut_squash': return const Color(0xFFFFA000);
+      case 'cabbage': return const Color(0xFF2E7D32);
+      case 'bok_choy': return const Color(0xFF388E3C);
+      case 'pumpkin': return const Color(0xFFE64A19);
+      case 'lettuce': return const Color(0xFF388E3C);
+      case 'swiss_chard': return const Color(0xFF2E7D32);
+      case 'celery': return const Color(0xFF388E3C);
+      case 'mini_watermelon': return const Color(0xFF2E7D32);
       default: return AppColors.primaryPink;
     }
   }

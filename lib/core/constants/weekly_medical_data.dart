@@ -15,7 +15,7 @@ class WeeklyMedicalData {
       },
       2: {
         'icon': Icons.grain_rounded,
-        'fruit_name': 'Minik Tohum Hücresi',
+        'fruit_name': 'Susam Tanesi',
         'length': '0.2 mm',
         'weight': '< 1 gr',
         'baby_dev': 'Yumurtlama ve döllenme gerçekleşir. Genetik mirasın temelleri bu mucizevi anda atılır.',
@@ -23,7 +23,7 @@ class WeeklyMedicalData {
       },
       3: {
         'icon': Icons.spa_rounded,
-        'fruit_name': 'Vanilya Çekirdeği',
+        'fruit_name': 'Karabiber Tanesi',
         'length': '0.5 mm',
         'weight': '< 1 gr',
         'baby_dev': 'Döllenmiş zigot hızla bölünerek blastokist halini alır ve fallop tüplerinden rahme doğru ilerler.',
@@ -31,7 +31,7 @@ class WeeklyMedicalData {
       },
       4: {
         'icon': Icons.spa_rounded,
-        'fruit_name': 'Haşhaş Tohumu',
+        'fruit_name': 'Nar Çekirdeği',
         'length': '1 mm',
         'weight': '< 1 gr',
         'baby_dev': 'Blastokist rahme güvenle yerleşti. Plasenta ve amniyotik kese hızla oluşmaya başladı.',
@@ -39,7 +39,7 @@ class WeeklyMedicalData {
       },
       5: {
         'icon': Icons.radio_button_checked_rounded,
-        'fruit_name': 'Susam Tanesi',
+        'fruit_name': 'Mercimek',
         'length': '2 mm',
         'weight': '< 1 gr',
         'baby_dev': 'Nöral tüp (beyin ve omurilik taslağı) şekillenmeye başladı. Kalp tüpü ilk ritmik kıpırtılarına hazırlanıyor.',
@@ -47,7 +47,7 @@ class WeeklyMedicalData {
       },
       6: {
         'icon': Icons.circle_rounded,
-        'fruit_name': 'Mercimek Tanesi',
+        'fruit_name': 'Bezelye',
         'length': '4 mm',
         'weight': '< 1 gr',
         'baby_dev': 'Minik kalp dakikada yaklaşık 100-115 vuruşla atmaya başlar. Kol ve bacak tomurcukları belirir.',
@@ -107,7 +107,7 @@ class WeeklyMedicalData {
       },
       12: {
         'icon': Icons.brightness_high_rounded,
-        'fruit_name': 'Erik / Şeftali Tomurcuğu',
+        'fruit_name': 'Erik',
         'length': '54 mm',
         'weight': '14 gr',
         'baby_dev': 'Refleksleri gelişiyor, parmaklarını açıp kapayabiliyor ve hıçkırma hareketleri yapabiliyor.',
@@ -121,7 +121,7 @@ class WeeklyMedicalData {
       },
       13: {
         'icon': Icons.yard_rounded,
-        'fruit_name': 'Bezelye Kabuğu',
+        'fruit_name': 'Limon',
         'length': '7.4 cm',
         'weight': '23 gr',
         'baby_dev': '1. Trimesterın son haftası! Ses telleri oluştu, minik parmak izleri şekilleniyor.',
@@ -129,7 +129,7 @@ class WeeklyMedicalData {
       },
       14: {
         'icon': Icons.flare_rounded,
-        'fruit_name': 'Limon',
+        'fruit_name': 'Şeftali',
         'length': '8.7 cm',
         'weight': '43 gr',
         'baby_dev': '2. Trimester başlangıcı! Yüz kasları gelişti, kaşlarını çatabilir veya gülümseyebilir.',
@@ -159,7 +159,7 @@ class WeeklyMedicalData {
       },
       17: {
         'icon': Icons.grain_rounded,
-        'fruit_name': 'Nar',
+        'fruit_name': 'Armut',
         'length': '13.0 cm',
         'weight': '140 gr',
         'baby_dev': 'İskeleti kıkırdaktan sert kemik dokusuna dönüşüyor. Yağ dokusu depolamaya başlıyor.',
@@ -167,7 +167,7 @@ class WeeklyMedicalData {
       },
       18: {
         'icon': Icons.local_florist_rounded,
-        'fruit_name': 'Dolmalık Biber',
+        'fruit_name': 'Tatlı Patates',
         'length': '14.2 cm',
         'weight': '190 gr',
         'baby_dev': 'Kulakları tam yerini aldı ve sesleri duyabiliyor! Sizin sesinizi ve kalp atışınızı dinliyor.',
@@ -213,7 +213,7 @@ class WeeklyMedicalData {
       },
       23: {
         'icon': Icons.brightness_7_rounded,
-        'fruit_name': 'Greyfurt',
+        'fruit_name': 'Patlıcan',
         'length': '28.9 cm',
         'weight': '500 gr',
         'baby_dev': 'Yarım kilo sınırını aştı! Hızlı göz hareketleri (REM uykusu) ile rüya görme fazı başlar.',
@@ -221,7 +221,7 @@ class WeeklyMedicalData {
       },
       24: {
         'icon': Icons.grass_rounded,
-        'fruit_name': 'Mısır Koçanı',
+        'fruit_name': 'Mısır',
         'length': '30.0 cm',
         'weight': '600 gr',
         'baby_dev': 'Akciğerlerinde sürfaktan maddesi üretilmeye başlandı. Tat tomurcukları tamamen gelişti.',
@@ -259,7 +259,7 @@ class WeeklyMedicalData {
       },
       28: {
         'icon': Icons.wb_twilight_rounded,
-        'fruit_name': 'Büyük Patlıcan',
+        'fruit_name': 'Kestane Kabağı',
         'length': '37.6 cm',
         'weight': '1000 gr (1 kg)',
         'baby_dev': '3. Trimester başladı! Gözlerini açıp kapayabiliyor, REM uykusu fazına geçiyor.',
@@ -273,7 +273,7 @@ class WeeklyMedicalData {
       },
       29: {
         'icon': Icons.circle_rounded,
-        'fruit_name': 'Balkabağı Dilimi',
+        'fruit_name': 'Su Kabağı',
         'length': '38.6 cm',
         'weight': '1150 gr',
         'baby_dev': 'Kasları ve akciğerleri güçleniyor. Başını hareket ettirerek çevreye tepki verir.',
@@ -297,7 +297,7 @@ class WeeklyMedicalData {
       },
       32: {
         'icon': Icons.star_rounded,
-        'fruit_name': 'Ananas',
+        'fruit_name': 'Çin Lahanası',
         'length': '42.4 cm',
         'weight': '1700 gr',
         'baby_dev': 'Tüm tırnakları uzadı, kemikleri güçlü. Yağ depolamaya devam ederek tombişleşiyor.',
@@ -305,7 +305,7 @@ class WeeklyMedicalData {
       },
       33: {
         'icon': Icons.spa_rounded,
-        'fruit_name': 'Kereviz Demeti',
+        'fruit_name': 'Ananas',
         'length': '43.7 cm',
         'weight': '1900 gr',
         'baby_dev': 'Bağışıklık sistemi anneden geçen antikorlarla güçleniyor. Kemikleri tamamen sertleşti.',
@@ -321,7 +321,7 @@ class WeeklyMedicalData {
       },
       35: {
         'icon': Icons.circle_rounded,
-        'fruit_name': 'Tatlı Kavun',
+        'fruit_name': 'Bal Kabağı',
         'length': '46.2 cm',
         'weight': '2380 gr',
         'baby_dev': 'Böbrekleri tamamen işlevsel. Çoğu bebek bu haftalarda doğum baş pozisyonunu alır.',
@@ -329,7 +329,7 @@ class WeeklyMedicalData {
       },
       36: {
         'icon': Icons.yard_rounded,
-        'fruit_name': 'Marul Demeti',
+        'fruit_name': 'Marul',
         'length': '47.4 cm',
         'weight': '2600 gr',
         'baby_dev': 'Doğum pozisyonu almaya başladı. Emme ve yutkunma koordinasyonu kusursuz.',
@@ -337,7 +337,7 @@ class WeeklyMedicalData {
       },
       37: {
         'icon': Icons.grass_rounded,
-        'fruit_name': 'Pazı Demeti',
+        'fruit_name': 'Pazı',
         'length': '48.6 cm',
         'weight': '2850 gr',
         'baby_dev': 'Erken dönem tam miad (Early Term)! Bebeğiniz artık dünyaya gelmeye tıbben hazır.',
@@ -345,7 +345,7 @@ class WeeklyMedicalData {
       },
       38: {
         'icon': Icons.eco_rounded,
-        'fruit_name': 'Kış Kabağı',
+        'fruit_name': 'Kereviz',
         'length': '49.8 cm',
         'weight': '3080 gr',
         'baby_dev': 'Organları tamamen olgunlaştı. Cildindeki lanugo tüyleri neredeyse tamamen döküldü.',
