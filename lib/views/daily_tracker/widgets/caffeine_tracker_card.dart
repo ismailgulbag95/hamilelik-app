@@ -32,12 +32,26 @@ class CaffeineTrackerCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Text('☕', style: TextStyle(fontSize: 24)),
-                  const SizedBox(width: 8),
+                  Container(
+                    width: 36,
+                    height: 36,
+                    decoration: ClayTheme.clayDecoration(
+                      color: isOverLimit ? AppColors.medicalAlertBg : Colors.white,
+                      borderRadius: 12,
+                    ),
+                    child: Center(
+                      child: Icon(
+                        Icons.local_cafe_rounded,
+                        color: isOverLimit ? AppColors.medicalAlertRed : AppColors.secondaryPeach,
+                        size: 20,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
                   Text(
                     'Kafein Takibi',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 17,
                       fontWeight: FontWeight.w800,
                       color: isOverLimit ? AppColors.medicalAlertRed : AppColors.secondaryPeach,
                     ),
@@ -70,13 +84,22 @@ class CaffeineTrackerCard extends StatelessWidget {
                   color: isOverLimit ? AppColors.medicalAlertRed : Colors.white.withOpacity(0.8),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Text(
-                  isOverLimit ? '⚠️ SINIR AŞILDI!' : 'Kalan: $remaining mg',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w800,
-                    color: isOverLimit ? Colors.white : AppColors.secondaryPeach,
-                  ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (isOverLimit) ...[
+                      const Icon(Icons.warning_amber_rounded, size: 14, color: Colors.white),
+                      const SizedBox(width: 4),
+                    ],
+                    Text(
+                      isOverLimit ? 'SINIR AŞILDI!' : 'Kalan: $remaining mg',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w800,
+                        color: isOverLimit ? Colors.white : AppColors.secondaryPeach,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -94,8 +117,8 @@ class CaffeineTrackerCard extends StatelessWidget {
               ),
               child: const Row(
                 children: [
-                  Text('🚨', style: TextStyle(fontSize: 20)),
-                  SizedBox(width: 8),
+                  Icon(Icons.crisis_alert_rounded, color: AppColors.medicalAlertRed, size: 22),
+                  SizedBox(width: 10),
                   Expanded(
                     child: Text(
                       'Tıbbi Güvenlik Uyarısı: Günlük 200 mg kafein sınırı aşıldı. Lütfen daha fazla kahve/çay tüketmeyiniz ve bol su içiniz.',

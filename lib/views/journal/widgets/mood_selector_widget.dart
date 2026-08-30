@@ -14,11 +14,11 @@ class MoodSelectorWidget extends StatelessWidget {
   });
 
   static const List<Map<String, dynamic>> moods = [
-    {'rating': 1, 'emoji': '🥺', 'label': 'Yorgun'},
-    {'rating': 2, 'emoji': '😌', 'label': 'Durgun'},
-    {'rating': 3, 'emoji': '😊', 'label': 'İyi'},
-    {'rating': 4, 'emoji': '🥰', 'label': 'Mutlu'},
-    {'rating': 5, 'emoji': '✨', 'label': 'Aura/Romantik'},
+    {'rating': 1, 'icon': Icons.sentiment_very_dissatisfied_rounded, 'color': Color(0xFFE57373), 'label': 'Yorgun'},
+    {'rating': 2, 'icon': Icons.sentiment_neutral_rounded, 'color': Color(0xFFFFB74D), 'label': 'Durgun'},
+    {'rating': 3, 'icon': Icons.sentiment_satisfied_rounded, 'color': Color(0xFF81C784), 'label': 'İyi'},
+    {'rating': 4, 'icon': Icons.sentiment_very_satisfied_rounded, 'color': Color(0xFF4FC3F7), 'label': 'Mutlu'},
+    {'rating': 5, 'icon': Icons.favorite_rounded, 'color': Color(0xFFF06292), 'label': 'Huzurlu'},
   ];
 
   @override
@@ -27,7 +27,8 @@ class MoodSelectorWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: moods.map((m) {
         final rating = m['rating'] as int;
-        final emoji = m['emoji'] as String;
+        final icon = m['icon'] as IconData;
+        final color = m['color'] as Color;
         final label = m['label'] as String;
         final isSelected = rating == selectedMood;
 
@@ -43,8 +44,12 @@ class MoodSelectorWidget extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Text(emoji, style: TextStyle(fontSize: isSelected ? 26 : 22)),
-                const SizedBox(height: 2),
+                Icon(
+                  icon,
+                  size: isSelected ? 26 : 22,
+                  color: isSelected ? color : AppColors.textSecondary,
+                ),
+                const SizedBox(height: 4),
                 Text(
                   label,
                   style: TextStyle(

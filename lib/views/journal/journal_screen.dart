@@ -82,7 +82,7 @@ class _JournalScreenState extends State<JournalScreen> {
                             borderRadius: 16,
                           ),
                           child: const Center(
-                            child: Text('🎬', style: TextStyle(fontSize: 24)),
+                            child: Icon(Icons.movie_creation_rounded, color: AppColors.primaryPink, size: 24),
                           ),
                         ),
                         const SizedBox(width: 14),

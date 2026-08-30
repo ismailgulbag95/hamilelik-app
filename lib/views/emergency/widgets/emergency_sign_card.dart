@@ -53,9 +53,10 @@ class EmergencySignCard extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    Text(
-                      isCritical ? '🚨' : '⚠️',
-                      style: const TextStyle(fontSize: 18),
+                    Icon(
+                      isCritical ? Icons.crisis_alert_rounded : Icons.warning_amber_rounded,
+                      color: isCritical ? AppColors.medicalAlertRed : AppColors.secondaryPeach,
+                      size: 20,
                     ),
                     const SizedBox(width: 8),
                     Expanded(

@@ -82,7 +82,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('📷 Fotoğraf başarıyla eklendi! ✨'),
+          content: Text('Fotoğraf başarıyla eklendi.'),
           backgroundColor: AppColors.successGreen,
           duration: Duration(seconds: 2),
         ),
@@ -99,7 +99,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('🎙️ Sesli mektup kaydı başarıyla alındı! ✨'),
+          content: Text('Sesli mektup kaydı başarıyla alındı.'),
           backgroundColor: AppColors.successGreen,
           duration: Duration(seconds: 2),
         ),
@@ -251,7 +251,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
               ),
               const SizedBox(height: 16),
 
-              // 📷 FOTOĞRAF ALANI
+              // Fotoğraf Alanı
               if (_photoPath != null) ...[
                 ClayCard(
                   color: AppColors.clayCardSurface,
@@ -263,7 +263,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                         children: [
                           const Row(
                             children: [
-                              Text('📷', style: TextStyle(fontSize: 18)),
+                              Icon(Icons.photo_camera_rounded, size: 18, color: AppColors.primaryPink),
                               SizedBox(width: 6),
                               Text(
                                 'Eklenen Fotoğraf',
@@ -338,7 +338,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                 const SizedBox(height: 16),
               ],
 
-              // 🎙️ SESLİ MEKTUP / KALPATIŞI ALANI
+              // Ses Kaydı Alanı
               if (_audioPath != null) ...[
                 ClayCard(
                   color: AppColors.clayCardSurface,
@@ -350,7 +350,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                         children: [
                           const Row(
                             children: [
-                              Text('🎙️', style: TextStyle(fontSize: 18)),
+                              Icon(Icons.mic_rounded, size: 18, color: AppColors.primaryPink),
                               SizedBox(width: 6),
                               Text(
                                 'Eklenen Ses Kaydı (Dinle)',
@@ -386,7 +386,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                 const SizedBox(height: 16),
               ],
 
-              // Medya Ekleme Butonları (Fotoğraf & Ses Seçici Butonlar)
+              // Medya Ekleme Butonları
               Row(
                 children: [
                   Expanded(
@@ -444,7 +444,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
               ),
               const SizedBox(height: 16),
 
-              // Özel An (Romantic Highlight) Seçimi
+              // Özel An Seçimi
               ClayCard(
                 color: AppColors.clayRose,
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -455,7 +455,13 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('⭐ Özel An Olarak İşaretle', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: AppColors.primaryDark)),
+                          Row(
+                            children: [
+                              Icon(Icons.star_rounded, size: 16, color: AppColors.primaryPink),
+                              SizedBox(width: 4),
+                              Text('Özel An Olarak İşaretle', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: AppColors.primaryDark)),
+                            ],
+                          ),
                           Text('Time-lapse Yolculuk Videosuna dahil edilir.', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.textSecondary)),
                         ],
                       ),
@@ -476,7 +482,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                 height: 54,
                 onPressed: () {
                   final text = _noteController.text.trim();
-                  final noteText = text.isNotEmpty ? text : 'Bebeğimle huzur ve sevgi dolu bir gün geçirdik ✨';
+                  final noteText = text.isNotEmpty ? text : 'Bebeğimle huzur ve sevgi dolu bir gün geçirdik.';
                   final entry = DiaryModel(
                     pregnancyWeek: _selectedWeek,
                     date: dateStr,
@@ -490,13 +496,20 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                   widget.onSave(entry);
                   Navigator.pop(context);
                 },
-                child: const Text(
-                  '✨ Anıyı Kaydet',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w800,
-                    color: AppColors.successGreen,
-                  ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.check_rounded, color: AppColors.successGreen, size: 20),
+                    SizedBox(width: 6),
+                    Text(
+                      'Anıyı Kaydet',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.successGreen,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

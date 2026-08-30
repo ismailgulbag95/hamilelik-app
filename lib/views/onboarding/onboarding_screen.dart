@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/theme/clay_theme.dart';
 import '../../controllers/onboarding_controller.dart';
@@ -141,25 +140,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         children: [
           ClayCard(
             color: AppColors.clayRose,
-            child: Column(
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Row(
+                Row(
                   children: [
-                    Text('🌸', style: TextStyle(fontSize: 26)),
+                    Icon(Icons.calendar_month_rounded, color: AppColors.primaryPink, size: 24),
                     SizedBox(width: 10),
                     Text(
                       'Hamilelik Başlangıcı',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.w800,
                         color: AppColors.primaryDark,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
-                const Text(
+                SizedBox(height: 10),
+                Text(
                   'Bebeğinizin gelişimini ve tıbbi test takvimini hesaplamak için Son Adet Tarihinizi (SAT) veya tahmini doğum tarihinizi seçin.',
                   style: TextStyle(
                     fontSize: 14,
@@ -339,13 +338,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ClayButton(
             color: AppColors.clayRose,
             onPressed: _nextPage,
-            child: const Text(
-              'Devam Et →',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w800,
-                color: AppColors.primaryDark,
-              ),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Devam Et',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.primaryDark,
+                  ),
+                ),
+                SizedBox(width: 6),
+                Icon(Icons.arrow_forward_rounded, color: AppColors.primaryDark, size: 18),
+              ],
             ),
           ),
         ],
@@ -364,25 +370,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         children: [
           ClayCard(
             color: AppColors.clayPeach,
-            child: Column(
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Row(
+                Row(
                   children: [
-                    Text('⚖️', style: TextStyle(fontSize: 26)),
+                    Icon(Icons.monitor_weight_rounded, color: AppColors.secondaryPeach, size: 24),
                     SizedBox(width: 10),
                     Text(
                       'Boy & Kilo Bilgisi',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.w800,
                         color: AppColors.secondaryPeach,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
-                const Text(
+                SizedBox(height: 8),
+                Text(
                   'Hamilelik öncesi kilonuz ve boyunuz, sağlıklı kilo artış hedefinizi belirler.',
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textSecondary),
                 ),
@@ -486,9 +492,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ClayButton(
             color: AppColors.clayRose,
             onPressed: _nextPage,
-            child: const Text(
-              'Bebek Bilgilerine Geç →',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Bebek Bilgilerine Geç',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
+                ),
+                SizedBox(width: 6),
+                Icon(Icons.arrow_forward_rounded, color: AppColors.primaryDark, size: 18),
+              ],
             ),
           ),
         ],
@@ -505,26 +518,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         children: [
           ClayCard(
             color: AppColors.clayLavender,
-            child: Column(
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Row(
+                Row(
                   children: [
-                    Text('👶', style: TextStyle(fontSize: 26)),
+                    Icon(Icons.child_care_rounded, color: AppColors.primaryDark, size: 24),
                     SizedBox(width: 10),
                     Text(
                       'Bebek & Anne Bilgileri',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.w800,
                         color: AppColors.primaryDark,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
-                const Text(
-                  'Bebeğinizin ismi veya cinsiyeti belliyse girin; uygulama boyunca bebeğinize özel hitaplarla seslenelim ✨',
+                SizedBox(height: 8),
+                Text(
+                  'Bebeğinizin ismi veya cinsiyeti belliyse girin; uygulama boyunca bebeğinize özel hitaplarla seslenelim.',
                   style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: AppColors.textSecondary),
                 ),
               ],
@@ -538,7 +551,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('🌸 Anne Adayının Adı (Opsiyonel):', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.primaryDark)),
+                const Row(
+                  children: [
+                    Icon(Icons.face_rounded, size: 16, color: AppColors.primaryPink),
+                    SizedBox(width: 6),
+                    Text('Anne Adayının Adı (Opsiyonel):', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.primaryDark)),
+                  ],
+                ),
                 const SizedBox(height: 8),
                 TextField(
                   controller: _momNameController,
@@ -563,7 +582,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('👶 Bebeğinize İsim Seçtiniz mi?', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.primaryDark)),
+                const Row(
+                  children: [
+                    Icon(Icons.child_friendly_rounded, size: 16, color: AppColors.primaryPink),
+                    SizedBox(width: 6),
+                    Text('Bebeğinize İsim Seçtiniz mi?', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.primaryDark)),
+                  ],
+                ),
                 const SizedBox(height: 4),
                 const Text('İsim girdiğinizde uygulama "Ayşe Bebek bugün 150 gr" gibi özel hitap edecektir.', style: TextStyle(fontSize: 11.5, color: AppColors.textSecondary)),
                 const SizedBox(height: 8),
@@ -590,15 +615,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('🎀 Bebeğinizin Cinsiyeti:', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.primaryDark)),
+                const Row(
+                  children: [
+                    Icon(Icons.stars_rounded, size: 16, color: AppColors.secondaryPeach),
+                    SizedBox(width: 6),
+                    Text('Bebeğinizin Cinsiyeti:', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.primaryDark)),
+                  ],
+                ),
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    _buildGenderOption('Kız 👧', 'girl', AppColors.clayRose, AppColors.primaryPink),
+                    _buildGenderOption('Kız', 'girl', Icons.female_rounded, AppColors.clayRose, AppColors.primaryPink),
                     const SizedBox(width: 8),
-                    _buildGenderOption('Erkek 👦', 'boy', AppColors.claySky, AppColors.waterBlue),
+                    _buildGenderOption('Erkek', 'boy', Icons.male_rounded, AppColors.claySky, AppColors.waterBlue),
                     const SizedBox(width: 8),
-                    _buildGenderOption('Sürpriz 💛', 'surprise', AppColors.clayCream, AppColors.accentGold),
+                    _buildGenderOption('Sürpriz', 'surprise', Icons.help_outline_rounded, AppColors.clayCream, AppColors.accentGold),
                   ],
                 ),
               ],
@@ -609,9 +640,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ClayButton(
             color: AppColors.clayRose,
             onPressed: _nextPage,
-            child: const Text(
-              'Özeti Görüntüle →',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Özeti Görüntüle',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
+                ),
+                SizedBox(width: 6),
+                Icon(Icons.arrow_forward_rounded, color: AppColors.primaryDark, size: 18),
+              ],
             ),
           ),
         ],
@@ -619,7 +657,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildGenderOption(String label, String value, Color bgColor, Color activeColor) {
+  Widget _buildGenderOption(String label, String value, IconData icon, Color bgColor, Color activeColor) {
     final isSelected = _controller.babyGender == value;
 
     return Expanded(
@@ -639,15 +677,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ],
           ),
-          child: Center(
-            child: Text(
-              label,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w800,
-                color: isSelected ? Colors.white : AppColors.textPrimary,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 16, color: isSelected ? Colors.white : AppColors.textPrimary),
+              const SizedBox(width: 4),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w800,
+                  color: isSelected ? Colors.white : AppColors.textPrimary,
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),
@@ -668,20 +711,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         children: [
           ClayCard(
             color: AppColors.clayLavender,
-            child: Column(
+            child: const Column(
               children: [
-                const Text('🎉', style: TextStyle(fontSize: 36)),
-                const SizedBox(height: 8),
-                const Text(
+                Icon(Icons.celebration_rounded, size: 36, color: AppColors.primaryPink),
+                SizedBox(height: 8),
+                Text(
                   'Aura Yolculuğunuz Başlıyor!',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.w800,
                     color: AppColors.primaryDark,
                   ),
                 ),
-                const SizedBox(height: 6),
-                const Text(
+                SizedBox(height: 6),
+                Text(
                   'Aşağıdaki profil bilgileriyle medikal takip ve anı günlüğünüz oluşturulacaktır.',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textSecondary),
@@ -697,7 +740,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               children: [
                 _buildSummaryRow('Bebek Hitap Adı', babyNameText),
                 const Divider(height: 18),
-                _buildSummaryRow('Cinsiyet', _controller.babyGender == 'girl' ? 'Kız 👧' : _controller.babyGender == 'boy' ? 'Erkek 👦' : 'Sürpriz 💛'),
+                _buildSummaryRow(
+                  'Cinsiyet',
+                  _controller.babyGender == 'girl'
+                      ? 'Kız'
+                      : _controller.babyGender == 'boy'
+                          ? 'Erkek'
+                          : 'Sürpriz',
+                ),
                 const Divider(height: 18),
                 _buildSummaryRow('Gebelik Haftası', '${_controller.currentWeek}. Hafta'),
                 const Divider(height: 18),
@@ -724,13 +774,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             onPressed: _controller.isLoading ? null : _saveAndContinue,
             child: _controller.isLoading
                 ? const CircularProgressIndicator(color: AppColors.successGreen)
-                : const Text(
-                    '✨ Profili Kaydet ve Başla',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w800,
-                      color: AppColors.successGreen,
-                    ),
+                : const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.check_circle_rounded, color: AppColors.successGreen, size: 20),
+                      SizedBox(width: 8),
+                      Text(
+                        'Profili Kaydet ve Başla',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.successGreen,
+                        ),
+                      ),
+                    ],
                   ),
           ),
         ],
@@ -745,7 +802,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (success) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Profil başarıyla oluşturuldu ve kaydedildi! ✨'),
+          content: Text('Profil başarıyla oluşturuldu ve kaydedildi!'),
           backgroundColor: AppColors.successGreen,
           duration: Duration(seconds: 2),
         ),

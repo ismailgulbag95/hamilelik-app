@@ -9,7 +9,7 @@ import '../../models/profile_model.dart';
 import '../../models/daily_log_model.dart';
 import '../../utils/date_utils.dart';
 import 'widgets/profile_edit_sheet.dart';
-import 'widgets/animated_womb_baby_widget.dart';
+import 'widgets/interactive_3d_fetus_widget.dart';
 
 /// Aura Pregnancy - Sade, Ferah & Romantik Ana Sayfa (Dashboard)
 class DashboardScreen extends StatefulWidget {
@@ -86,6 +86,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final weekData = WeeklyMedicalData.getInfoForWeek(currentWeek);
     final babyName = _profile?.babyDisplayName ?? 'Bebeğiniz';
     final momName = _profile?.momName ?? 'Anne Adayı';
+    final fruitIcon = (weekData['icon'] as IconData?) ?? Icons.eco_rounded;
+    final fruitName = weekData['fruit_name'] as String? ?? 'Gelişim';
 
     // Detaylı Yaş Hesaplama (Kaçıncı haftanın kaçıncı gününde)
     DateTime lmpDate;
@@ -111,13 +113,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              '🌸 Hoş Geldin, $momName',
-              style: const TextStyle(
-                color: AppColors.primaryDark,
-                fontWeight: FontWeight.w800,
-                fontSize: 16,
-              ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.favorite_rounded, color: AppColors.primaryPink, size: 16),
+                const SizedBox(width: 6),
+                Text(
+                  'Hoş Geldin, $momName',
+                  style: const TextStyle(
+                    color: AppColors.primaryDark,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
             ),
             Text(
               AppDateUtils.formatToday(),
@@ -149,7 +158,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 child: const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('🚨', style: TextStyle(fontSize: 13)),
+                    Icon(Icons.emergency_rounded, color: AppColors.medicalAlertRed, size: 14),
                     SizedBox(width: 4),
                     Text(
                       'Acil',
@@ -176,7 +185,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // 1. ANNE KARNINDA HAREKETLİ BEBEK ANİMASYONU KARTI
+                // 1. 360° İNTERAKTİF 3D FETUS & CANLI ANİMASYON KARTI
                 ClayCard(
                   color: AppColors.clayCardSurface,
                   padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
@@ -212,7 +221,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             ),
                             child: Row(
                               children: [
-                                const Text('⏳', style: TextStyle(fontSize: 12)),
+                                const Icon(Icons.hourglass_top_rounded, size: 13, color: AppColors.primaryDark),
                                 const SizedBox(width: 4),
                                 Text(
                                   'Doğuma $daysRemaining Gün',
@@ -229,11 +238,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Hareketli Uterus / Amniyotik Bebek Görseli
-                      AnimatedWombBabyWidget(
+                      // 360° İnteraktif 3D Fetus Modeli
+                      Interactive3DFetusWidget(
                         currentWeek: weekNumber,
+                        currentDay: dayNumber,
                         babyName: babyName,
-                        gender: _profile?.babyGender ?? 'surprise',
+                        eddDate: dueDateStr,
                       ),
                       const SizedBox(height: 18),
 
@@ -250,7 +260,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                       const SizedBox(height: 4),
 
-                      // Bebeğin Meyve Büyüklüğü
+                      // Bebeğin Meyve Büyüklüğü (Güncellenen Format)
                       Container(
                         margin: const EdgeInsets.only(top: 6),
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -261,10 +271,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(weekData['fruit'] as String? ?? '🍋', style: const TextStyle(fontSize: 18)),
+                            Container(
+                              width: 28,
+                              height: 28,
+                              decoration: ClayTheme.clayDecoration(
+                                color: AppColors.clayRose,
+                                borderRadius: 8,
+                              ),
+                              child: Center(
+                                child: Icon(fruitIcon, size: 16, color: AppColors.secondaryPeach),
+                              ),
+                            ),
                             const SizedBox(width: 8),
                             Text(
-                              'Bebeğiniz ${weekData['fruit_name']} Büyüklüğünde',
+                              'Bebeğiniz bu hafta $fruitName boyutunda',
                               style: const TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w800,
@@ -278,7 +298,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                       // Boy & Kilo Detayı
                       Text(
-                        'Ortalama Boy: ${weekData['size_cm']} cm  •  Ağırlık: ~${weekData['weight_gr']} gr',
+                        'Ortalama Boy: ${weekData['length'] ?? '~30.0 cm'}  •  Ağırlık: ${weekData['weight'] ?? '~600 gr'}',
                         style: const TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w700,
@@ -307,7 +327,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             borderRadius: 14,
                           ),
                           child: const Center(
-                            child: Text('🩺', style: TextStyle(fontSize: 22)),
+                            child: Icon(Icons.medical_services_rounded, color: Color(0xFFE65100), size: 22),
                           ),
                         ),
                         const SizedBox(width: 14),
@@ -368,7 +388,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     children: [
                       const Row(
                         children: [
-                          Text('✨', style: TextStyle(fontSize: 18)),
+                          Icon(Icons.auto_awesome_rounded, color: AppColors.primaryPink, size: 18),
                           SizedBox(width: 8),
                           Text(
                             'Hamileliğin Bu Günü',

@@ -21,11 +21,11 @@ class WalkingTrackerCard extends StatelessWidget {
 
   String _getTrimesterTip() {
     if (currentWeek <= 13) {
-      return '1. Trimester: Günde 20-30 dakikalık hafif tempolu yürüyüşler sabah bulantılarını ve yorgunluğu azaltır. Yeterli su içmeyi unutmayın 💧';
+      return '1. Trimester: Günde 20-30 dakikalık hafif tempolu yürüyüşler sabah bulantılarını ve yorgunluğu azaltır. Yeterli su içmeyi unutmayın.';
     } else if (currentWeek <= 26) {
-      return '2. Trimester: Enerjinizin en yüksek olduğu dönem! 30-40 dakikalık düzenli yürüyüşler doğum kaslarını ve kan dolaşımını güçlendirir 🌸';
+      return '2. Trimester: Enerjinizin en yüksek olduğu dönem! 30-40 dakikalık düzenli yürüyüşler doğum kaslarını ve kan dolaşımını güçlendirir.';
     } else {
-      return '3. Trimester: Kısa ve rahat adımlarla 15-25 dakikalık yürüyüşler yapın. Pelvik baskı hissettiğinizde dinlenin ve rahat ayakkabı giyin 👟';
+      return '3. Trimester: Kısa ve rahat adımlarla 15-25 dakikalık yürüyüşler yapın. Pelvik baskı hissettiğinizde dinlenin ve rahat ayakkabı giyin.';
     }
   }
 
@@ -55,7 +55,13 @@ class WalkingTrackerCard extends StatelessWidget {
                       color: isTargetReached ? AppColors.successGreen : AppColors.clayPeach,
                       borderRadius: 12,
                     ),
-                    child: const Center(child: Text('👟', style: TextStyle(fontSize: 18))),
+                    child: Center(
+                      child: Icon(
+                        Icons.directions_walk_rounded,
+                        color: isTargetReached ? Colors.white : AppColors.secondaryPeach,
+                        size: 20,
+                      ),
+                    ),
                   ),
                   const SizedBox(width: 10),
                   Column(
@@ -123,7 +129,7 @@ class WalkingTrackerCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          isTargetReached ? '✨ Harika! Günlük hedef tamamlandı' : '/ $targetSteps adım (%${(progress * 100).toInt()})',
+                          isTargetReached ? 'Harika! Günlük hedef tamamlandı' : '/ $targetSteps adım (%${(progress * 100).toInt()})',
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
@@ -138,13 +144,24 @@ class WalkingTrackerCard extends StatelessWidget {
                         color: isTargetReached ? AppColors.clayMint : AppColors.clayRose,
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: Text(
-                        isTargetReached ? '🏆 Başarıldı' : '🚶‍♀️ Yolda',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w800,
-                          color: isTargetReached ? AppColors.successGreen : AppColors.primaryDark,
-                        ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            isTargetReached ? Icons.emoji_events_rounded : Icons.directions_walk_rounded,
+                            size: 16,
+                            color: isTargetReached ? AppColors.successGreen : AppColors.primaryDark,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            isTargetReached ? 'Başarıldı' : 'Yolda',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w800,
+                              color: isTargetReached ? AppColors.successGreen : AppColors.primaryDark,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -169,11 +186,11 @@ class WalkingTrackerCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _buildStatItem('📏 Mesafe', '$distanceKm km'),
+                    _buildStatItem('Mesafe', '$distanceKm km', Icons.straighten_rounded),
                     Container(width: 1, height: 24, color: Colors.black12),
-                    _buildStatItem('🔥 Kalori', '$burnedKcal kcal'),
+                    _buildStatItem('Kalori', '$burnedKcal kcal', Icons.local_fire_department_rounded),
                     Container(width: 1, height: 24, color: Colors.black12),
-                    _buildStatItem('⏱️ Süre', '$walkingMinutes dk'),
+                    _buildStatItem('Süre', '$walkingMinutes dk', Icons.timer_rounded),
                   ],
                 ),
               ],
@@ -239,7 +256,7 @@ class WalkingTrackerCard extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('💡', style: TextStyle(fontSize: 16)),
+                const Icon(Icons.tips_and_updates_rounded, color: AppColors.waterBlue, size: 18),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
@@ -260,12 +277,19 @@ class WalkingTrackerCard extends StatelessWidget {
     );
   }
 
-  Widget _buildStatItem(String label, String value) {
+  Widget _buildStatItem(String label, String value, IconData icon) {
     return Column(
       children: [
-        Text(
-          label,
-          style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: AppColors.textSecondary),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 12, color: AppColors.textSecondary),
+            const SizedBox(width: 3),
+            Text(
+              label,
+              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: AppColors.textSecondary),
+            ),
+          ],
         ),
         const SizedBox(height: 2),
         Text(

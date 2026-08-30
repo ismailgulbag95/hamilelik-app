@@ -4,6 +4,8 @@
   "java.autobuild.enabled": false,
   "java.configuration.updateBuildConfiguration": "disabled",
   "java.import.generatesMetadataFilesAtProjectRoot": false,
+  "java.project.importOnFirstTimeStartup": "disabled",
+  "java.project.importHint": false,
   "gradle.autoDetect": "off",
   "gradle.nestedProjects": false,
   "gradle.server.enabled": false,

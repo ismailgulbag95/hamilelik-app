@@ -171,7 +171,7 @@ class _AnimatedWombBabyWidgetState extends State<AnimatedWombBabyWidget>
                         child: const Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text('💓', style: TextStyle(fontSize: 10)),
+                            Icon(Icons.favorite_rounded, color: AppColors.primaryPink, size: 12),
                             SizedBox(width: 4),
                             Text(
                               'Kalp Atışı Aktif',
@@ -204,13 +204,20 @@ class _AnimatedWombBabyWidgetState extends State<AnimatedWombBabyWidget>
                       ),
                     ],
                   ),
-                  child: Text(
-                    _getBabyActionText(week),
-                    style: const TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w800,
-                      color: AppColors.primaryDark,
-                    ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.auto_awesome_rounded, size: 11, color: AppColors.primaryPink),
+                      const SizedBox(width: 4),
+                      Text(
+                        _getBabyActionText(week),
+                        style: const TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.primaryDark,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -225,120 +232,100 @@ class _AnimatedWombBabyWidgetState extends State<AnimatedWombBabyWidget>
   Widget _buildBabyFigureForWeek(int week) {
     if (week <= 8) {
       // 1-8. Hafta: Minik Embriyo / Kalp Tomurcuğu Evresi
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: const Color(0xFFFF8FA3).withOpacity(0.85),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFFFF758F).withOpacity(0.4),
-                  blurRadius: 18,
-                  spreadRadius: 2,
-                ),
-              ],
+      return Container(
+        width: 80,
+        height: 80,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: const Color(0xFFFF8FA3).withOpacity(0.85),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFFFF758F).withOpacity(0.4),
+              blurRadius: 18,
+              spreadRadius: 2,
             ),
-            child: const Center(
-              child: Text('🌱', style: TextStyle(fontSize: 42)),
-            ),
-          ),
-        ],
+          ],
+        ),
+        child: const Center(
+          child: Icon(Icons.spa_rounded, color: Colors.white, size: 42),
+        ),
       );
     } else if (week <= 13) {
       // 9-13. Hafta: İlk Fetüs Silueti (Kollar, Bacaklar belirgin)
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 105,
-            height: 105,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: const Color(0xFFFFB3C1).withOpacity(0.9),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.primaryPink.withOpacity(0.35),
-                  blurRadius: 20,
-                  spreadRadius: 2,
-                ),
-              ],
+      return Container(
+        width: 105,
+        height: 105,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: const Color(0xFFFFB3C1).withOpacity(0.9),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primaryPink.withOpacity(0.35),
+              blurRadius: 20,
+              spreadRadius: 2,
             ),
-            child: const Center(
-              child: Text('🥑', style: TextStyle(fontSize: 54)),
-            ),
-          ),
-        ],
+          ],
+        ),
+        child: const Center(
+          child: Icon(Icons.nature_people_rounded, color: Colors.white, size: 54),
+        ),
       );
     } else if (week <= 27) {
       // 14-27. Hafta: 2. Trimester Hareketli Sevimli Fetüs
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 120,
-            height: 120,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: const Color(0xFFFFCCD5).withOpacity(0.95),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.primaryPink.withOpacity(0.3),
-                  blurRadius: 22,
-                  spreadRadius: 3,
-                ),
-              ],
+      return Container(
+        width: 120,
+        height: 120,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: const Color(0xFFFFCCD5).withOpacity(0.95),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primaryPink.withOpacity(0.3),
+              blurRadius: 22,
+              spreadRadius: 3,
             ),
-            child: const Center(
-              child: Text('👼', style: TextStyle(fontSize: 68)),
-            ),
-          ),
-        ],
+          ],
+        ),
+        child: const Center(
+          child: Icon(Icons.child_care_rounded, color: Colors.white, size: 68),
+        ),
       );
     } else {
       // 28-40. Hafta: 3. Trimester Tam Gelişmiş Melek Bebek
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 130,
-            height: 130,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: const Color(0xFFFFF0F3),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.primaryPink.withOpacity(0.35),
-                  blurRadius: 25,
-                  spreadRadius: 4,
-                ),
-              ],
+      return Container(
+        width: 130,
+        height: 130,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: const Color(0xFFFFF0F3),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primaryPink.withOpacity(0.35),
+              blurRadius: 25,
+              spreadRadius: 4,
             ),
-            child: const Center(
-              child: Text('👶', style: TextStyle(fontSize: 78)),
-            ),
-          ),
-        ],
+          ],
+        ),
+        child: const Center(
+          child: Icon(Icons.face_retouching_natural_rounded, color: AppColors.primaryPink, size: 78),
+        ),
       );
     }
   }
 
   String _getBabyActionText(int week) {
     if (week <= 8) {
-      return '🌱 Kalp tüpleri hızla atıyor';
+      return 'Kalp tüpleri hızla atıyor';
     } else if (week <= 13) {
-      return '🏊‍♀️ Amniyotik sıvıda tatlı yüzüş';
+      return 'Amniyotik sıvıda tatlı yüzüş';
     } else if (week <= 20) {
-      return '👂 Sesinizi dinliyor ve esniyor';
+      return 'Sesinizi dinliyor ve esniyor';
     } else if (week <= 28) {
-      return '👣 Minik tekmelerle dans ediyor';
+      return 'Minik hareketlerle dans ediyor';
     } else if (week <= 36) {
-      return '💤 Rüya görüyor ve kilo alıyor';
+      return 'Rüya görüyor ve kilo alıyor';
     } else {
-      return '🍼 Doğuma hazır bekliyor ✨';
+      return 'Doğuma hazır bekliyor';
     }
   }
 }

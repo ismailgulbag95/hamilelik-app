@@ -29,14 +29,24 @@ class WaterTrackerCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Row(
+              Row(
                 children: [
-                  Text('💧', style: TextStyle(fontSize: 24)),
-                  SizedBox(width: 8),
-                  Text(
+                  Container(
+                    width: 36,
+                    height: 36,
+                    decoration: ClayTheme.clayDecoration(
+                      color: Colors.white,
+                      borderRadius: 12,
+                    ),
+                    child: const Center(
+                      child: Icon(Icons.water_drop_rounded, color: AppColors.waterBlue, size: 20),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  const Text(
                     'Su Tüketimi',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 17,
                       fontWeight: FontWeight.w800,
                       color: AppColors.waterBlue,
                     ),
@@ -123,7 +133,7 @@ class WaterTrackerCard extends StatelessWidget {
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('🥛', style: TextStyle(fontSize: 16)),
+                      Icon(Icons.local_drink_rounded, color: AppColors.waterBlue, size: 18),
                       SizedBox(width: 6),
                       Text('+250 ml', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13, color: AppColors.waterBlue)),
                     ],
@@ -139,7 +149,7 @@ class WaterTrackerCard extends StatelessWidget {
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('🍶', style: TextStyle(fontSize: 16)),
+                      Icon(Icons.water_drop_outlined, color: AppColors.waterBlue, size: 18),
                       SizedBox(width: 6),
                       Text('+500 ml', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13, color: AppColors.waterBlue)),
                     ],

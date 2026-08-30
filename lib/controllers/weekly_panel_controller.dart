@@ -4,15 +4,17 @@ import '../../models/profile_model.dart';
 import '../../services/database_helper.dart';
 import '../../services/medical_calculator.dart';
 
-/// Hafta Hafta Tıbbi Panel Controller'ı
+/// Hafta Hafta Tıbbi Panel Controller'ı (Gelecek Hafta Kilit & Reklam Desteği)
 class WeeklyPanelController extends ChangeNotifier {
   int _selectedWeek = 12;
   int _actualPregnancyWeek = 12;
+  final Set<int> _unlockedWeeks = {};
   ProfileModel? _profile;
   bool _isLoading = false;
 
   int get selectedWeek => _selectedWeek;
   int get actualPregnancyWeek => _actualPregnancyWeek;
+  Set<int> get unlockedWeeks => _unlockedWeeks;
   ProfileModel? get profile => _profile;
   bool get isLoading => _isLoading;
 
@@ -20,6 +22,10 @@ class WeeklyPanelController extends ChangeNotifier {
 
   Map<String, dynamic> get currentWeekData {
     return WeeklyMedicalData.getInfoForWeek(_selectedWeek);
+  }
+
+  bool isWeekUnlocked(int week) {
+    return week <= _actualPregnancyWeek || _unlockedWeeks.contains(week);
   }
 
   /// Profil ve güncel haftayı yükle
@@ -43,7 +49,16 @@ class WeeklyPanelController extends ChangeNotifier {
 
   /// Seçili haftayı değiştir
   void selectWeek(int week) {
-    if (week >= 1 && week <= 42) {
+    if (week >= 1 && week <= 40) {
+      _selectedWeek = week;
+      notifyListeners();
+    }
+  }
+
+  /// Reklam izlendikten sonra gelecek haftanın kilidini aç ve seç
+  void unlockWeek(int week) {
+    if (week >= 1 && week <= 40) {
+      _unlockedWeeks.add(week);
       _selectedWeek = week;
       notifyListeners();
     }

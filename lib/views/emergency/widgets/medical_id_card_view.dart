@@ -27,7 +27,7 @@ class MedicalIdCardView extends StatelessWidget {
             ),
             child: const Row(
               children: [
-                Text('🏥', style: TextStyle(fontSize: 24)),
+                Icon(Icons.local_hospital_rounded, color: AppColors.primaryPink, size: 24),
                 SizedBox(width: 10),
                 Expanded(
                   child: Column(

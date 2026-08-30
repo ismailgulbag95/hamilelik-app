@@ -16,9 +16,6 @@ class TrimesterNutritionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final trimesterText = PregnancyMedicalSpecs.trimesterEnergyRequirements[trimester] ??
-        PregnancyMedicalSpecs.trimesterEnergyRequirements[1]!;
-
     String title = '';
     String extraCal = '';
     List<String> foodItems = [];
@@ -29,9 +26,9 @@ class TrimesterNutritionCard extends StatelessWidget {
       title = '1. Trimester Beslenme Rehberi (1-13. Hafta)';
       extraCal = '+0 kkal/gün (Normal İhtiyaç)';
       foodItems = [
-        '🌿 Folik Asit (400 - 800 mcg/gün) takviyesini ihmal etmeyin.',
-        '🍵 Sabah bulantılarına karşı zencefil çayı ve kuru kraker.',
-        '🥗 Bol yeşil yapraklı sebzeler ve hafif öğünler.',
+        'Folik Asit (400 - 800 mcg/gün) takviyesini ihmal etmeyin.',
+        'Sabah bulantılarına karşı zencefil çayı ve kuru kraker tercih edin.',
+        'Bol yeşil yapraklı sebzeler ve hafif sindirilen öğünler tüketin.',
       ];
       cardColor = AppColors.clayMint;
       accentColor = AppColors.successGreen;
@@ -39,9 +36,9 @@ class TrimesterNutritionCard extends StatelessWidget {
       title = '2. Trimester Beslenme Rehberi (14-27. Hafta)';
       extraCal = '+340 kkal/gün Ek Kalori İhtiyacı';
       foodItems = [
-        '🥩 Kaliteli Protein: Et, tavuk, yumurta ve baklagiller.',
-        '🥛 Kalsiyum: Süt, yoğurt ve peynir ile kemik gelişimi desteği.',
-        '🐟 Omega-3 & Demir: Haftada 1-2 porsiyon düşük cıvalı balık ve demir zengini gıdalar.',
+        'Kaliteli Protein: Et, tavuk, yumurta ve baklagiller.',
+        'Kalsiyum: Süt, yoğurt ve peynir ile kemik gelişimi desteği.',
+        'Omega-3 & Demir: Haftada 1-2 porsiyon düşük cıvalı balık ve demir zengini gıdalar.',
       ];
       cardColor = AppColors.clayLavender;
       accentColor = AppColors.primaryDark;
@@ -49,9 +46,9 @@ class TrimesterNutritionCard extends StatelessWidget {
       title = '3. Trimester Beslenme Rehberi (28-40. Hafta)';
       extraCal = '+452 kkal/gün Ek Kalori İhtiyacı';
       foodItems = [
-        '👶 Hızlı Bebek Büyümesi: Yüksek protein ve lif desteği.',
-        '🧂 Ödem & Şişlik Uyarısı: Tuz tüketimini kısıtlayın, bol su için.',
-        '💧 Mide yanmasına karşı az ve sık öğünler tercih edin.',
+        'Hızlı Bebek Büyümesi: Yüksek protein ve lif desteği.',
+        'Ödem & Şişlik Uyarısı: Tuz tüketimini kısıtlayın, bol su için.',
+        'Mide yanmasına karşı az ve sık öğünler tercih edin.',
       ];
       cardColor = AppColors.clayRose;
       accentColor = AppColors.primaryDark;
@@ -64,13 +61,23 @@ class TrimesterNutritionCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Text('🥗', style: TextStyle(fontSize: 24)),
-              const SizedBox(width: 8),
+              Container(
+                width: 36,
+                height: 36,
+                decoration: ClayTheme.clayDecoration(
+                  color: Colors.white,
+                  borderRadius: 12,
+                ),
+                child: Center(
+                  child: Icon(Icons.restaurant_rounded, color: accentColor, size: 20),
+                ),
+              ),
+              const SizedBox(width: 10),
               Expanded(
                 child: Text(
                   title,
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 15,
                     fontWeight: FontWeight.w800,
                     color: accentColor,
                   ),
@@ -78,7 +85,7 @@ class TrimesterNutritionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 12),
 
           // Kalori Bandı
           Container(
@@ -94,7 +101,7 @@ class TrimesterNutritionCard extends StatelessWidget {
                 Text(
                   extraCal,
                   style: const TextStyle(
-                    fontSize: 14,
+                    fontSize: 13,
                     fontWeight: FontWeight.w800,
                     color: AppColors.textPrimary,
                   ),
@@ -107,14 +114,23 @@ class TrimesterNutritionCard extends StatelessWidget {
           // Maddeler
           ...foodItems.map((item) => Padding(
                 padding: const EdgeInsets.only(bottom: 6),
-                child: Text(
-                  item,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                    height: 1.35,
-                  ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(Icons.check_circle_outline_rounded, size: 14, color: AppColors.textSecondary),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        item,
+                        style: const TextStyle(
+                          fontSize: 12.5,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.textPrimary,
+                          height: 1.35,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               )),
         ],

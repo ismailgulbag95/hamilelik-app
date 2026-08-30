@@ -88,7 +88,9 @@ class _RootGateScreenState extends State<RootGateScreen> {
                   color: AppColors.clayRose,
                   borderRadius: 35,
                 ),
-                child: const Center(child: Text('✨', style: TextStyle(fontSize: 34))),
+                child: const Center(
+                  child: Icon(Icons.favorite_rounded, color: AppColors.primaryPink, size: 36),
+                ),
               ),
               const SizedBox(height: 16),
               const Text(

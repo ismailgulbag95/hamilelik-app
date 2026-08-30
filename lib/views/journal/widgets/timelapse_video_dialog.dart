@@ -95,7 +95,7 @@ class _TimelapseVideoDialogState extends State<TimelapseVideoDialog> with Single
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text('🎬', style: TextStyle(fontSize: 40)),
+              const Icon(Icons.movie_creation_rounded, size: 40, color: AppColors.primaryPink),
               const SizedBox(height: 12),
               const Text('Henüz anı ve fotoğraf kaydı bulunamadı.', style: TextStyle(fontWeight: FontWeight.w800)),
               const SizedBox(height: 16),
@@ -110,7 +110,6 @@ class _TimelapseVideoDialogState extends State<TimelapseVideoDialog> with Single
     }
 
     final currentFrame = _frames[_currentFrameIndex];
-    final progress = (_currentFrameIndex + 1) / _frames.length;
 
     return Dialog(
       backgroundColor: Colors.transparent,
@@ -173,7 +172,7 @@ class _TimelapseVideoDialogState extends State<TimelapseVideoDialog> with Single
                 right: 16,
                 child: Column(
                   children: [
-                    // Instagram Story / Reel Tarzı Parçalı İlerleme Çubuğu
+                    // Parçalı İlerleme Çubuğu
                     Row(
                       children: List.generate(_frames.length, (index) {
                         final isPassed = index < _currentFrameIndex;
@@ -203,7 +202,7 @@ class _TimelapseVideoDialogState extends State<TimelapseVideoDialog> with Single
                       children: [
                         Row(
                           children: [
-                            const Text('🎬', style: TextStyle(fontSize: 18)),
+                            const Icon(Icons.movie_creation_rounded, color: Colors.white, size: 20),
                             const SizedBox(width: 8),
                             Text(
                               'Hamilelik Hikayesi',

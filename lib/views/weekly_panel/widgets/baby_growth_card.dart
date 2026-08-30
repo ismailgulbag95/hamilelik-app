@@ -17,7 +17,7 @@ class BabyGrowthCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fruit = weekData['fruit'] as String? ?? '✨';
+    final fruitIcon = (weekData['icon'] as IconData?) ?? Icons.eco_rounded;
     final fruitName = weekData['fruit_name'] as String? ?? 'Gelişim';
     final length = weekData['length'] as String? ?? '-';
     final weight = weekData['weight'] as String? ?? '-';
@@ -43,7 +43,7 @@ class BabyGrowthCard extends StatelessWidget {
                       borderRadius: 20,
                     ),
                     child: Center(
-                      child: Text(fruit, style: const TextStyle(fontSize: 32)),
+                      child: Icon(fruitIcon, size: 30, color: AppColors.secondaryPeach),
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -126,15 +126,25 @@ class BabyGrowthCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Text('👶', style: TextStyle(fontSize: 20)),
-                  const SizedBox(width: 8),
+                  Container(
+                    width: 32,
+                    height: 32,
+                    decoration: ClayTheme.clayDecoration(
+                      color: AppColors.clayRose,
+                      borderRadius: 10,
+                    ),
+                    child: const Center(
+                      child: Icon(Icons.child_care_rounded, color: AppColors.primaryPink, size: 18),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
                   Text(
                     '$babyName Gelişim Durumu',
                     style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppColors.textPrimary),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 10),
               Text(
                 babyDev,
                 style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textSecondary, height: 1.45),
@@ -150,17 +160,27 @@ class BabyGrowthCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(
+              Row(
                 children: [
-                  Text('🌸', style: TextStyle(fontSize: 20)),
-                  SizedBox(width: 8),
-                  Text(
+                  Container(
+                    width: 32,
+                    height: 32,
+                    decoration: ClayTheme.clayDecoration(
+                      color: AppColors.clayRose,
+                      borderRadius: 10,
+                    ),
+                    child: const Center(
+                      child: Icon(Icons.spa_rounded, color: AppColors.lavenderPurple, size: 18),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  const Text(
                     'Annede Görülen Değişimler',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 10),
               Text(
                 motherChanges,
                 style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textPrimary, height: 1.45),

@@ -21,7 +21,7 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
 
   final List<Map<String, dynamic>> _guideSteps = [
     {
-      'emoji': '🌸',
+      'icon': Icons.calendar_month_rounded,
       'color': AppColors.clayRose,
       'title': '1. Kişiselleştirilmiş Gebelik Takibi',
       'subtitle': 'SAT ve Boy/Kilo Analiziniz',
@@ -33,7 +33,7 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
       ],
     },
     {
-      'emoji': '🩺',
+      'icon': Icons.medical_services_rounded,
       'color': AppColors.claySky,
       'title': '2. Kritik Tıbbi Tarama & Test Takvimi',
       'subtitle': 'Hangi Hafta Hangi Test Yapılmalı?',
@@ -46,7 +46,7 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
       ],
     },
     {
-      'emoji': '💧',
+      'icon': Icons.water_drop_rounded,
       'color': AppColors.clayPeach,
       'title': '3. Günlük Sağlık & 200 mg Kafein Alarmı',
       'subtitle': 'Su, Beslenme ve Tıbbi Güvenlik',
@@ -58,7 +58,7 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
       ],
     },
     {
-      'emoji': '📖',
+      'icon': Icons.menu_book_rounded,
       'color': AppColors.clayLavender,
       'title': '4. Aura Journal & Yolculuk Videosu',
       'subtitle': 'Romantik Anılar ve Sesli Mektuplar',
@@ -66,11 +66,11 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
       'highlights': [
         '5 Seviyeli Günlük Ruh Hali (Mood) Takibi',
         'Ultrason fotoğrafları ve sesli mektup kayıtları',
-        'Romantik ninni melodisi (Aura_Lullaby.mp3) ile otomatik video',
+        'Romantik melodi ile otomatik video derleme',
       ],
     },
     {
-      'emoji': '🚨',
+      'icon': Icons.emergency_rounded,
       'color': AppColors.medicalAlertBg,
       'title': '5. Kırmızı Alarm & Acil Durum Kartı',
       'subtitle': 'Beklenmedik Anlarda Hayati Destek',
@@ -142,13 +142,20 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
             padding: const EdgeInsets.only(right: 8),
             child: TextButton(
               onPressed: _finishGuide,
-              child: const Text(
-                'Atla ➔',
-                style: TextStyle(
-                  color: AppColors.primaryPink,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 14,
-                ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Atla',
+                    style: TextStyle(
+                      color: AppColors.primaryPink,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 14,
+                    ),
+                  ),
+                  SizedBox(width: 4),
+                  Icon(Icons.arrow_forward_rounded, color: AppColors.primaryPink, size: 16),
+                ],
               ),
             ),
           ),
@@ -186,6 +193,7 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
                 itemBuilder: (context, index) {
                   final step = _guideSteps[index];
                   final highlights = step['highlights'] as List<String>;
+                  final stepIcon = step['icon'] as IconData;
 
                   return SingleChildScrollView(
                     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
@@ -201,8 +209,18 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
                             children: [
                               Row(
                                 children: [
-                                  Text(step['emoji'] as String, style: const TextStyle(fontSize: 34)),
-                                  const SizedBox(width: 12),
+                                  Container(
+                                    width: 48,
+                                    height: 48,
+                                    decoration: ClayTheme.clayDecoration(
+                                      color: Colors.white,
+                                      borderRadius: 16,
+                                    ),
+                                    child: Center(
+                                      child: Icon(stepIcon, color: AppColors.primaryDark, size: 24),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 14),
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -210,7 +228,7 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
                                         Text(
                                           step['title'] as String,
                                           style: const TextStyle(
-                                            fontSize: 17,
+                                            fontSize: 16,
                                             fontWeight: FontWeight.w800,
                                             color: AppColors.primaryDark,
                                           ),
@@ -232,7 +250,7 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
                               Text(
                                 step['description'] as String,
                                 style: const TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 13.5,
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.textPrimary,
                                   height: 1.45,
@@ -270,7 +288,8 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        const Text('✓ ', style: TextStyle(color: AppColors.successGreen, fontWeight: FontWeight.w800)),
+                                        const Icon(Icons.check_circle_rounded, size: 16, color: AppColors.successGreen),
+                                        const SizedBox(width: 8),
                                         Expanded(
                                           child: Text(
                                             h,
@@ -306,12 +325,18 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      _currentStep == _guideSteps.length - 1 ? '✨ Profilini Oluştur ve Başla' : 'Sonraki Özellik →',
+                      _currentStep == _guideSteps.length - 1 ? 'Profilini Oluştur ve Başla' : 'Sonraki Özellik',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w800,
                         color: _currentStep == _guideSteps.length - 1 ? AppColors.successGreen : AppColors.primaryDark,
                       ),
+                    ),
+                    const SizedBox(width: 6),
+                    Icon(
+                      Icons.arrow_forward_rounded,
+                      color: _currentStep == _guideSteps.length - 1 ? AppColors.successGreen : AppColors.primaryDark,
+                      size: 18,
                     ),
                   ],
                 ),

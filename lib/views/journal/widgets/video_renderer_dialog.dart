@@ -54,8 +54,18 @@ class _VideoRendererDialogState extends State<VideoRendererDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('🎬', style: TextStyle(fontSize: 40)),
-            const SizedBox(height: 8),
+            Container(
+              width: 60,
+              height: 60,
+              decoration: ClayTheme.clayDecoration(
+                color: Colors.white,
+                borderRadius: 20,
+              ),
+              child: const Center(
+                child: Icon(Icons.movie_creation_rounded, color: AppColors.primaryPink, size: 32),
+              ),
+            ),
+            const SizedBox(height: 12),
             const Text(
               'Aura Yolculuk Videosu',
               style: TextStyle(
@@ -85,7 +95,7 @@ class _VideoRendererDialogState extends State<VideoRendererDialog> {
               child: Column(
                 children: [
                   _buildMatrixRow('Seçilen Özel Anlar', '${widget.highlightEntries.length} Adet'),
-                  _buildMatrixRow('Arka Plan Melodisi', 'Aura_Lullaby.mp3 🎵'),
+                  _buildMatrixRow('Arka Plan Melodisi', 'Aura_Lullaby.mp3'),
                   _buildMatrixRow('Video Çözünürlüğü', '1080x1920 (Full HD Dikey)'),
                   _buildMatrixRow('Tahmini Süre', '${matrix['total_duration_sec']} Saniye'),
                 ],
@@ -120,7 +130,7 @@ class _VideoRendererDialogState extends State<VideoRendererDialog> {
                     Icon(Icons.check_circle_rounded, color: AppColors.successGreen, size: 20),
                     SizedBox(width: 6),
                     Text(
-                      'Yolculuk Videosu Başarıyla Üretildi! 🎉',
+                      'Yolculuk Videosu Başarıyla Üretildi!',
                       style: TextStyle(fontWeight: FontWeight.w800, color: AppColors.successGreen, fontSize: 13),
                     ),
                   ],
@@ -144,7 +154,7 @@ class _VideoRendererDialogState extends State<VideoRendererDialog> {
                     color: _isFinished ? AppColors.clayMint : AppColors.clayPeach,
                     onPressed: _isRendering ? null : (_isFinished ? null : _startRender),
                     child: Text(
-                      _isFinished ? 'Hazır ✨' : 'Render Başlat 🚀',
+                      _isFinished ? 'Hazır' : 'Render Başlat',
                       style: const TextStyle(
                         fontWeight: FontWeight.w800,
                         color: AppColors.primaryDark,

@@ -250,7 +250,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
         children: [
           const Row(
             children: [
-              Text('✨', style: TextStyle(fontSize: 20)),
+              Icon(Icons.auto_awesome_rounded, color: AppColors.primaryPink, size: 20),
               SizedBox(width: 8),
               Text(
                 'Hamilelik Yolculuğu Özeti',
@@ -262,11 +262,11 @@ class _TimelineScreenState extends State<TimelineScreen> {
           Row(
             children: [
               Expanded(
-                child: _buildSummaryBox('👟 Toplam Adım', '$_totalSteps', '$distanceKm km mesafe', AppColors.clayMint),
+                child: _buildSummaryBox('Toplam Adım', '$_totalSteps', '$distanceKm km mesafe', Icons.directions_walk_rounded, AppColors.clayMint),
               ),
               const SizedBox(width: 8),
               Expanded(
-                child: _buildSummaryBox('💧 Toplam Su', '$waterLiters L', '$_totalWaterMl ml kayıt', AppColors.claySky),
+                child: _buildSummaryBox('Toplam Su', '$waterLiters L', '$_totalWaterMl ml kayıt', Icons.water_drop_rounded, AppColors.claySky),
               ),
             ],
           ),
@@ -274,11 +274,11 @@ class _TimelineScreenState extends State<TimelineScreen> {
           Row(
             children: [
               Expanded(
-                child: _buildSummaryBox('📖 Toplam Anı', '$_totalDiariesCount Adet', 'Kaydedilen günlük', AppColors.clayRose),
+                child: _buildSummaryBox('Toplam Anı', '$_totalDiariesCount Adet', 'Kaydedilen günlük', Icons.menu_book_rounded, AppColors.clayRose),
               ),
               const SizedBox(width: 8),
               Expanded(
-                child: _buildSummaryBox('🎙️ Sesli Mektup', '$_totalAudioLettersCount Adet', 'Bebeğe özel kayıt', AppColors.clayPeach),
+                child: _buildSummaryBox('Sesli Mektup', '$_totalAudioLettersCount Adet', 'Bebeğe özel kayıt', Icons.mic_rounded, AppColors.clayPeach),
               ),
             ],
           ),
@@ -287,7 +287,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
     );
   }
 
-  Widget _buildSummaryBox(String title, String mainValue, String subValue, Color color) {
+  Widget _buildSummaryBox(String title, String mainValue, String subValue, IconData icon, Color color) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
@@ -297,8 +297,14 @@ class _TimelineScreenState extends State<TimelineScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: AppColors.textSecondary)),
-          const SizedBox(height: 2),
+          Row(
+            children: [
+              Icon(icon, size: 13, color: AppColors.textSecondary),
+              const SizedBox(width: 4),
+              Text(title, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: AppColors.textSecondary)),
+            ],
+          ),
+          const SizedBox(height: 4),
           Text(mainValue, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: AppColors.primaryDark)),
           Text(subValue, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textMuted)),
         ],
@@ -312,17 +318,17 @@ class _TimelineScreenState extends State<TimelineScreen> {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          _buildFilterChip('🌟 Tümü', TimelineFilter.all),
-          _buildFilterChip('📖 Anılar & Sesler', TimelineFilter.diaries),
-          _buildFilterChip('👟 Yürüyüş & Adım', TimelineFilter.steps),
-          _buildFilterChip('💧 Su & Kafein', TimelineFilter.waterCaffeine),
-          _buildFilterChip('⚖️ Kilo Ölçümleri', TimelineFilter.weight),
+          _buildFilterChip('Tümü', TimelineFilter.all, Icons.dashboard_rounded),
+          _buildFilterChip('Anılar & Sesler', TimelineFilter.diaries, Icons.menu_book_rounded),
+          _buildFilterChip('Yürüyüş & Adım', TimelineFilter.steps, Icons.directions_walk_rounded),
+          _buildFilterChip('Su & Kafein', TimelineFilter.waterCaffeine, Icons.water_drop_rounded),
+          _buildFilterChip('Kilo Ölçümleri', TimelineFilter.weight, Icons.monitor_weight_rounded),
         ],
       ),
     );
   }
 
-  Widget _buildFilterChip(String label, TimelineFilter filter) {
+  Widget _buildFilterChip(String label, TimelineFilter filter, IconData icon) {
     final isSelected = _selectedFilter == filter;
     return Padding(
       padding: const EdgeInsets.only(right: 8),
@@ -342,13 +348,20 @@ class _TimelineScreenState extends State<TimelineScreen> {
               ),
             ],
           ),
-          child: Text(
-            label,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w800,
-              color: isSelected ? Colors.white : AppColors.textPrimary,
-            ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, size: 14, color: isSelected ? Colors.white : AppColors.textSecondary),
+              const SizedBox(width: 5),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w800,
+                  color: isSelected ? Colors.white : AppColors.textPrimary,
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -381,13 +394,10 @@ class _TimelineScreenState extends State<TimelineScreen> {
                 ],
               ),
               child: Center(
-                child: Text(
-                  isToday ? '★' : '•',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w900,
-                    color: isToday ? Colors.white : AppColors.primaryPink,
-                  ),
+                child: Icon(
+                  isToday ? Icons.star_rounded : Icons.fiber_manual_record_rounded,
+                  size: isToday ? 12 : 8,
+                  color: isToday ? Colors.white : AppColors.primaryPink,
                 ),
               ),
             ),
@@ -452,23 +462,24 @@ class _TimelineScreenState extends State<TimelineScreen> {
                   ),
                   const SizedBox(height: 12),
 
-                  // Günlük Takip Rozetleri (Adım, Su, Kafein, Kilo)
+                  // Günlük Takip Rozetleri
                   Wrap(
                     spacing: 6,
                     runSpacing: 6,
                     children: [
                       if (day.totalSteps > 0)
-                        _buildBadgeChip('👟 ${day.totalSteps} Adım', AppColors.clayMint, AppColors.successGreen),
+                        _buildBadgeChip('${day.totalSteps} Adım', Icons.directions_walk_rounded, AppColors.clayMint, AppColors.successGreen),
                       if (day.totalWaterMl > 0)
-                        _buildBadgeChip('💧 ${day.totalWaterMl} ml Su', AppColors.claySky, AppColors.waterBlue),
+                        _buildBadgeChip('${day.totalWaterMl} ml Su', Icons.water_drop_rounded, AppColors.claySky, AppColors.waterBlue),
                       if (day.totalCaffeineMg > 0)
                         _buildBadgeChip(
-                          '☕ ${day.totalCaffeineMg} mg Kafein',
+                          '${day.totalCaffeineMg} mg Kafein',
+                          Icons.local_cafe_rounded,
                           day.totalCaffeineMg > 200 ? AppColors.medicalAlertBg : AppColors.clayPeach,
                           day.totalCaffeineMg > 200 ? AppColors.medicalAlertRed : AppColors.secondaryPeach,
                         ),
                       if (day.weightEntry != null)
-                        _buildBadgeChip('⚖️ ${day.weightEntry} kg', AppColors.clayLavender, AppColors.primaryDark),
+                        _buildBadgeChip('${day.weightEntry} kg', Icons.monitor_weight_rounded, AppColors.clayLavender, AppColors.primaryDark),
                     ],
                   ),
 
@@ -483,7 +494,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                       ),
                       child: Row(
                         children: [
-                          const Text('🩺', style: TextStyle(fontSize: 14)),
+                          const Icon(Icons.medical_information_rounded, size: 14, color: AppColors.primaryPink),
                           const SizedBox(width: 6),
                           Expanded(
                             child: Text(
@@ -525,16 +536,23 @@ class _TimelineScreenState extends State<TimelineScreen> {
     );
   }
 
-  Widget _buildBadgeChip(String label, Color bg, Color textColor) {
+  Widget _buildBadgeChip(String label, IconData icon, Color bg, Color textColor) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.circular(14),
       ),
-      child: Text(
-        label,
-        style: TextStyle(fontSize: 11, fontWeight: FontWeight.w800, color: textColor),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 13, color: textColor),
+          const SizedBox(width: 4),
+          Text(
+            label,
+            style: TextStyle(fontSize: 11, fontWeight: FontWeight.w800, color: textColor),
+          ),
+        ],
       ),
     );
   }
@@ -542,18 +560,18 @@ class _TimelineScreenState extends State<TimelineScreen> {
   Widget _buildEmptyState() {
     return Container(
       padding: const EdgeInsets.all(32),
-      child: Center(
+      child: const Center(
         child: Column(
           children: [
-            const Text('🌸', style: TextStyle(fontSize: 48)),
-            const SizedBox(height: 12),
-            const Text(
+            Icon(Icons.calendar_month_rounded, size: 48, color: AppColors.primaryPink),
+            SizedBox(height: 12),
+            Text(
               'Bu kategoride henüz kayıt yok',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
             ),
-            const SizedBox(height: 6),
-            const Text(
-              'Günlük takiplerinizi yaptıkça ve anı yazdıkça zaman tüneliniz burada güzelleşecek ✨',
+            SizedBox(height: 6),
+            Text(
+              'Günlük takiplerinizi yaptıkça ve anı yazdıkça zaman tüneliniz burada listelenecektir.',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.textSecondary),
             ),

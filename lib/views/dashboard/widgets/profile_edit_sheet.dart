@@ -56,7 +56,7 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('✨ Bilgiler güncellendi! Hoş geldin ${updated.babyDisplayName} 🌸'),
+          content: Text('Bilgiler güncellendi: ${updated.babyDisplayName}'),
           backgroundColor: AppColors.successGreen,
         ),
       );
@@ -97,8 +97,18 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
             // Başlık
             Row(
               children: [
-                const Text('👶', style: TextStyle(fontSize: 22)),
-                const SizedBox(width: 8),
+                Container(
+                  width: 32,
+                  height: 32,
+                  decoration: ClayTheme.clayDecoration(
+                    color: AppColors.clayRose,
+                    borderRadius: 10,
+                  ),
+                  child: const Center(
+                    child: Icon(Icons.child_care_rounded, color: AppColors.primaryPink, size: 18),
+                  ),
+                ),
+                const SizedBox(width: 10),
                 Text(
                   'Bebek & Profil Ayarları',
                   style: GoogleFonts.nunito(
@@ -123,7 +133,13 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('🌸 Anne Adayının İsmi:', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.primaryDark)),
+                  const Row(
+                    children: [
+                      Icon(Icons.face_rounded, size: 15, color: AppColors.primaryPink),
+                      SizedBox(width: 6),
+                      Text('Anne Adayının İsmi:', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.primaryDark)),
+                    ],
+                  ),
                   const SizedBox(height: 6),
                   TextField(
                     controller: _momNameController,
@@ -148,7 +164,13 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('👶 Bebeğin İsmi:', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.primaryDark)),
+                  const Row(
+                    children: [
+                      Icon(Icons.child_friendly_rounded, size: 15, color: AppColors.primaryPink),
+                      SizedBox(width: 6),
+                      Text('Bebeğin İsmi:', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.primaryDark)),
+                    ],
+                  ),
                   const SizedBox(height: 4),
                   const Text('İsim girdiğinizde uygulama "Ayşe Bebek bugün 150 gr" şeklinde hitap edecektir.', style: TextStyle(fontSize: 11, color: AppColors.textSecondary)),
                   const SizedBox(height: 6),
@@ -175,15 +197,21 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('🎀 Bebeğin Cinsiyeti:', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.primaryDark)),
+                  const Row(
+                    children: [
+                      Icon(Icons.stars_rounded, size: 15, color: AppColors.secondaryPeach),
+                      SizedBox(width: 6),
+                      Text('Bebeğin Cinsiyeti:', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.primaryDark)),
+                    ],
+                  ),
                   const SizedBox(height: 10),
                   Row(
                     children: [
-                      _buildGenderPill('Kız 👧', 'girl', AppColors.clayRose, AppColors.primaryPink),
+                      _buildGenderPill('Kız', 'girl', Icons.female_rounded, AppColors.clayRose, AppColors.primaryPink),
                       const SizedBox(width: 8),
-                      _buildGenderPill('Erkek 👦', 'boy', AppColors.claySky, AppColors.waterBlue),
+                      _buildGenderPill('Erkek', 'boy', Icons.male_rounded, AppColors.claySky, AppColors.waterBlue),
                       const SizedBox(width: 8),
-                      _buildGenderPill('Sürpriz 💛', 'surprise', AppColors.clayCream, AppColors.accentGold),
+                      _buildGenderPill('Sürpriz', 'surprise', Icons.help_outline_rounded, AppColors.clayCream, AppColors.accentGold),
                     ],
                   ),
                 ],
@@ -198,7 +226,7 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
               child: _isSaving
                   ? const CircularProgressIndicator(color: AppColors.successGreen)
                   : const Text(
-                      '✨ Değişiklikleri Kaydet',
+                      'Değişiklikleri Kaydet',
                       style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: AppColors.successGreen),
                     ),
             ),
@@ -208,7 +236,7 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
     );
   }
 
-  Widget _buildGenderPill(String label, String value, Color bgColor, Color activeColor) {
+  Widget _buildGenderPill(String label, String value, IconData icon, Color bgColor, Color activeColor) {
     final isSelected = _selectedGender == value;
 
     return Expanded(
@@ -228,15 +256,24 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
               ),
             ],
           ),
-          child: Center(
-            child: Text(
-              label,
-              style: TextStyle(
-                fontSize: 11.5,
-                fontWeight: FontWeight.w800,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                size: 16,
                 color: isSelected ? Colors.white : AppColors.textPrimary,
               ),
-            ),
+              const SizedBox(width: 4),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 11.5,
+                  fontWeight: FontWeight.w800,
+                  color: isSelected ? Colors.white : AppColors.textPrimary,
+                ),
+              ),
+            ],
           ),
         ),
       ),

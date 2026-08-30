@@ -18,14 +18,25 @@ class JournalEntryCard extends StatelessWidget {
     this.onDelete,
   });
 
-  String _getMoodEmoji(int mood) {
+  IconData _getMoodIcon(int mood) {
     switch (mood) {
-      case 1: return '🥺';
-      case 2: return '😌';
-      case 3: return '😊';
-      case 4: return '🥰';
-      case 5: return '✨';
-      default: return '❤️';
+      case 1: return Icons.sentiment_very_dissatisfied_rounded;
+      case 2: return Icons.sentiment_neutral_rounded;
+      case 3: return Icons.sentiment_satisfied_rounded;
+      case 4: return Icons.sentiment_very_satisfied_rounded;
+      case 5: return Icons.favorite_rounded;
+      default: return Icons.favorite_rounded;
+    }
+  }
+
+  Color _getMoodColor(int mood) {
+    switch (mood) {
+      case 1: return const Color(0xFFE57373);
+      case 2: return const Color(0xFFFFB74D);
+      case 3: return const Color(0xFF81C784);
+      case 4: return const Color(0xFF4FC3F7);
+      case 5: return const Color(0xFFF06292);
+      default: return AppColors.primaryPink;
     }
   }
 
@@ -44,8 +55,22 @@ class JournalEntryCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text(_getMoodEmoji(entry.moodRating), style: const TextStyle(fontSize: 22)),
-                    const SizedBox(width: 8),
+                    Container(
+                      width: 34,
+                      height: 34,
+                      decoration: ClayTheme.clayDecoration(
+                        color: Colors.white,
+                        borderRadius: 10,
+                      ),
+                      child: Center(
+                        child: Icon(
+                          _getMoodIcon(entry.moodRating),
+                          color: _getMoodColor(entry.moodRating),
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -119,7 +144,7 @@ class JournalEntryCard extends StatelessWidget {
                 ),
               ),
 
-            // 📷 Gerçek Fotoğraf Alanı (Varsa)
+            // Fotoğraf Alanı (Varsa)
             if (entry.photoPath != null) ...[
               const SizedBox(height: 12),
               GestureDetector(
@@ -172,12 +197,12 @@ class JournalEntryCard extends StatelessWidget {
               ),
             ],
 
-            // 🎙️ Gerçek Ses Kaydı / Çalma Alanı (Varsa)
+            // Ses Kaydı / Çalma Alanı (Varsa)
             if (entry.audioPath != null) ...[
               const SizedBox(height: 12),
               ClayAudioPlayer(
                 audioPath: entry.audioPath!,
-                title: '${entry.pregnancyWeek}. Hafta Sesli Mektubu 🎙️',
+                title: '${entry.pregnancyWeek}. Hafta Sesli Mektubu',
                 durationSeconds: 30,
               ),
             ],

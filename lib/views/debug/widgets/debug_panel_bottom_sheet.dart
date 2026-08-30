@@ -46,7 +46,7 @@ class _DebugPanelBottomSheetState extends State<DebugPanelBottomSheet> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: AppColors.successGreen,
-          content: Text('🎉 40 Haftalık Test Verisi Yüklendi (${result['logs']} Günlük Log, ${result['diaries']} Anı & Fotoğraf)'),
+          content: Text('40 Haftalık Test Verisi Yüklendi (${result['logs']} Günlük Log, ${result['diaries']} Anı & Fotoğraf)'),
         ),
       );
     }
@@ -62,7 +62,7 @@ class _DebugPanelBottomSheetState extends State<DebugPanelBottomSheet> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           backgroundColor: AppColors.medicalAlertRed,
-          content: Text('🗑️ Tüm veritabanı temizlendi ve sıfırlandı.'),
+          content: Text('Tüm veritabanı temizlendi ve sıfırlandı.'),
         ),
       );
     }
@@ -100,7 +100,17 @@ class _DebugPanelBottomSheetState extends State<DebugPanelBottomSheet> {
               children: [
                 Row(
                   children: [
-                    const Text('🛠️', style: TextStyle(fontSize: 22)),
+                    Container(
+                      width: 32,
+                      height: 32,
+                      decoration: ClayTheme.clayDecoration(
+                        color: Colors.white,
+                        borderRadius: 10,
+                      ),
+                      child: const Center(
+                        child: Icon(Icons.build_rounded, color: Color(0xFFE07A5F), size: 18),
+                      ),
+                    ),
                     const SizedBox(width: 8),
                     Text(
                       'Geliştirici & Test Paneli',
@@ -143,10 +153,10 @@ class _DebugPanelBottomSheetState extends State<DebugPanelBottomSheet> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _buildStatItem('📅 Hafta', '${_stats!['currentWeek']}'),
-                    _buildStatItem('📝 Günlük Log', '${_stats!['totalLogs']}'),
-                    _buildStatItem('📖 Anı & Not', '${_stats!['totalDiaries']}'),
-                    _buildStatItem('📷 Fotoğraf', '${_stats!['totalPhotos']}'),
+                    _buildStatItem('Hafta', '${_stats!['currentWeek']}', Icons.calendar_month_rounded),
+                    _buildStatItem('Günlük Log', '${_stats!['totalLogs']}', Icons.edit_calendar_rounded),
+                    _buildStatItem('Anı & Not', '${_stats!['totalDiaries']}', Icons.menu_book_rounded),
+                    _buildStatItem('Fotoğraf', '${_stats!['totalPhotos']}', Icons.photo_camera_rounded),
                   ],
                 ),
               ),
@@ -159,7 +169,7 @@ class _DebugPanelBottomSheetState extends State<DebugPanelBottomSheet> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('🎲', style: TextStyle(fontSize: 18)),
+                  const Icon(Icons.auto_awesome_rounded, color: Color(0xFF2E6135), size: 18),
                   const SizedBox(width: 8),
                   Text(
                     _isLoading ? 'Yükleniyor...' : '40 Haftalık Test Verisi Doldur',
@@ -187,7 +197,7 @@ class _DebugPanelBottomSheetState extends State<DebugPanelBottomSheet> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('🎬', style: TextStyle(fontSize: 18)),
+                  const Icon(Icons.movie_creation_rounded, color: AppColors.primaryDark, size: 18),
                   const SizedBox(width: 8),
                   Text(
                     'Time-lapse Video Oluştur & Oynat',
@@ -216,7 +226,7 @@ class _DebugPanelBottomSheetState extends State<DebugPanelBottomSheet> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '⏩ Aktif Haftayı Değiştir: ${_sliderWeek.toInt()}. Hafta',
+                        'Aktif Haftayı Değiştir: ${_sliderWeek.toInt()}. Hafta',
                         style: GoogleFonts.nunito(fontWeight: FontWeight.w800, fontSize: 13, color: const Color(0xFF2D232E)),
                       ),
                       Text(
@@ -253,7 +263,7 @@ class _DebugPanelBottomSheetState extends State<DebugPanelBottomSheet> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('🗑️', style: TextStyle(fontSize: 16)),
+                  const Icon(Icons.delete_outline_rounded, color: AppColors.medicalAlertRed, size: 18),
                   const SizedBox(width: 8),
                   Text(
                     'Tüm Veritabanını Sıfırla',
@@ -273,10 +283,17 @@ class _DebugPanelBottomSheetState extends State<DebugPanelBottomSheet> {
     );
   }
 
-  Widget _buildStatItem(String title, String value) {
+  Widget _buildStatItem(String title, String value, IconData icon) {
     return Column(
       children: [
-        Text(title, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: Color(0xFF7A6E78))),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 11, color: const Color(0xFF7A6E78)),
+            const SizedBox(width: 3),
+            Text(title, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: Color(0xFF7A6E78))),
+          ],
+        ),
         const SizedBox(height: 2),
         Text(value, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w900, color: Color(0xFF2D232E))),
       ],

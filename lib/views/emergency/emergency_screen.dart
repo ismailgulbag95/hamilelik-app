@@ -42,7 +42,8 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
         title: const Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('🚨 ', style: TextStyle(fontSize: 20)),
+            Icon(Icons.emergency_rounded, color: AppColors.medicalAlertRed, size: 22),
+            SizedBox(width: 8),
             Text(
               'Kırmızı Alarm & Acil Durum',
               style: TextStyle(
@@ -137,7 +138,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text('🚨 112 Acil Yardım veya Doktorunuz Aranıyor...'),
+                      content: Text('112 Acil Yardım veya Doktorunuz Aranıyor...'),
                       backgroundColor: AppColors.medicalAlertRed,
                     ),
                   );

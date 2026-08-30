@@ -108,27 +108,27 @@ class DebugSeederService {
     switch (week) {
       case 1:
       case 4:
-        return 'Hamilelik testimiz pozitif çıktı! Kalbimiz sevinçten uçuyor minik bebeğim 🌱';
+        return 'Hamilelik testimiz pozitif çıktı! Kalbimiz sevinçten uçuyor minik bebeğim.';
       case 8:
-        return 'Bugün ilk kez minik kalbinin pıt pıt atışlarını duyduk. Dünyanın en güzel melodisiydi 🫐';
+        return 'Bugün ilk kez minik kalbinin pıt pıt atışlarını duyduk. Dünyanın en güzel melodisiydi.';
       case 12:
-        return '1. Trimester bitti! İkili testimiz çok temiz çıktı, ultrasonda el salladın ✨';
+        return '1. Trimester bitti! İkili testimiz çok temiz çıktı, ultrasonda el salladın.';
       case 16:
-        return 'Kıvrık minik fetüs oldun! İlk hafif kıpırtılarını hissettim sanki bir kelebek kanat çırptı 🥑';
+        return 'Kıvrık minik fetüs oldun! İlk hafif kıpırtılarını hissettim sanki bir kelebek kanat çırptı.';
       case 20:
-        return 'Ayrıntılı ultrasonda tüm organlarını detaylıca gördük. Yüzün tıpkı babana benziyor 💖';
+        return 'Ayrıntılı ultrasonda tüm organlarını detaylıca gördük. Yüzün tıpkı babana benziyor.';
       case 24:
-        return 'Şeker yükleme testimiz yapıldı, her şey yolunda. Baban karnına şarkılar söylüyor 🎵';
+        return 'Şeker yükleme testimiz yapıldı, her şey yolunda. Baban karnına şarkılar söylüyor.';
       case 28:
-        return '3. Trimester başladı! Beşik ve odan hazırlanıyor, sana kavuşmak için gün sayıyoruz 🌸';
+        return '3. Trimester başladı! Beşik ve odan hazırlanıyor, sana kavuşmak için gün sayıyoruz.';
       case 32:
         return 'NST ve büyüme takibimiz harika geçti. Tekmelerin artık dışarıdan bile net görünüyor!';
       case 36:
-        return 'Doğum çantamız hazırlandı. Seni kucağımıza alacağımız o büyük güne çok az kaldı 🍼';
+        return 'Doğum çantamız hazırlandı. Seni kucağımıza alacağımız o büyük güne çok az kaldı.';
       case 40:
-        return 'Zaman doldu melek bebeğim! Dünyaya gözlerini açman ve kollarımıza gelmen için seni bekliyoruz 👶✨';
+        return 'Zaman doldu melek bebeğim! Dünyaya gözlerini açman ve kollarımıza gelmen için seni bekliyoruz.';
       default:
-        return '$week. hafta anımız: Birlikte büyüyor, her anın tadını çıkarıyoruz 💖';
+        return '$week. hafta anımız: Birlikte büyüyor, her anın tadını çıkarıyoruz.';
     }
   }
 

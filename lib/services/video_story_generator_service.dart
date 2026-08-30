@@ -54,7 +54,7 @@ class VideoStoryGeneratorService {
           week: 4,
           date: '2026-06-05',
           title: '4. Hafta • Yaşamın Başlangıcı',
-          subtitle: 'Minik bir mucize aramıza katıldı 🌱',
+          subtitle: 'Minik bir mucize aramıza katıldı.',
           photoPath: 'assets/images/aura_logo.png',
           quote: 'İlk andan beri seni büyük bir sevgiyle bekliyoruz...',
         ),
@@ -62,7 +62,7 @@ class VideoStoryGeneratorService {
           week: currentWeek,
           date: '2026-08-29',
           title: '$currentWeek. Hafta • Birlikte Büyüyoruz',
-          subtitle: 'Her kalp atışında aşkımız büyüyor 🌸',
+          subtitle: 'Her kalp atışında aşkımız büyüyor.',
           photoPath: 'assets/images/sample_ultrasound.png',
           quote: 'Seninle geçen her gün hayatımızın en güzel hediyesi.',
         ),
@@ -74,7 +74,7 @@ class VideoStoryGeneratorService {
     for (final diary in visualDiaries) {
       final note = (diary.noteText != null && diary.noteText!.isNotEmpty)
           ? diary.noteText!
-          : '$babyName ile unutulmaz bir hatıra ✨';
+          : '$babyName ile unutulmaz bir hatıra.';
 
       frames.add(
         VideoStoryFrame(
@@ -87,8 +87,8 @@ class VideoStoryGeneratorService {
               : 'assets/images/sample_ultrasound.png',
           audioPath: diary.audioPath,
           quote: diary.isRomanticHighlight
-              ? '💖 Kalbimizin en özel anı • $babyName'
-              : '🌸 $babyName için sevgiyle...',
+              ? 'Kalbimizin en özel anı • $babyName'
+              : '$babyName için sevgiyle...',
         ),
       );
     }

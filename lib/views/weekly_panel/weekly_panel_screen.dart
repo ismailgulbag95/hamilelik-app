@@ -6,6 +6,7 @@ import 'widgets/weekly_timeline_strip.dart';
 import 'widgets/pregnancy_journey_tracker.dart';
 import 'widgets/baby_growth_card.dart';
 import 'widgets/medical_tests_checklist_card.dart';
+import 'widgets/ad_reward_dialog.dart';
 
 /// Hafta Hafta Tıbbi Bilgilendirme ve Test Takvimi Ekranı
 class WeeklyPanelScreen extends StatefulWidget {
@@ -53,6 +54,18 @@ class _WeeklyPanelScreenState extends State<WeeklyPanelScreen> {
     return 10;                 // Bal Kabağı / Bebek (37-40. Hafta)
   }
 
+  void _handleLockedWeekTapped(int week) {
+    AdRewardDialog.show(
+      context: context,
+      title: '$week. Hafta İçeriğini Aç',
+      subtitle: '$week. haftadaki bebeğinizin boyutunu, organ gelişimini ve yapılması gereken testleri görüntülemek için kısa bir video izleyin.',
+      unlockTargetName: '$week. Hafta Rehberi',
+      onRewardEarned: () {
+        _controller.unlockWeek(week);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_controller.isLoading) {
@@ -97,11 +110,13 @@ class _WeeklyPanelScreenState extends State<WeeklyPanelScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // 1-40 Hafta Kaydırılabilir Şerit
+            // 1-40 Hafta Kaydırılabilir Şerit (Gelecek Haftalar Reklam Kilitli)
             WeeklyTimelineStrip(
               selectedWeek: _controller.selectedWeek,
               currentWeek: _controller.actualPregnancyWeek,
+              unlockedWeeks: _controller.unlockedWeeks,
               onWeekSelected: (w) => _controller.selectWeek(w),
+              onLockedWeekTapped: (w) => _handleLockedWeekTapped(w),
             ),
             const SizedBox(height: 12),
 
@@ -111,8 +126,9 @@ class _WeeklyPanelScreenState extends State<WeeklyPanelScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // 🌟 3D Claymorphic Fetal Journey Tracker
+                    // 3D Claymorphic Fetal Journey Tracker (Gelecek Meyveler Gizli + Soru İşaretli Reklam Kutusu)
                     PregnancyJourneyTracker(
+                      currentWeek: _controller.actualPregnancyWeek,
                       initialIndex: stageIndex,
                     ),
                     const SizedBox(height: 16),

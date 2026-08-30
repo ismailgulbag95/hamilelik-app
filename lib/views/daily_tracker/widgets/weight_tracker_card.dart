@@ -58,14 +58,24 @@ class _WeightTrackerCardState extends State<WeightTrackerCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
-              Text('⚖️', style: TextStyle(fontSize: 24)),
-              SizedBox(width: 8),
-              Text(
+              Container(
+                width: 36,
+                height: 36,
+                decoration: ClayTheme.clayDecoration(
+                  color: Colors.white,
+                  borderRadius: 12,
+                ),
+                child: const Center(
+                  child: Icon(Icons.monitor_weight_rounded, color: AppColors.primaryDark, size: 20),
+                ),
+              ),
+              const SizedBox(width: 10),
+              const Text(
                 'Günlük Kilo Takibi',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 17,
                   fontWeight: FontWeight.w800,
                   color: AppColors.primaryDark,
                 ),

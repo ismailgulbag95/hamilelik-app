@@ -40,7 +40,7 @@ class WelcomeCongratulationScreen extends StatelessWidget {
                         height: 110,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) => const Center(
-                          child: Text('🌸', style: TextStyle(fontSize: 48)),
+                          child: Icon(Icons.favorite_rounded, color: AppColors.primaryPink, size: 48),
                         ),
                       ),
                     ),
@@ -49,7 +49,7 @@ class WelcomeCongratulationScreen extends StatelessWidget {
 
                   // Tebrik Başlığı
                   const Text(
-                    'Tebrikler Anne Adayı! 🎉',
+                    'Tebrikler Anne Adayı!',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 26,
@@ -61,7 +61,7 @@ class WelcomeCongratulationScreen extends StatelessWidget {
                   const SizedBox(height: 12),
 
                   const Text(
-                    'Hayatının en mucizevi ve sevgi dolu yolculuğu başladı.',
+                    'Hayatınızın en mucizevi ve sevgi dolu yolculuğu başladı.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
@@ -91,9 +91,13 @@ class WelcomeCongratulationScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text('✨ Sevgiyle Tasarlandı', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: AppColors.primaryPink)),
-                            SizedBox(width: 12),
-                            Text('🩺 Tıbbi Doğruluk', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: AppColors.waterBlue)),
+                            Icon(Icons.favorite_border_rounded, size: 16, color: AppColors.primaryPink),
+                            SizedBox(width: 4),
+                            Text('Sevgiyle Tasarlandı', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: AppColors.primaryPink)),
+                            SizedBox(width: 16),
+                            Icon(Icons.medical_services_outlined, size: 16, color: AppColors.waterBlue),
+                            SizedBox(width: 4),
+                            Text('Tıbbi Doğruluk', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: AppColors.waterBlue)),
                           ],
                         ),
                       ],
@@ -125,7 +129,7 @@ class WelcomeCongratulationScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Uygulama Rehberini İncele ✨',
+                          'Uygulama Rehberini İncele',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w800,

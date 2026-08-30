@@ -62,7 +62,7 @@ class _MedicationTrackerCardState extends State<MedicationTrackerCard> {
       SnackBar(
         content: Text(
           nextState
-              ? '✨ ${med.name} alındı olarak işaretlendi! Bebeğine ve sana şifa olsun 🌸'
+              ? '${med.name} alındı olarak işaretlendi.'
               : '${med.name} alımı geri alındı.',
         ),
         backgroundColor: nextState ? AppColors.successGreen : AppColors.secondaryPeach,
@@ -112,7 +112,7 @@ class _MedicationTrackerCardState extends State<MedicationTrackerCard> {
                   const SizedBox(height: 16),
                   const Row(
                     children: [
-                      Text('💊', style: TextStyle(fontSize: 22)),
+                      Icon(Icons.medication_rounded, color: AppColors.primaryDark, size: 22),
                       SizedBox(width: 8),
                       Text(
                         'Yeni İlaç / Vitamin Ekle',
@@ -206,13 +206,20 @@ class _MedicationTrackerCardState extends State<MedicationTrackerCard> {
                       await DatabaseHelper.instance.insertMedication(newMed);
                       if (ctx.mounted) Navigator.pop(ctx);
                     },
-                    child: const Text(
-                      'Kaydet ve Listeye Ekle ✨',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.successGreen,
-                      ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.check_rounded, color: AppColors.successGreen, size: 18),
+                        SizedBox(width: 6),
+                        Text(
+                          'Kaydet ve Listeye Ekle',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.successGreen,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -249,7 +256,9 @@ class _MedicationTrackerCardState extends State<MedicationTrackerCard> {
                       color: Colors.white,
                       borderRadius: 12,
                     ),
-                    child: const Center(child: Text('💊', style: TextStyle(fontSize: 18))),
+                    child: const Center(
+                      child: Icon(Icons.medication_rounded, color: AppColors.lavenderPurple, size: 20),
+                    ),
                   ),
                   const SizedBox(width: 10),
                   Column(
