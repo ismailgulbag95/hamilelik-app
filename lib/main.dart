@@ -1,8 +1,10 @@
-import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+
+// Web uyumluluğu için koşullu importlar
+import 'dart:io' if (dart.library.html) 'services/io_stubs.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart' if (dart.library.html) 'services/sqflite_ffi_stubs.dart';
 import 'core/theme/clay_theme.dart';
 import 'core/constants/app_colors.dart';
 import 'services/database_helper.dart';
