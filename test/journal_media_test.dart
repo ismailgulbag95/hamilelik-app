@@ -105,7 +105,7 @@ void main() {
       expect(recService.isRecording, isTrue);
 
       final result = await recService.stopRecording();
-      expect(result['path'], contains('voice_letter.m4a'));
+      expect(result!['path'], contains('voice_letter.m4a'));
       expect(recService.isRecording, isFalse);
 
       final playService = AudioPlaybackService.instance;

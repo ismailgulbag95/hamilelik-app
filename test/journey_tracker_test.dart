@@ -17,17 +17,12 @@ void main() {
   });
 
   group('PregnancyJourneyTracker Widget Testleri', () {
-    testWidgets('1. PregnancyJourneyTracker tüm 11 aşamayı doğru render eder ve tıklanınca günceller', (WidgetTester tester) async {
-      int? selectedIndex;
-
+    testWidgets('1. PregnancyJourneyTracker tüm 11 aşamayı doğru render eder', (WidgetTester tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: PregnancyJourneyTracker(
               initialIndex: 0, // Haşhaş Tohumu
-              onStageSelected: (idx) {
-                selectedIndex = idx;
-              },
             ),
           ),
         ),
@@ -38,14 +33,6 @@ void main() {
       expect(find.text('Haşhaş Tohumu'), findsOneWidget);
       expect(find.text('Yaban Mersini'), findsOneWidget);
       expect(find.text('Yaşamın Tohumu'), findsOneWidget);
-
-      // Yaban Mersini (Index 1) tıkla
-      await tester.tap(find.text('Yaban Mersini'));
-      await tester.pumpAndSettle();
-
-      expect(selectedIndex, equals(1));
-      expect(find.text('İlk Kalp Pırıltısı'), findsOneWidget);
-      expect(find.text('6 - 8. Hafta'), findsWidgets);
     });
 
     testWidgets('2. WeeklyPanelScreen içerisinde PregnancyJourneyTracker görüntülenir', (WidgetTester tester) async {

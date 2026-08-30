@@ -15,7 +15,7 @@ void main() {
 
       // 1. Koyu Akustik Monitör Arka Planı
       final bgPaint = Paint()..color = const Color(0xFF080C12);
-      canvas.drawRect(const Rect.fromLTWH(0, 0, width.toDouble(), height.toDouble()), bgPaint);
+      canvas.drawRect(Rect.fromLTWH(0, 0, width.toDouble(), height.toDouble()), bgPaint);
 
       // 2. Akustik Sektör Koni Alanı
       final conePath = Path();
@@ -23,8 +23,8 @@ void main() {
       conePath.moveTo(apex.dx, apex.dy);
       conePath.lineTo(20, height.toDouble());
       conePath.arcToPoint(
-        const Offset(width - 20, height.toDouble()),
-        radius: const Radius.circular(width * 0.8),
+        Offset(width - 20, height.toDouble()),
+        radius: Radius.circular(width * 0.8),
       );
       conePath.close();
 
@@ -36,7 +36,7 @@ void main() {
           const Color(0xFF140F0C),
           const Color(0xFF0A0806),
         ],
-      ).createShader(const Rect.fromLTWH(0, 0, width.toDouble(), height.toDouble()));
+      ).createShader(Rect.fromLTWH(0, 0, width.toDouble(), height.toDouble()));
 
       canvas.drawPath(conePath, Paint()..shader = coneShader);
 

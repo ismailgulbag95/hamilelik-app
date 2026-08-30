@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import '../models/diary_model.dart';
-import '../models/profile_model.dart';
+
 import '../services/database_helper.dart';
 
 /// Video Karesi (Story Frame) Modeli

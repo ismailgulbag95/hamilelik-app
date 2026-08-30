@@ -11,10 +11,10 @@ import 'services/database_helper.dart';
 import 'models/profile_model.dart';
 import 'views/welcome/welcome_congratulation_screen.dart';
 import 'views/welcome/app_guide_screen.dart';
-import 'views/onboarding/onboarding_screen.dart';
+
 import 'views/main_navigation_scaffold.dart';
 
-import 'services/fruit_asset_sync.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

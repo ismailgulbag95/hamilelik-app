@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/theme/clay_theme.dart';
-import '../../models/daily_log_model.dart';
-import '../../models/diary_model.dart';
+
 import '../../models/profile_model.dart';
 import '../../models/timeline_day_entry.dart';
 import '../../services/database_helper.dart';
