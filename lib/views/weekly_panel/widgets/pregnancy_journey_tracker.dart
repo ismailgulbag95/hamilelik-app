@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/widgets/fruit_3d_widget.dart';
+import '../../../core/constants/weekly_medical_data.dart';
 import 'ad_reward_dialog.dart';
 
 /// Gebelik Gelişim Aşaması Bilgi Modeli
@@ -25,7 +26,6 @@ class JourneyStageData {
   });
 }
 
-import '../../../core/constants/weekly_medical_data.dart';
 
 /// Dribbble Aesthetic - Claymorphism 3D Fetal Journey Tracker
 /// Evre butonları tıklanamaz (serüven göstergesi); daima mevcut haftanın evre bilgisini sunar.
