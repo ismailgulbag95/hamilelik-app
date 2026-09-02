@@ -8,6 +8,10 @@ class AdService {
   AdService._();
   static final AdService instance = AdService._();
 
+  /// Canlı (Production) AdMob Kimlikleri
+  static const String androidAppId = 'ca-app-pub-2626843024156194~8901972198';
+  static const String androidNativeProdId = 'ca-app-pub-2626843024156194/5241928781';
+
   /// Google Mobile Ads Resmi Test Reklam Birimi Kimlikleri (Ad Unit IDs)
   static const String androidRewardedTestId = 'ca-app-pub-3940256099942544/5224354917';
   static const String iosRewardedTestId = 'ca-app-pub-3940256099942544/1712485313';
@@ -17,6 +21,14 @@ class AdService {
 
   static const String androidBannerTestId = 'ca-app-pub-3940256099942544/6300978111';
   static const String iosBannerTestId = 'ca-app-pub-3940256099942544/2934735716';
+
+  /// Ortama göre aktif Native Ad Unit ID'yi döner (Canlı / Test ayrımı)
+  static String get nativeAdUnitId {
+    if (kReleaseMode) {
+      return androidNativeProdId;
+    }
+    return androidNativeTestId;
+  }
 
   bool _isInitialized = false;
   bool get isInitialized => _isInitialized;
