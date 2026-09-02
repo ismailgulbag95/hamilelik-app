@@ -153,7 +153,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
     final filtered = _filteredEntries;
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,

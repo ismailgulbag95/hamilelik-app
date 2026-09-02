@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/theme/clay_theme.dart';
+import '../../core/widgets/ambient_background.dart';
 import '../../services/database_helper.dart';
 import '../onboarding/onboarding_screen.dart';
 import '../main_navigation_scaffold.dart';
@@ -126,7 +127,7 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -167,7 +168,8 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
           ),
         ],
       ),
-      body: SafeArea(
+      body: AmbientBackground(
+        child: SafeArea(
         child: Column(
           children: [
             // İlerleme Çubukları
@@ -351,6 +353,7 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }

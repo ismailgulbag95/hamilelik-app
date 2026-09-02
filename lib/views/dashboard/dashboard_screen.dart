@@ -107,7 +107,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final medicalMilestone = PregnancyMedicalSpecs.medicalMilestones[weekNumber];
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,

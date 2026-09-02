@@ -2,9 +2,20 @@ import 'package:flutter/material.dart';
 
 /// Aura Pregnancy Pastel & Claymorphism Renk Paleti
 class AppColors {
-  // Arka Plan Tint Tonları (Soft Tinted Background)
+  // Arka Plan Tint & Ambient Degrade Tonları
   static const Color background = Color(0xFFFDF7F4); // Soft warm porcelain
   static const Color backgroundSubtle = Color(0xFFF6ECE7);
+  static const Color backgroundGradientStart = Color(0xFFFFFDFC); // Üst Aydınlık Sıcak Porselen
+  static const Color backgroundGradientEnd = Color(0xFFFDF1EB);   // Alt Sıcak Şeftali/Pudra Tint
+
+  static const LinearGradient ambientBackgroundGradient = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      backgroundGradientStart,
+      backgroundGradientEnd,
+    ],
+  );
 
   // Clay Kart Yüzeyleri (Light Pastels)
   static const Color clayRose = Color(0xFFFDE8ED);      // Romantik Pembe
@@ -27,13 +38,14 @@ class AppColors {
   static const Color waterBlue = Color(0xFF42A5F5);      // Su Takibi
   static const Color caffeineBrown = Color(0xFF8D6E63);  // Kafein Takibi
 
-  // Tipografi Renkleri (Yüksek okunabilirlik)
-  static const Color textPrimary = Color(0xFF2D232E);    // Koyu Erik / Siyah
-  static const Color textSecondary = Color(0xFF6B5E62);  // Yumuşak Gri-Mürdüm
+  // Tipografi Renkleri (Yüksek okunabilirlik ve sıcak kontrast)
+  static const Color textPrimary = Color(0xFF231B24);    // Derin Koyu Kömür-Mürdüm
+  static const Color textSecondary = Color(0xFF635666);  // Sıcak Mürdüm Gri
   static const Color textMuted = Color(0xFF9E8F94);      // Soluk Gri
 
-  // Claymorphic Gölge Renkleri (Shadow Recipe Helpers)
-  static const Color clayHighlightTop = Color(0xFFFFFFFF); // Üst Işık (255,255,255, .65)
-  static const Color clayShadowDark = Color(0x28000000);   // Alt İç Gölge (rgba(0,0,0, .16))
-  static const Color clayOuterDrop = Color(0x24C49A9E);    // Dış Yumuşak Gölge (rgba(196,154,158, .18))
+  // Claymorphic Gölge & Işık Renkleri (Shadow Recipe Helpers)
+  static const Color clayHighlightTop = Color(0xFFFFFFFF); // Üst Işık
+  static const Color clayShadowDark = Color(0x28000000);   // Alt İç Gölge
+  static const Color clayOuterDrop = Color(0x24C49A9E);    // Dış Yumuşak Gölge
 }
+

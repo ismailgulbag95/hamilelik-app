@@ -73,7 +73,7 @@ class _WeeklyPanelScreenState extends State<WeeklyPanelScreen> {
         : 'weekly_status_future'.tr();
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,

@@ -56,7 +56,7 @@ class _DailyTrackerScreenState extends State<DailyTrackerScreen> {
     final log = _controller.currentLog;
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,

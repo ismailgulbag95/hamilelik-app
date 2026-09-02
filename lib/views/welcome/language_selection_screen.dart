@@ -1,8 +1,10 @@
-import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
-import '../../core/theme/inset_box_shadow.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../core/constants/app_colors.dart';
+import '../../core/theme/clay_theme.dart';
+import '../../core/widgets/ambient_background.dart';
 import 'welcome_congratulation_screen.dart';
 
 class LanguageSelectionScreen extends StatelessWidget {
@@ -23,47 +25,60 @@ class LanguageSelectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFDF7F4),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Icon(
-                Icons.language_rounded,
-                size: 80,
-                color: AppColors.primaryPink,
-              ),
-              const SizedBox(height: 32),
-              Text(
-                'Choose Your Language\nDil Seçiminizi Yapın',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.nunito(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w900,
-                  color: const Color(0xFF2D232E),
-                  height: 1.3,
+      backgroundColor: Colors.transparent,
+      body: AmbientBackground(
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                  width: 88,
+                  height: 88,
+                  decoration: ClayTheme.clayDecoration(
+                    color: AppColors.clayRose,
+                    borderRadius: 44,
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Icons.language_rounded,
+                      size: 48,
+                      color: AppColors.primaryPink,
+                    ),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 48),
-              ClayLanguageButton(
-                title: 'English',
-                subtitle: 'US / UK',
-                icon: Icons.g_translate_rounded,
-                onTap: () => _selectLanguage(context, const Locale('en')),
-                color: const Color(0xFFFEE6E0),
-              ),
-              const SizedBox(height: 24),
-              ClayLanguageButton(
-                title: 'Türkçe',
-                subtitle: 'Türkiye',
-                icon: Icons.translate_rounded,
-                onTap: () => _selectLanguage(context, const Locale('tr')),
-                color: const Color(0xFFD4EBD6),
-              ),
-            ],
+                const SizedBox(height: 32),
+                Text(
+                  'Choose Your Language\nDil Seçiminizi Yapın',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.outfit(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w900,
+                    color: AppColors.textPrimary,
+                    height: 1.25,
+                    letterSpacing: -0.5,
+                  ),
+                ),
+                const SizedBox(height: 48),
+                ClayLanguageButton(
+                  title: 'English',
+                  subtitle: 'US / UK',
+                  icon: Icons.g_translate_rounded,
+                  onTap: () => _selectLanguage(context, const Locale('en')),
+                  color: AppColors.clayPeach,
+                ),
+                const SizedBox(height: 20),
+                ClayLanguageButton(
+                  title: 'Türkçe',
+                  subtitle: 'Türkiye',
+                  icon: Icons.translate_rounded,
+                  onTap: () => _selectLanguage(context, const Locale('tr')),
+                  color: AppColors.clayMint,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -94,83 +109,81 @@ class ClayLanguageButton extends StatefulWidget {
 class _ClayLanguageButtonState extends State<ClayLanguageButton> {
   bool _isPressed = false;
 
+  void _handleTapDown(TapDownDetails _) {
+    HapticFeedback.lightImpact();
+    setState(() => _isPressed = true);
+  }
+
+  void _handleTapUp(TapUpDetails _) {
+    setState(() => _isPressed = false);
+    widget.onTap();
+  }
+
+  void _handleTapCancel() {
+    setState(() => _isPressed = false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTapDown: (_) => setState(() => _isPressed = true),
-      onTapUp: (_) {
-        setState(() => _isPressed = false);
-        widget.onTap();
-      },
-      onTapCancel: () => setState(() => _isPressed = false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 150),
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: widget.color,
-          borderRadius: BorderRadius.circular(30),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.18),
-              offset: _isPressed ? const Offset(0, 8) : const Offset(0, 24),
-              blurRadius: _isPressed ? 16 : 40,
-              inset: false,
-            ),
-            BoxShadow(
-              color: Colors.white.withValues(alpha: 0.65),
-              offset: _isPressed ? const Offset(0, 12) : const Offset(0, 8),
-              blurRadius: _isPressed ? 20 : 16,
-              inset: true,
-            ),
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.15),
-              offset: _isPressed ? const Offset(0, -12) : const Offset(0, -8),
-              blurRadius: _isPressed ? 20 : 16,
-              inset: true,
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.5),
-                shape: BoxShape.circle,
+      onTapDown: _handleTapDown,
+      onTapUp: _handleTapUp,
+      onTapCancel: _handleTapCancel,
+      child: AnimatedScale(
+        scale: _isPressed ? 0.96 : 1.0,
+        duration: const Duration(milliseconds: 110),
+        curve: Curves.easeOutCubic,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 110),
+          padding: const EdgeInsets.all(20),
+          decoration: ClayTheme.clayButtonDecoration(
+            color: widget.color,
+            borderRadius: 28,
+            isPressed: _isPressed,
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.65),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(widget.icon, color: AppColors.primaryDark, size: 24),
               ),
-              child: Icon(widget.icon, color: AppColors.primaryDark, size: 26),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.title,
-                    style: GoogleFonts.nunito(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w900,
-                      color: const Color(0xFF2D232E),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.title,
+                      style: GoogleFonts.outfit(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.textPrimary,
+                      ),
                     ),
-                  ),
-                  Text(
-                    widget.subtitle,
-                    style: GoogleFonts.quicksand(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                      color: const Color(0xFF2D232E).withValues(alpha: 0.6),
+                    const SizedBox(height: 2),
+                    Text(
+                      widget.subtitle,
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.textSecondary,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.primaryDark,
-              size: 28,
-            ),
-          ],
+              const Icon(
+                Icons.chevron_right_rounded,
+                color: AppColors.primaryDark,
+                size: 26,
+              ),
+            ],
+          ),
         ),
       ),
     );

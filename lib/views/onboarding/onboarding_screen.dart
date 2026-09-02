@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/theme/clay_theme.dart';
+import '../../core/widgets/ambient_background.dart';
 import '../../controllers/onboarding_controller.dart';
 import '../../utils/date_utils.dart';
 import '../widgets/medical_disclaimer_sheet.dart';
@@ -61,7 +62,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -81,53 +82,55 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               )
             : null,
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Claymorphic İlerleme Adımları (4 Adım)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-              child: Row(
-                children: List.generate(_totalPages, (index) {
-                  final isActive = index <= _currentPage;
-                  return Expanded(
-                    child: Container(
-                      height: 8,
-                      margin: const EdgeInsets.symmetric(horizontal: 3),
-                      decoration: BoxDecoration(
-                        color: isActive ? AppColors.primaryPink : AppColors.backgroundSubtle,
-                        borderRadius: BorderRadius.circular(4),
-                        boxShadow: isActive
-                            ? [
-                                BoxShadow(
-                                  color: AppColors.primaryPink.withValues(alpha: 0.4),
-                                  blurRadius: 6,
-                                  offset: const Offset(0, 2),
-                                )
-                              ]
-                            : null,
+      body: AmbientBackground(
+        child: SafeArea(
+          child: Column(
+            children: [
+              // Claymorphic İlerleme Adımları (4 Adım)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                child: Row(
+                  children: List.generate(_totalPages, (index) {
+                    final isActive = index <= _currentPage;
+                    return Expanded(
+                      child: Container(
+                        height: 8,
+                        margin: const EdgeInsets.symmetric(horizontal: 3),
+                        decoration: BoxDecoration(
+                          color: isActive ? AppColors.primaryPink : AppColors.backgroundSubtle,
+                          borderRadius: BorderRadius.circular(4),
+                          boxShadow: isActive
+                              ? [
+                                  BoxShadow(
+                                    color: AppColors.primaryPink.withValues(alpha: 0.35),
+                                    blurRadius: 6,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ]
+                              : null,
+                        ),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  }),
+                ),
               ),
-            ),
-            const SizedBox(height: 12),
+              const SizedBox(height: 12),
 
-            Expanded(
-              child: PageView(
-                controller: _pageController,
-                physics: const NeverScrollableScrollPhysics(),
-                onPageChanged: (page) => setState(() => _currentPage = page),
-                children: [
-                  _buildDateSelectionStep(),
-                  _buildBmiStep(),
-                  _buildBabyAndMomInfoStep(),
-                  _buildSummaryStep(),
-                ],
+              Expanded(
+                child: PageView(
+                  controller: _pageController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  onPageChanged: (page) => setState(() => _currentPage = page),
+                  children: [
+                    _buildDateSelectionStep(),
+                    _buildBmiStep(),
+                    _buildBabyAndMomInfoStep(),
+                    _buildSummaryStep(),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../core/constants/app_colors.dart';
+import '../core/widgets/ambient_background.dart';
 import '../core/widgets/fluid_clay_bottom_bar.dart';
 import 'dashboard/dashboard_screen.dart';
 import 'weekly_panel/weekly_panel_screen.dart';
@@ -47,20 +48,23 @@ class _MainNavigationScaffoldState extends State<MainNavigationScaffold> {
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: Stack(
-        children: [
-          IndexedStack(
-            index: _currentIndex,
-            children: screens,
-          ),
-          // 🛠️ Sağ Kenar Geliştirici & Test Paneli Butonu (Prodüksiyonda kolayca kaldırılabilir)
-          DebugFloatingButton(
-            onDataChanged: () {
-              setState(() {});
-            },
-          ),
-        ],
+      body: AmbientBackground(
+        child: Stack(
+          children: [
+            IndexedStack(
+              index: _currentIndex,
+              children: screens,
+            ),
+            // 🛠️ Sağ Kenar Geliştirici & Test Paneli Butonu (Prodüksiyonda kolayca kaldırılabilir)
+            DebugFloatingButton(
+              onDataChanged: () {
+                setState(() {});
+              },
+            ),
+          ],
+        ),
       ),
+
       bottomNavigationBar: FluidClayBottomNavBar(
         selectedIndex: _currentIndex,
         onTabSelected: _onTabTapped,
