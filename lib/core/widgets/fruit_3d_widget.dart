@@ -74,15 +74,15 @@ class Fruit3DWidget extends StatelessWidget {
     switch (key) {
       case 'carrot': return Icons.eco_rounded;
       case 'papaya': return Icons.circle_rounded;
-      case 'cauliflower': return Icons.nature_people_rounded;
-      case 'zucchini': return Icons.yard_rounded;
+      case 'cauliflower': return Icons.spa_rounded;
+      case 'zucchini': return Icons.grass_rounded;
       case 'broccoli': return Icons.park_rounded;
-      case 'squash': return Icons.eco_rounded;
+      case 'squash': return Icons.circle_rounded;
       case 'butternut_squash': return Icons.circle_rounded;
-      case 'cabbage': return Icons.filter_vintage_rounded;
-      case 'bok_choy': return Icons.eco_rounded;
+      case 'cabbage': return Icons.spa_rounded;
+      case 'bok_choy': return Icons.grass_rounded;
       case 'pumpkin': return Icons.circle_rounded;
-      case 'lettuce': return Icons.yard_rounded;
+      case 'lettuce': return Icons.spa_rounded;
       case 'swiss_chard': return Icons.grass_rounded;
       case 'celery': return Icons.spa_rounded;
       case 'mini_watermelon': return Icons.circle_rounded;
