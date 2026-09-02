@@ -1,0 +1,8 @@
+{
+  "background": "linear-gradient(160deg, #FDF7F4 0%, #FEE6E0 55%, #FFF0EB 100%)",
+  "frame": "17-pro-orange",
+  "fontFamily": "-apple-system, \"Nunito\", \"Quicksand\", system-ui, sans-serif",
+  "template": "editorial",
+  "layout": "classic",
+  "screenOnly": false
+}

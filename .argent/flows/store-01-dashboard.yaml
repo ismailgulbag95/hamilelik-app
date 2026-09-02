@@ -1,0 +1,8 @@
+steps:
+  - echo: Launch Aura Pregnancy and wait for the Dashboard screen to settle
+  - launch: com.balax.pregnancy
+  - await:
+      visible:
+        text: Hafta
+  - await:
+      idle: true

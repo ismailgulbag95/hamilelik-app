@@ -1,0 +1,7 @@
+steps:
+  - echo: Preview Segment 1 - Open Dashboard and examine week info
+  - launch: com.balax.pregnancy
+  - await:
+      visible:
+        text: Hafta
+  - wait: 2000

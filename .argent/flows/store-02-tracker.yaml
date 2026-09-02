@@ -1,0 +1,13 @@
+steps:
+  - echo: Launch Aura Pregnancy and switch to Daily Tracker tab
+  - launch: com.balax.pregnancy
+  - await:
+      visible:
+        text: Takip
+  - tap:
+      text: Takip
+  - await:
+      visible:
+        text: Su Takibi
+  - await:
+      idle: true

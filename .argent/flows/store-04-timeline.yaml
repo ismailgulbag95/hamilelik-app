@@ -1,0 +1,13 @@
+steps:
+  - echo: Launch Aura Pregnancy and switch to Journey / Timeline tab
+  - launch: com.balax.pregnancy
+  - await:
+      visible:
+        text: Yolculuk
+  - tap:
+      text: Yolculuk
+  - await:
+      visible:
+        text: Anı Günlüğü
+  - await:
+      idle: true

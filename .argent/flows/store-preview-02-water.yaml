@@ -1,0 +1,13 @@
+executionPrerequisite: >-
+  App open on dashboard.
+
+steps:
+  - echo: Preview Segment 2 - Tap on Tracker tab and log water
+  - tap:
+      text: Takip
+  - await:
+      visible:
+        text: Su Takibi
+  - tap:
+      text: +250 ml
+  - wait: 2000

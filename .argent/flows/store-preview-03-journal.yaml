@@ -1,0 +1,11 @@
+executionPrerequisite: >-
+  App open on daily tracker.
+
+steps:
+  - echo: Preview Segment 3 - Navigate to Journey and see baby journal
+  - tap:
+      text: Yolculuk
+  - await:
+      visible:
+        text: Anı Günlüğü
+  - wait: 3000

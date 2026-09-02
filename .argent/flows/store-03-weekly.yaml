@@ -1,0 +1,13 @@
+steps:
+  - echo: Launch Aura Pregnancy and switch to Weekly Guide tab
+  - launch: com.balax.pregnancy
+  - await:
+      visible:
+        text: Rehber
+  - tap:
+      text: Rehber
+  - await:
+      visible:
+        text: Hafta
+  - await:
+      idle: true
