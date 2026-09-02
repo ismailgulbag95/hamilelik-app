@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/clay_theme.dart';
 import '../../../core/widgets/fruit_3d_widget.dart';
@@ -113,8 +114,9 @@ class BabyGrowthCard extends StatelessWidget {
         ),
         const SizedBox(height: 14),
 
-        // 2. Bebeğin Gelişimi Açıklama Kartı
+        // 2. Bebeğin Gelişimi Açıklama Kartı (Liquid Glass Katmanı)
         ClayCard(
+          isGlazed: true,
           color: AppColors.clayCardSurface,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,22 +137,32 @@ class BabyGrowthCard extends StatelessWidget {
                   const SizedBox(width: 10),
                   Text(
                     'baby_dev_status'.tr(args: [babyName]),
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppColors.textPrimary),
+                    style: GoogleFonts.outfit(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.textPrimary,
+                    ),
                   ),
                 ],
               ),
               const SizedBox(height: 10),
               Text(
                 babyDev,
-                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textSecondary, height: 1.45),
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.textPrimary,
+                  height: 1.5,
+                ),
               ),
             ],
           ),
         ),
         const SizedBox(height: 14),
 
-        // 3. Annedeki Değişimler Kartı
+        // 3. Annedeki Değişimler Kartı (Liquid Glass Katmanı)
         ClayCard(
+          isGlazed: true,
           color: AppColors.clayLavender,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,14 +183,23 @@ class BabyGrowthCard extends StatelessWidget {
                   const SizedBox(width: 10),
                   Text(
                     'baby_mother_changes'.tr(),
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
+                    style: GoogleFonts.outfit(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.primaryDark,
+                    ),
                   ),
                 ],
               ),
               const SizedBox(height: 10),
               Text(
                 motherChanges,
-                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textPrimary, height: 1.45),
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.textPrimary,
+                  height: 1.5,
+                ),
               ),
             ],
           ),

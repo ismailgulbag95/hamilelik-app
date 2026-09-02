@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/theme/clay_theme.dart';
 import '../../core/constants/weekly_medical_data.dart';
@@ -310,6 +311,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 // 2. HAFTANIN YAPILMASI GEREKEN TIBBİ TESTİ / KONTROLÜ (VARSA GÖSTER, YOKSA GİZLE)
                 if (medicalMilestone != null) ...[
                   ClayCard(
+                    isGlazed: true,
                     color: const Color(0xFFFFF3E0), // Sıcak uyarı turuncusu
                     padding: const EdgeInsets.all(16),
                     onTap: () => widget.onNavigateTab(1),
@@ -342,7 +344,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     ),
                                     child: Text(
                                       'dashboard_medical_test_title'.tr(),
-                                      style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w800),
+                                      style: GoogleFonts.plusJakartaSans(
+                                        color: Colors.white,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w800,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -350,20 +356,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               const SizedBox(height: 6),
                               Text(
                                 medicalMilestone['test'] ?? '',
-                                style: const TextStyle(
-                                  fontSize: 14,
+                                style: GoogleFonts.outfit(
+                                  fontSize: 14.5,
                                   fontWeight: FontWeight.w800,
-                                  color: Color(0xFF5D4037),
+                                  color: const Color(0xFF5D4037),
                                 ),
                               ),
                               const SizedBox(height: 3),
                               Text(
                                 medicalMilestone['desc'] ?? '',
-                                style: const TextStyle(
-                                  fontSize: 11,
+                                style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 11.5,
                                   fontWeight: FontWeight.w600,
-                                  color: Color(0xFF795548),
-                                  height: 1.35,
+                                  color: const Color(0xFF795548),
+                                  height: 1.4,
                                 ),
                               ),
                             ],
@@ -376,8 +382,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   const SizedBox(height: 16),
                 ],
 
-                // 3. HAMİLELİĞİN BU GÜNÜ & DİNGİN GÜNLÜK ÖZET KARTI
+                // 3. HAMİLELİĞİN BU GÜNÜ & DİNGİN GÜNLÜK ÖZET KARTI (Liquid Glass Katmanı)
                 ClayCard(
+                  isGlazed: true,
                   color: AppColors.clayRose,
                   padding: const EdgeInsets.all(18),
                   child: Column(
@@ -389,8 +396,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           const SizedBox(width: 8),
                           Text(
                             'dashboard_today_title'.tr(),
-                            style: const TextStyle(
-                              fontSize: 14,
+                            style: GoogleFonts.outfit(
+                              fontSize: 15,
                               fontWeight: FontWeight.w800,
                               color: AppColors.primaryDark,
                             ),
@@ -401,11 +408,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       Text(
                         weekData['summary'] as String? ??
                             'dashboard_today_desc_default'.tr(),
-                        style: const TextStyle(
+                        style: GoogleFonts.plusJakartaSans(
                           fontSize: 13,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           color: AppColors.textPrimary,
-                          height: 1.45,
+                          height: 1.5,
                         ),
                       ),
                       const SizedBox(height: 12),
@@ -418,7 +425,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             onPressed: () => widget.onNavigateTab(2), // Günlük Takip Sekmesine
                             child: Row(
                               children: [
-                                Text('dashboard_view_daily_routines'.tr(), style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w800, color: AppColors.primaryPink)),
+                                Text(
+                                  'dashboard_view_daily_routines'.tr(),
+                                  style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 11.5,
+                                    fontWeight: FontWeight.w800,
+                                    color: AppColors.primaryPink,
+                                  ),
+                                ),
                                 const SizedBox(width: 4),
                                 const Icon(Icons.arrow_forward_rounded, size: 14, color: AppColors.primaryPink),
                               ],
