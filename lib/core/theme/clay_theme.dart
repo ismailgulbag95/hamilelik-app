@@ -1,12 +1,12 @@
+import 'dart:ui';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'inset_box_shadow.dart';
 import '../constants/app_colors.dart';
 
-/// Claymorphism 3.0 UI Tarzı Yapılandırması ve Widget Bileşenleri
-/// Formül: Hacimli Degrade (Volume Gradient) + Çift İç Işık (Glossy Highlight + Occlusion) + Renkli Dış Gölge + Yaylanma Etkileşimi
-/// Oversized Radius (24px - 32px), Bağımsız Pastel Renkler, Google Fonts (Outfit & Plus Jakarta Sans)
+/// Claymorphism 3.0 & Liquid Glass Hibrit UI Tarzı Yapılandırması ve Widget Bileşenleri
+/// Formül: Hacimli Degrade (Volume Gradient) + Çift İç Işık + Buzlu Sıvı Cam (Liquid Glass) + Dokunsal Yaylanma
 class ClayTheme {
   static const double defaultRadius = 26.0;
   static const double cardRadius = 30.0;
@@ -92,6 +92,52 @@ class ClayTheme {
           color: Colors.black.withValues(alpha: 0.08),
           offset: const Offset(0, -5),
           blurRadius: 10,
+          inset: true,
+        ),
+      ],
+    );
+  }
+
+  /// Liquid Glass & Glazed Ceramic (Buzlu Sıvı Cam & Sırlı Seramik) Dekorasyonu
+  /// Yarı saydam arka plan, parlak beyaz sır çerçevesi ve mikro iç ışıklar içerir.
+  static BoxDecoration glazedGlassDecoration({
+    Color? surfaceColor,
+    double borderRadius = cardRadius,
+    double opacity = 0.85,
+    bool isPressed = false,
+  }) {
+    final Color base = surfaceColor ?? Colors.white;
+    return BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          Colors.white.withValues(alpha: (opacity + 0.08).clamp(0.0, 0.98)),
+          base.withValues(alpha: opacity.clamp(0.0, 0.95)),
+        ],
+      ),
+      borderRadius: BorderRadius.circular(borderRadius),
+      border: Border.all(
+        color: Colors.white.withValues(alpha: 0.85),
+        width: 1.2,
+      ),
+      boxShadow: [
+        BoxShadow(
+          color: const Color(0x18C49A9E),
+          offset: const Offset(0, 12),
+          blurRadius: 24,
+          inset: false,
+        ),
+        BoxShadow(
+          color: Colors.white.withValues(alpha: 0.92),
+          offset: const Offset(0, 2),
+          blurRadius: 6,
+          inset: true,
+        ),
+        BoxShadow(
+          color: Colors.black.withValues(alpha: 0.04),
+          offset: const Offset(0, -3),
+          blurRadius: 6,
           inset: true,
         ),
       ],
@@ -288,7 +334,8 @@ class ClayTheme {
   }
 }
 
-/// Claymorphic Kart Widget'ı (Hacim degradesi, çift iç ışık ve yumuşak dış derinlik)
+/// Claymorphic & Liquid Glass Kart Widget'ı
+/// isGlazed: true olduğunda buzlu cam (BackdropFilter) ve sırlı seramik yansıması sunar.
 class ClayCard extends StatelessWidget {
   final Widget child;
   final Color color;
@@ -296,6 +343,8 @@ class ClayCard extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry? margin;
   final VoidCallback? onTap;
+  final bool isGlazed;
+  final double blurSigma;
 
   const ClayCard({
     super.key,
@@ -305,10 +354,42 @@ class ClayCard extends StatelessWidget {
     this.padding = const EdgeInsets.all(20),
     this.margin,
     this.onTap,
+    this.isGlazed = false,
+    this.blurSigma = 16.0,
   });
 
   @override
   Widget build(BuildContext context) {
+    if (isGlazed) {
+      return Container(
+        margin: margin,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(borderRadius),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: blurSigma, sigmaY: blurSigma),
+            child: Container(
+              decoration: ClayTheme.glazedGlassDecoration(
+                surfaceColor: color,
+                borderRadius: borderRadius,
+              ),
+              child: Material(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(borderRadius),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(borderRadius),
+                  onTap: onTap,
+                  child: Padding(
+                    padding: padding,
+                    child: child,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     return Container(
       margin: margin,
       decoration: ClayTheme.clayDecoration(

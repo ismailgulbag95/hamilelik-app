@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -8,7 +9,7 @@ import '../../../services/database_helper.dart';
 import '../../widgets/medical_disclaimer_sheet.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-/// Aura Pregnancy - Bebek & Anne Bilgilerini Düzenleme Modalı
+/// Aura Pregnancy - Bebek & Anne Bilgilerini Düzenleme Modalı (Liquid Glass & Glazed Ceramic)
 class ProfileEditSheet extends StatefulWidget {
   final ProfileModel profile;
   final VoidCallback onSaved;
@@ -59,7 +60,7 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('profile_edit_toast'.tr(args: [updated.babyDisplayName])),
+          content: Text('profile_edit_saved'.tr()),
           backgroundColor: AppColors.successGreen,
         ),
       );
@@ -68,60 +69,65 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Color(0xFFFDF7F4),
-        borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
-      ),
-      padding: EdgeInsets.only(
-        left: 20,
-        right: 20,
-        top: 18,
-        bottom: MediaQuery.of(context).viewInsets.bottom + 24,
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Üst Tutamaç
-            Center(
-              child: Container(
-                width: 44,
-                height: 5,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-            const SizedBox(height: 14),
-
-            // Başlık
-            Row(
+    return ClipRRect(
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+        child: Container(
+          decoration: ClayTheme.glazedGlassDecoration(
+            surfaceColor: AppColors.background,
+            borderRadius: 32,
+            opacity: 0.92,
+          ),
+          padding: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 18,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  width: 32,
-                  height: 32,
-                  decoration: ClayTheme.clayDecoration(
-                    color: AppColors.clayRose,
-                    borderRadius: 10,
-                  ),
-                  child: const Center(
-                    child: Icon(Icons.child_care_rounded, color: AppColors.primaryPink, size: 18),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  'profile_edit_title'.tr(),
-                  style: GoogleFonts.nunito(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w900,
-                    color: const Color(0xFF2D232E),
+                // Üst Tutamaç Çukuru
+                Center(
+                  child: Container(
+                    width: 44,
+                    height: 5,
+                    decoration: ClayTheme.concaveDecoration(
+                      color: Colors.black.withValues(alpha: 0.12),
+                      borderRadius: 10,
+                    ),
                   ),
                 ),
-              ],
-            ),
+                const SizedBox(height: 14),
+
+                // Başlık
+                Row(
+                  children: [
+                    Container(
+                      width: 32,
+                      height: 32,
+                      decoration: ClayTheme.clayDecoration(
+                        color: AppColors.clayRose,
+                        borderRadius: 10,
+                      ),
+                      child: const Center(
+                        child: Icon(Icons.child_care_rounded, color: AppColors.primaryPink, size: 18),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      'profile_edit_title'.tr(),
+                      style: GoogleFonts.outfit(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                  ],
+                ),
             const SizedBox(height: 4),
             Text(
               'profile_edit_desc'.tr(),
@@ -313,8 +319,10 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
           ],
         ),
       ),
-    );
-  }
+    ),
+  ),
+);
+}
 
   Widget _buildGenderPill(String label, String value, IconData icon, Color bgColor, Color activeColor) {
     final isSelected = _selectedGender == value;

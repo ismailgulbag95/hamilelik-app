@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/theme/clay_theme.dart';
 
-/// Aura Pregnancy - Tıbbi Sorumluluk Reddi ve Yasal Bilgilendirme Modalı
+/// Aura Pregnancy - Tıbbi Sorumluluk Reddi ve Yasal Bilgilendirme Modalı (Liquid Glass & Glazed Ceramic)
 class MedicalDisclaimerSheet extends StatelessWidget {
   const MedicalDisclaimerSheet({super.key});
 
@@ -24,14 +25,20 @@ class MedicalDisclaimerSheet extends StatelessWidget {
       constraints: BoxConstraints(
         maxHeight: MediaQuery.of(context).size.height * 0.88,
       ),
-      decoration: ClayTheme.clayDecoration(
-        color: AppColors.background,
-        borderRadius: 32,
-      ),
-      padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: ClipRRect(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+          child: Container(
+            decoration: ClayTheme.glazedGlassDecoration(
+              surfaceColor: AppColors.background,
+              borderRadius: 32,
+              opacity: 0.92,
+            ),
+            padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Tutamaç Çizgisi
           Center(
@@ -195,8 +202,11 @@ class MedicalDisclaimerSheet extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
+    ),
+  ),
+),
+);
+}
 
   Widget _buildLegalItem({
     required IconData icon,
