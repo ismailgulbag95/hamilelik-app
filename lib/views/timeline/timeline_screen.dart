@@ -11,6 +11,7 @@ import '../journal/widgets/journal_entry_card.dart';
 import '../journal/new_entry_screen.dart';
 import '../weekly_panel/widgets/ad_reward_dialog.dart';
 import '../widgets/clay_native_ad_card.dart';
+import '../widgets/medical_disclaimer_sheet.dart';
 
 enum TimelineFilter { all, diaries, steps, waterCaffeine, weight }
 
@@ -177,50 +178,60 @@ class _TimelineScreenState extends State<TimelineScreen> {
             ),
           ],
         ),
+        actions: const [
+          MedicalInfoButton(),
+          SizedBox(width: 12),
+        ],
       ),
-      body: RefreshIndicator(
-        onRefresh: _loadTimelineData,
-        color: AppColors.primaryPink,
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // 1. Genel İstatistik Hero Kartı
-              _buildOverallSummaryCard(),
-              const SizedBox(height: 10),
+      body: SafeArea(
+        child: RefreshIndicator(
+          onRefresh: _loadTimelineData,
+          color: AppColors.primaryPink,
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // 1. Genel İstatistik Hero Kartı
+                _buildOverallSummaryCard(),
+                const SizedBox(height: 10),
 
-              // Hekim Klinik Raporu (Ödüllü Reklam ile Oluşturma)
-              _buildDoctorReportAction(),
-              const SizedBox(height: 14),
+                // Hekim Klinik Raporu (Ödüllü Reklam ile Oluşturma)
+                _buildDoctorReportAction(),
+                const SizedBox(height: 14),
 
-              // 2. Filtre Butonları (Chips)
-              _buildFilterChips(),
-              const SizedBox(height: 10),
+                // 2. Filtre Butonları (Chips)
+                _buildFilterChips(),
+                const SizedBox(height: 10),
 
-              // Sponsorlu Destekçi Native Ad Kartı
-              const ClayNativeAdCard(
-                cardColor: Color(0xFFD6E4F0),
-                icon: Icons.health_and_safety_rounded,
-              ),
-              const SizedBox(height: 14),
-
-              // 3. Zaman Tüneli Akışı
-              if (filtered.isEmpty)
-                _buildEmptyState()
-              else
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: filtered.length,
-                  itemBuilder: (context, index) {
-                    final dayEntry = filtered[index];
-                    return _buildTimelineDayItem(dayEntry, isFirst: index == 0, isLast: index == filtered.length - 1);
-                  },
+                // Sponsorlu Destekçi Native Ad Kartı
+                const ClayNativeAdCard(
+                  cardColor: Color(0xFFD6E4F0),
+                  icon: Icons.health_and_safety_rounded,
                 ),
-              const SizedBox(height: 30),
-            ],
+                const SizedBox(height: 14),
+
+                // 3. Zaman Tüneli Akışı
+                if (filtered.isEmpty)
+                  _buildEmptyState()
+                else
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: filtered.length,
+                    itemBuilder: (context, index) {
+                      final dayEntry = filtered[index];
+                      return _buildTimelineDayItem(dayEntry, isFirst: index == 0, isLast: index == filtered.length - 1);
+                    },
+                  ),
+                const SizedBox(height: 16),
+
+                // Tıbbi Sorumluluk Reddi Bannerı
+                const MedicalDisclaimerBanner(),
+                const SizedBox(height: 30),
+              ],
+            ),
           ),
         ),
       ),
