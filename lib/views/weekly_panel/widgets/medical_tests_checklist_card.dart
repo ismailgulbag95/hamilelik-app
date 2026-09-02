@@ -97,9 +97,9 @@ class _MedicalTestsChecklistCardState extends State<MedicalTestsChecklistCard> {
 
           Container(
             padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.85),
-              borderRadius: BorderRadius.circular(14),
+            decoration: ClayTheme.concaveDecoration(
+              color: Colors.white.withValues(alpha: 0.9),
+              borderRadius: 14,
             ),
             child: Row(
               children: [

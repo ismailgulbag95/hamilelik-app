@@ -82,9 +82,9 @@ class CaffeineTrackerCard extends StatelessWidget {
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: isOverLimit ? AppColors.medicalAlertRed : Colors.white.withValues(alpha: 0.8),
-                  borderRadius: BorderRadius.circular(12),
+                decoration: ClayTheme.clayButtonDecoration(
+                  color: isOverLimit ? AppColors.medicalAlertRed : Colors.white,
+                  borderRadius: 12,
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -111,16 +111,10 @@ class CaffeineTrackerCard extends StatelessWidget {
           // Claymorphic İlerleme Çubuğu (Progress Bar)
           Container(
             height: 16,
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.85),
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.06),
-                  offset: const Offset(0, 2),
-                  blurRadius: 4,
-                ),
-              ],
+            padding: const EdgeInsets.all(2),
+            decoration: ClayTheme.concaveDecoration(
+              color: AppColors.backgroundSubtle,
+              borderRadius: 12,
             ),
             child: FractionallySizedBox(
               alignment: Alignment.centerLeft,
@@ -133,13 +127,6 @@ class CaffeineTrackerCard extends StatelessWidget {
                         : const [Color(0xFFFFB74D), Color(0xFFFF7043)],
                   ),
                   borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: (isOverLimit ? const Color(0xFFD32F2F) : const Color(0xFFFF7043)).withValues(alpha: 0.35),
-                      blurRadius: 6,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
                 ),
               ),
             ),
@@ -150,10 +137,9 @@ class CaffeineTrackerCard extends StatelessWidget {
           if (isOverLimit) ...[
             Container(
               padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
+              decoration: ClayTheme.clayDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.medicalAlertRed, width: 2),
+                borderRadius: 16,
               ),
               child: Row(
                 children: [

@@ -166,16 +166,9 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
           // 2. Adım Sayacı ve İlerleme Kartı
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.85),
-              borderRadius: BorderRadius.circular(22),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.03),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
+            decoration: ClayTheme.clayDecoration(
+              color: Colors.white,
+              borderRadius: 22,
             ),
             child: Column(
               children: [
@@ -208,9 +201,9 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                      decoration: BoxDecoration(
+                      decoration: ClayTheme.clayButtonDecoration(
                         color: isTargetReached ? AppColors.clayMint : AppColors.clayRose,
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: 16,
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -236,15 +229,22 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                 ),
                 const SizedBox(height: 12),
 
-                // İlerleme Çubuğu
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: LinearProgressIndicator(
-                    value: progress,
-                    minHeight: 10,
-                    backgroundColor: Colors.grey.shade200,
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      isTargetReached ? AppColors.successGreen : AppColors.primaryPink,
+                // İlerleme Çubuğu (Concave Trough)
+                Container(
+                  padding: const EdgeInsets.all(2),
+                  decoration: ClayTheme.concaveDecoration(
+                    color: AppColors.backgroundSubtle,
+                    borderRadius: 10,
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: LinearProgressIndicator(
+                      value: progress,
+                      minHeight: 10,
+                      backgroundColor: Colors.transparent,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        isTargetReached ? AppColors.successGreen : AppColors.primaryPink,
+                      ),
                     ),
                   ),
                 ),
@@ -269,10 +269,9 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
           // 3. Mod Seçici (Toggle): Adım Sayısı vs Yürüyüş Süresi
           Container(
             padding: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.7),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: Colors.black.withValues(alpha: 0.05)),
+            decoration: ClayTheme.concaveDecoration(
+              color: AppColors.backgroundSubtle,
+              borderRadius: 16,
             ),
             child: Row(
               children: [
@@ -282,19 +281,12 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 180),
                       padding: const EdgeInsets.symmetric(vertical: 7),
-                      decoration: BoxDecoration(
-                        color: !_isDurationMode ? AppColors.clayPeach : Colors.transparent,
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: !_isDurationMode
-                            ? [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.05),
-                                  blurRadius: 6,
-                                  offset: const Offset(0, 2),
-                                )
-                              ]
-                            : null,
-                      ),
+                      decoration: !_isDurationMode
+                          ? ClayTheme.clayButtonDecoration(
+                              color: AppColors.clayPeach,
+                              borderRadius: 12,
+                            )
+                          : const BoxDecoration(color: Colors.transparent),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -324,19 +316,12 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 180),
                       padding: const EdgeInsets.symmetric(vertical: 7),
-                      decoration: BoxDecoration(
-                        color: _isDurationMode ? AppColors.clayPeach : Colors.transparent,
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: _isDurationMode
-                            ? [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.05),
-                                  blurRadius: 6,
-                                  offset: const Offset(0, 2),
-                                )
-                              ]
-                            : null,
-                      ),
+                      decoration: _isDurationMode
+                          ? ClayTheme.clayButtonDecoration(
+                              color: AppColors.clayPeach,
+                              borderRadius: 12,
+                            )
+                          : const BoxDecoration(color: Colors.transparent),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

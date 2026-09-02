@@ -181,16 +181,9 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
+                  decoration: ClayTheme.clayButtonDecoration(
                     color: const Color(0xFFD4EBD6),
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF4E8D55).withValues(alpha: 0.18),
-                        offset: const Offset(0, 4),
-                        blurRadius: 10,
-                      ),
-                    ],
+                    borderRadius: 16,
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -346,20 +339,9 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
           // 3. Mevcut Aşama İçin 3D Detay Kartı (Daima seçili/aktif haftanın evresini sunar)
           Container(
             padding: const EdgeInsets.all(18),
-            decoration: BoxDecoration(
+            decoration: ClayTheme.clayDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(26),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFF9E7B83).withValues(alpha: 0.08),
-                  offset: const Offset(0, 8),
-                  blurRadius: 20,
-                ),
-              ],
-              border: Border.all(
-                color: const Color(0xFFD4EBD6).withValues(alpha: 0.6),
-                width: 1.5,
-              ),
+              borderRadius: 26,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -409,10 +391,9 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
                     const SizedBox(width: 8),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                      decoration: BoxDecoration(
+                      decoration: ClayTheme.concaveDecoration(
                         color: const Color(0xFFFDF7F4),
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: const Color(0xFFE8D7DC)),
+                        borderRadius: 14,
                       ),
                       child: Text(
                         activeStage.sizeInfo,

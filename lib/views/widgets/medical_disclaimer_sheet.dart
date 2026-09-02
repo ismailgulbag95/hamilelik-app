@@ -23,9 +23,9 @@ class MedicalDisclaimerSheet extends StatelessWidget {
       constraints: BoxConstraints(
         maxHeight: MediaQuery.of(context).size.height * 0.88,
       ),
-      decoration: const BoxDecoration(
+      decoration: ClayTheme.clayDecoration(
         color: AppColors.background,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+        borderRadius: 32,
       ),
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
       child: Column(
@@ -37,9 +37,9 @@ class MedicalDisclaimerSheet extends StatelessWidget {
             child: Container(
               width: 44,
               height: 5,
-              decoration: BoxDecoration(
+              decoration: ClayTheme.concaveDecoration(
                 color: Colors.black.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: 10,
               ),
             ),
           ),

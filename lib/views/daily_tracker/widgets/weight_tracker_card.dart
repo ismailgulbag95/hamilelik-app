@@ -90,16 +90,9 @@ class _WeightTrackerCardState extends State<WeightTrackerCard> {
               Expanded(
                 child: Container(
                   height: 52,
-                  decoration: BoxDecoration(
+                  decoration: ClayTheme.concaveDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(ClayTheme.defaultRadius),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.05),
-                        offset: const Offset(0, 3),
-                        blurRadius: 6,
-                      ),
-                    ],
+                    borderRadius: 16,
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
@@ -156,9 +149,9 @@ class _WeightTrackerCardState extends State<WeightTrackerCard> {
           // Karşılaştırma Durumu
           Container(
             padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.85),
-              borderRadius: BorderRadius.circular(18),
+            decoration: ClayTheme.clayDecoration(
+              color: Colors.white,
+              borderRadius: 18,
             ),
             child: Column(
               children: [

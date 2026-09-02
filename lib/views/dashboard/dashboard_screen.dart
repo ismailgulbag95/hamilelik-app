@@ -154,10 +154,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
               onTap: () => widget.onNavigateTab(5), // Acil Durum sekmesi
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                decoration: BoxDecoration(
+                decoration: ClayTheme.clayButtonDecoration(
                   color: AppColors.medicalAlertBg,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppColors.medicalAlertRed, width: 1.2),
+                  borderRadius: 16,
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -202,10 +201,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         children: [
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                            decoration: BoxDecoration(
+                            decoration: ClayTheme.clayButtonDecoration(
                               color: AppColors.clayLavender,
-                              borderRadius: BorderRadius.circular(14),
-                              border: Border.all(color: AppColors.lavenderPurple.withValues(alpha: 0.25)),
+                              borderRadius: 14,
                             ),
                             child: Text(
                               'dashboard_trimester'.tr(args: [trimester.toString()]),
@@ -218,10 +216,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                            decoration: BoxDecoration(
+                            decoration: ClayTheme.clayButtonDecoration(
                               color: AppColors.clayRose,
-                              borderRadius: BorderRadius.circular(14),
-                              border: Border.all(color: AppColors.primaryPink.withValues(alpha: 0.25)),
+                              borderRadius: 14,
                             ),
                             child: Row(
                               children: [
@@ -268,9 +265,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       Container(
                         margin: const EdgeInsets.only(top: 6),
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        decoration: BoxDecoration(
+                        decoration: ClayTheme.clayButtonDecoration(
                           color: AppColors.clayPeach,
-                          borderRadius: BorderRadius.circular(18),
+                          borderRadius: 18,
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -339,9 +336,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 children: [
                                   Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                                    decoration: BoxDecoration(
+                                    decoration: ClayTheme.clayButtonDecoration(
                                       color: const Color(0xFFE65100),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: 8,
                                     ),
                                     child: Text(
                                       'dashboard_medical_test_title'.tr(),

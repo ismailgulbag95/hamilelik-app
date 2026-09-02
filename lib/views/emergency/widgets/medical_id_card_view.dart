@@ -22,9 +22,9 @@ class MedicalIdCardView extends StatelessWidget {
           // Başlık Şeridi
           Container(
             padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
+            decoration: ClayTheme.clayDecoration(
               color: AppColors.clayRose,
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: 18,
             ),
             child: Row(
               children: [
@@ -90,9 +90,9 @@ class MedicalIdCardView extends StatelessWidget {
           const SizedBox(height: 4),
           Container(
             padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
+            decoration: ClayTheme.concaveDecoration(
               color: AppColors.backgroundSubtle,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: 12,
             ),
             child: Text(
               card.recentSymptoms,

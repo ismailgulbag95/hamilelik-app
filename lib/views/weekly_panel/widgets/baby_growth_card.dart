@@ -76,9 +76,9 @@ class BabyGrowthCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.85),
-                        borderRadius: BorderRadius.circular(16),
+                      decoration: ClayTheme.clayButtonDecoration(
+                        color: Colors.white,
+                        borderRadius: 16,
                       ),
                       child: Column(
                         children: [
@@ -93,9 +93,9 @@ class BabyGrowthCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.85),
-                        borderRadius: BorderRadius.circular(16),
+                      decoration: ClayTheme.clayButtonDecoration(
+                        color: Colors.white,
+                        borderRadius: 16,
                       ),
                       child: Column(
                         children: [
@@ -188,10 +188,9 @@ class BabyGrowthCard extends StatelessWidget {
         // 4. Doktor Bilgilendirme ve Tıbbi Feragat Uyarısı
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-          decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.8),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppColors.lavenderPurple.withValues(alpha: 0.3)),
+          decoration: ClayTheme.concaveDecoration(
+            color: AppColors.backgroundSubtle,
+            borderRadius: 16,
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,

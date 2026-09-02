@@ -90,16 +90,10 @@ class WaterTrackerCard extends StatelessWidget {
           // Claymorphic İlerleme Çubuğu
           Container(
             height: 16,
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.8),
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.06),
-                  offset: const Offset(0, 2),
-                  blurRadius: 4,
-                ),
-              ],
+            padding: const EdgeInsets.all(2),
+            decoration: ClayTheme.concaveDecoration(
+              color: AppColors.backgroundSubtle,
+              borderRadius: 12,
             ),
             child: FractionallySizedBox(
               alignment: Alignment.centerLeft,
@@ -110,13 +104,6 @@ class WaterTrackerCard extends StatelessWidget {
                     colors: [Color(0xFF64B5F6), Color(0xFF1E88E5)],
                   ),
                   borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFF1E88E5).withValues(alpha: 0.4),
-                      blurRadius: 6,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
                 ),
               ),
             ),
