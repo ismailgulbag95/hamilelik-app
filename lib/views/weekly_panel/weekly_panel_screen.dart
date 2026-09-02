@@ -8,6 +8,7 @@ import 'widgets/pregnancy_journey_tracker.dart';
 import 'widgets/baby_growth_card.dart';
 import 'widgets/medical_tests_checklist_card.dart';
 import 'widgets/ad_reward_dialog.dart';
+import '../widgets/medical_disclaimer_sheet.dart';
 
 /// Hafta Hafta Tıbbi Bilgilendirme ve Test Takvimi Ekranı
 class WeeklyPanelScreen extends StatefulWidget {
@@ -96,6 +97,12 @@ class _WeeklyPanelScreenState extends State<WeeklyPanelScreen> {
             ),
           ],
         ),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 14),
+            child: MedicalInfoButton(),
+          ),
+        ],
       ),
       body: SafeArea(
         child: Column(
@@ -138,6 +145,10 @@ class _WeeklyPanelScreenState extends State<WeeklyPanelScreen> {
                       weekData: data,
                       babyDisplayName: babyDisplayName,
                     ),
+                    const SizedBox(height: 16),
+
+                    // Yasal & Tıbbi Sorumluluk Reddi Bildirimi
+                    const MedicalDisclaimerBanner(),
                     const SizedBox(height: 20),
                   ],
                 ),

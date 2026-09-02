@@ -7,6 +7,7 @@ import '../../core/theme/clay_theme.dart';
 import '../../controllers/emergency_controller.dart';
 import 'widgets/medical_id_card_view.dart';
 import 'widgets/edit_emergency_card_sheet.dart';
+import '../widgets/medical_disclaimer_sheet.dart';
 
 /// Gebelikte Acil Tıbbi Kart ve Hızlı Doktor Arama Ekranı
 class EmergencyScreen extends StatefulWidget {
@@ -138,6 +139,12 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
             ),
           ],
         ),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 14),
+            child: MedicalInfoButton(),
+          ),
+        ],
       ),
       body: SafeArea(
         child: _controller.isLoading || _controller.card == null
@@ -148,7 +155,14 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
                   Expanded(
                     child: SingleChildScrollView(
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: MedicalIdCardView(card: _controller.card!),
+                      child: Column(
+                        children: [
+                          MedicalIdCardView(card: _controller.card!),
+                          const SizedBox(height: 14),
+                          const MedicalDisclaimerBanner(),
+                          const SizedBox(height: 8),
+                        ],
+                      ),
                     ),
                   ),
 

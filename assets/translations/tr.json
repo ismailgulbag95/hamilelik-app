@@ -554,5 +554,20 @@
   "disclaimer_nutrition": "Önemli Not: Beslenme ve takviye ihtiyaçları kişiden kişiye değişir; herhangi bir takviye kullanmadan veya beslenme düzeninizi değiştirmeden önce mutlaka kendi hekiminize danışınız.",
   "disclaimer_walking": "Egzersiz ve yürüyüş süresi kişisel sağlık durumunuza göre değişir; fiziksel aktiviteye başlamadan önce mutlaka doktorunuza danışınız.",
   "disclaimer_medication": "Tüm ilaç ve takviyeler yalnızca doktorunuzun reçetesi ve tavsiyesi doğrultusunda kullanılmalıdır.",
-  "disclaimer_weekly": "Belirtilen gelişim ve öneriler genel bilgilendirme amaçlıdır; her gebelik ve vücut farklıdır. Kişisel tavsiyeler ve takip için daima kendi hekiminize danışınız."
+  "disclaimer_weekly": "Belirtilen gelişim ve öneriler genel bilgilendirme amaçlıdır; her gebelik ve vücut farklıdır. Kişisel tavsiyeler ve takip için daima kendi hekiminize danışınız.",
+  "legal_disclaimer_title": "Yasal Bilgilendirme & Tıbbi Sorumluluk Reddi",
+  "legal_disclaimer_badge": "Tıbbi Sorumluluk Reddi & Yasal Uyarı",
+  "legal_item_1_title": "1. Tıbbi Teşhis ve Tedavi Aracı Değildir",
+  "legal_item_1_desc": "Aura Pregnancy, yalnızca sağlıklı yaşam ve kişisel takip (wellness & lifestyle tracking) amacıyla geliştirilmiş bir dijital kayıt ve rehberlik aracıdır. Herhangi bir tıbbi teşhis koymaz, tedavi reçete etmez ve klinik karar destek sistemi niteliği taşımaz.",
+  "legal_item_2_title": "2. Hekim Muayenesi ve Kişisel Takip Önceliği",
+  "legal_item_2_desc": "Uygulamada sunulan hafta hafta fetal gelişim, boy-kilo tahminleri, kalori/beslenme ve aktivite önerileri ACOG, WHO ve IOM gibi uluslararası klinik kaynaklardan derlenen genel referans bilgileridir. Her gebelik benzersizdir; kişisel sağlık kararlarınız için daima kendi kadın hastalıkları ve doğum uzmanınıza danışınız.",
+  "legal_item_3_title": "3. Acil Durumlar ve 112 Protokolü",
+  "legal_item_3_desc": "Şiddetli karın/baş ağrısı, ani vajinal kanama, su gelmesi, fetal hareketlerde ani azalma, görme bulanıklığı veya 38°C üzeri ateş gibi acil durumlarda vakit kaybetmeden 112 Acil Çağrı Merkezi'ni arayınız veya en yakın acil servise başvurunuz.",
+  "legal_item_4_title": "4. KVKK / GDPR Uyumlu Yerel Veri Saklama",
+  "legal_item_4_desc": "Tüm vital sağlık kayıtlarınız (tansiyon, ateş, kilo, tekmeler, ilaçlar, anılar ve fotoğraflar) yalnızca kendi cihazınızda şifrelenerek yerel olarak saklanır. Kişisel verileriniz hiçbir harici sunucuya veya üçüncü tarafa iletilmez.",
+  "legal_disclaimer_understood": "Okudum, Anladım",
+  "legal_info_tooltip": "Yasal & Tıbbi Bilgilendirme",
+  "disclaimer_bp_fever": "Tansiyon ve ateş ölçüm kayıtları kişisel izlem içindir. Yüksek veya beklenmeyen değerlerde hekiminize başvurunuz.",
+  "disclaimer_kick_counter": "Tekme sayacı fetal hareket farkındalığı içindir. Hareketlerde belirgin azalma hissederseniz derhal doktorunuza başvurunuz.",
+  "onboarding_disclaimer_notice": "Uygulamayı kullanarak Tıbbi Sorumluluk Reddi ve Bilgilendirme şartlarını kabul etmiş sayılırsınız."
 }

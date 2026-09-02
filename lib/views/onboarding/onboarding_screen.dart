@@ -4,6 +4,7 @@ import '../../core/constants/app_colors.dart';
 import '../../core/theme/clay_theme.dart';
 import '../../controllers/onboarding_controller.dart';
 import '../../utils/date_utils.dart';
+import '../widgets/medical_disclaimer_sheet.dart';
 import '../main_navigation_scaffold.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -760,7 +761,42 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ],
             ),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 16),
+
+          // Tıbbi & Yasal Sorumluluk Reddi Onay & Bilgilendirme Kutusu
+          InkWell(
+            onTap: () => MedicalDisclaimerSheet.show(context),
+            borderRadius: BorderRadius.circular(14),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+              decoration: BoxDecoration(
+                color: AppColors.clayLavender.withValues(alpha: 0.4),
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: AppColors.primaryPink.withValues(alpha: 0.3), width: 1),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.verified_user_outlined, size: 18, color: AppColors.primaryPink),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      'onboarding_disclaimer_notice'.tr(),
+                      style: const TextStyle(
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.textPrimary,
+                        height: 1.35,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  const Icon(Icons.info_outline_rounded, size: 16, color: AppColors.primaryPink),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
 
           if (_controller.errorMessage != null) ...[
             Text(

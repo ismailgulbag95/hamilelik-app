@@ -158,7 +158,7 @@ class _MedicationTrackerCardState extends State<MedicationTrackerCard> {
                     children: [
                       Expanded(
                         child: DropdownButtonFormField<String>(
-                          value: selectedTime,
+                          initialValue: selectedTime,
                           decoration: InputDecoration(
                             labelText: 'med_time_label'.tr(),
                             filled: true,

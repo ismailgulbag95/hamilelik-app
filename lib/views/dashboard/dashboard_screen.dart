@@ -6,6 +6,7 @@ import '../../core/constants/weekly_medical_data.dart';
 import '../../core/constants/medical_specs.dart';
 import '../../services/database_helper.dart';
 import '../../services/medical_calculator.dart';
+import '../widgets/medical_disclaimer_sheet.dart';
 import '../../models/profile_model.dart';
 import '../../utils/date_utils.dart';
 import 'widgets/profile_edit_sheet.dart';
@@ -140,6 +141,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ],
         ),
         actions: [
+          const MedicalInfoButton(),
+          const SizedBox(width: 4),
           IconButton(
             tooltip: 'dashboard_profile_settings'.tr(),
             icon: const Icon(Icons.settings_suggest_rounded, color: AppColors.primaryDark),
@@ -429,6 +432,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ],
                   ),
                 ),
+                const SizedBox(height: 12),
+                const MedicalDisclaimerBanner(),
                 const SizedBox(height: 24),
               ],
             ),

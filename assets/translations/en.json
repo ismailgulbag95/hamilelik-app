@@ -554,5 +554,20 @@
   "disclaimer_nutrition": "Important Notice: Nutritional and supplement needs vary for each individual; always consult your own physician before taking any supplements or changing your diet.",
   "disclaimer_walking": "Exercise tolerance and walking duration vary individually; always consult your physician before starting or changing physical activity.",
   "disclaimer_medication": "All medications and supplements should be taken strictly as prescribed and advised by your doctor.",
-  "disclaimer_weekly": "Development and recommendations provided are for general information only; every pregnancy is unique. Always consult your own physician for personalized medical advice."
+  "disclaimer_weekly": "Development and recommendations provided are for general information only; every pregnancy is unique. Always consult your own physician for personalized medical advice.",
+  "legal_disclaimer_title": "Legal & Medical Disclaimer",
+  "legal_disclaimer_badge": "Medical Disclaimer & Legal Notice",
+  "legal_item_1_title": "1. Not a Medical or Diagnostic Device",
+  "legal_item_1_desc": "Aura Pregnancy is a digital tracking and wellness guide designed solely for lifestyle and personal logging. It does not provide medical diagnoses, prescribe treatments, or serve as a clinical decision support system.",
+  "legal_item_2_title": "2. Physician Consultation & Care Priority",
+  "legal_item_2_desc": "Weekly fetal growth milestones, weight/length estimates, calorie/nutrition tips, and physical activity guidelines are general references compiled from international standards (ACOG, WHO, IOM). Every pregnancy is unique; always consult your obstetrician/gynecologist for personalized healthcare decisions.",
+  "legal_item_3_title": "3. Emergency Situations & Protocol",
+  "legal_item_3_desc": "In case of severe abdominal or head pain, sudden vaginal bleeding, fluid leakage, sudden decrease in fetal movement, vision disturbances, or fever above 38°C (100.4°F), immediately call emergency services (112 / 911) or visit the nearest emergency department.",
+  "legal_item_4_title": "4. 100% On-Device Local Data Privacy",
+  "legal_item_4_desc": "All vital health logs (blood pressure, temperature, weight, kicks, medications, memories, and photos) are stored securely on your local device. Your personal data is never transmitted to external servers or third parties.",
+  "legal_disclaimer_understood": "I Understand",
+  "legal_info_tooltip": "Legal & Medical Notice",
+  "disclaimer_bp_fever": "Blood pressure and temperature records are for personal logging. Consult your physician for abnormal or concerning readings.",
+  "disclaimer_kick_counter": "Kick counter is intended for fetal movement awareness. Contact your doctor immediately if you notice a significant decrease in movements.",
+  "onboarding_disclaimer_notice": "By using the app, you acknowledge and agree to the Medical Disclaimer & Legal Terms."
 }

@@ -9,6 +9,7 @@ import 'widgets/caffeine_tracker_card.dart';
 import 'widgets/walking_tracker_card.dart';
 import 'widgets/trimester_nutrition_card.dart';
 import 'widgets/weight_tracker_card.dart';
+import '../widgets/medical_disclaimer_sheet.dart';
 import '../../services/database_helper.dart';
 
 /// Claymorphic Günlük Takip & Rutin Yönetim Ekranı (Daily Tracker)
@@ -80,6 +81,12 @@ class _DailyTrackerScreenState extends State<DailyTrackerScreen> {
             ),
           ],
         ),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 14),
+            child: MedicalInfoButton(),
+          ),
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -130,6 +137,10 @@ class _DailyTrackerScreenState extends State<DailyTrackerScreen> {
                 currentWeek: _controller.currentWeek,
                 trimester: _controller.trimester,
               ),
+              const SizedBox(height: 16),
+
+              // Yasal & Tıbbi Sorumluluk Reddi Bildirimi
+              const MedicalDisclaimerBanner(),
               const SizedBox(height: 24),
             ],
           ),
