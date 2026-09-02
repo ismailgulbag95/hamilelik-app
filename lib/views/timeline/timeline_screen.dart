@@ -9,6 +9,8 @@ import '../../services/database_helper.dart';
 import '../../utils/date_utils.dart';
 import '../journal/widgets/journal_entry_card.dart';
 import '../journal/new_entry_screen.dart';
+import '../weekly_panel/widgets/ad_reward_dialog.dart';
+import '../widgets/clay_native_ad_card.dart';
 
 enum TimelineFilter { all, diaries, steps, waterCaffeine, weight }
 
@@ -187,11 +189,22 @@ class _TimelineScreenState extends State<TimelineScreen> {
             children: [
               // 1. Genel İstatistik Hero Kartı
               _buildOverallSummaryCard(),
-              const SizedBox(height: 16),
+              const SizedBox(height: 10),
+
+              // Hekim Klinik Raporu (Ödüllü Reklam ile Oluşturma)
+              _buildDoctorReportAction(),
+              const SizedBox(height: 14),
 
               // 2. Filtre Butonları (Chips)
               _buildFilterChips(),
-              const SizedBox(height: 18),
+              const SizedBox(height: 10),
+
+              // Sponsorlu Destekçi Native Ad Kartı
+              const ClayNativeAdCard(
+                cardColor: Color(0xFFD6E4F0),
+                icon: Icons.health_and_safety_rounded,
+              ),
+              const SizedBox(height: 14),
 
               // 3. Zaman Tüneli Akışı
               if (filtered.isEmpty)
@@ -291,6 +304,108 @@ class _TimelineScreenState extends State<TimelineScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  /// Hekim Klinik Raporu (Ödüllü Reklam ile Oluşturma)
+  Widget _buildDoctorReportAction() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      decoration: ClayTheme.clayDecoration(
+        color: AppColors.clayMint,
+        borderRadius: 20,
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 44,
+            height: 44,
+            decoration: ClayTheme.concaveDecoration(
+              color: Colors.white,
+              borderRadius: 14,
+            ),
+            child: const Center(
+              child: Icon(Icons.picture_as_pdf_rounded, color: Color(0xFF2E6135), size: 24),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'timeline_pdf_report_title'.tr(),
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w900,
+                    color: Color(0xFF2E6135),
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  'timeline_pdf_report_sub'.tr(),
+                  style: const TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF4A6B50),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+          ClayButton(
+            color: Colors.white,
+            height: 36,
+            borderRadius: 12,
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            onPressed: _openDoctorReportWithReward,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.play_circle_fill_rounded, color: Color(0xFF2E6135), size: 16),
+                const SizedBox(width: 4),
+                Text(
+                  'timeline_pdf_report_btn'.tr(),
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w900,
+                    color: Color(0xFF2E6135),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _openDoctorReportWithReward() {
+    AdRewardDialog.show(
+      context: context,
+      title: 'timeline_pdf_report_title'.tr(),
+      subtitle: 'timeline_pdf_report_sub'.tr(),
+      unlockTargetName: 'timeline_pdf_report_title'.tr(),
+      onRewardEarned: () {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                const Icon(Icons.check_circle_rounded, color: Colors.white, size: 20),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text('timeline_pdf_success_desc'.tr()),
+                ),
+              ],
+            ),
+            backgroundColor: AppColors.successGreen,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          ),
+        );
+      },
     );
   }
 

@@ -4,6 +4,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/clay_theme.dart';
 import '../../../models/diary_model.dart';
 import '../../../services/ffmpeg_video_service.dart';
+import '../../weekly_panel/widgets/ad_reward_dialog.dart';
 
 /// FFmpeg Yolculuk Videosu Render Diyalogu
 class VideoRendererDialog extends StatefulWidget {
@@ -19,6 +20,18 @@ class _VideoRendererDialogState extends State<VideoRendererDialog> {
   bool _isRendering = false;
   double _progress = 0.0;
   bool _isFinished = false;
+
+  void _requestRenderWithReward() {
+    AdRewardDialog.show(
+      context: context,
+      title: 'video_reward_unlock_title'.tr(),
+      subtitle: 'video_reward_unlock_sub'.tr(),
+      unlockTargetName: 'timelapse_story_title'.tr(),
+      onRewardEarned: () {
+        _startRender();
+      },
+    );
+  }
 
   void _startRender() {
     setState(() {
@@ -153,7 +166,7 @@ class _VideoRendererDialogState extends State<VideoRendererDialog> {
                 Expanded(
                   child: ClayButton(
                     color: _isFinished ? AppColors.clayMint : AppColors.clayPeach,
-                    onPressed: _isRendering ? null : (_isFinished ? null : _startRender),
+                    onPressed: _isRendering ? null : (_isFinished ? null : _requestRenderWithReward),
                     child: Text(
                       _isFinished ? 'video_ready'.tr() : 'video_start_render'.tr(),
                       style: const TextStyle(

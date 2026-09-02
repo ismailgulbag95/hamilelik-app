@@ -570,5 +570,21 @@
   "legal_info_tooltip": "Legal & Medical Notice",
   "disclaimer_bp_fever": "Blood pressure and temperature records are for personal logging. Consult your physician for abnormal or concerning readings.",
   "disclaimer_kick_counter": "Kick counter is intended for fetal movement awareness. Contact your doctor immediately if you notice a significant decrease in movements.",
-  "onboarding_disclaimer_notice": "By using the app, you acknowledge and agree to the Medical Disclaimer & Legal Terms."
+  "onboarding_disclaimer_notice": "By using the app, you acknowledge and agree to the Medical Disclaimer & Legal Terms.",
+  "ad_native_sponsor_badge": "Sponsored Partner",
+  "ad_sponsored_info": "This content is a partner announcement that helps keep Aura free for everyone.",
+  "ad_thank_support": "Thank you for supporting us! Redirecting to partner details.",
+  "ad_native_title_1": "Aura Baby Care & Organic Nutrition Guide",
+  "ad_native_desc_1": "Discover expert-approved organic nutrition and gentle care tips for pregnancy and postpartum.",
+  "ad_native_btn_1": "Explore",
+  "ad_native_title_2": "Mom & Baby Sleep & Massage Therapy",
+  "ad_native_desc_2": "Doctor-recommended relaxation and stretches for back comfort and restful pregnancy sleep.",
+  "ad_native_btn_2": "Discover",
+  "timeline_pdf_report_title": "Clinical Summary Report for Doctor",
+  "timeline_pdf_report_sub": "Generate a concise, printable clinical report of blood pressure, water, kicks, and vitals.",
+  "timeline_pdf_report_btn": "Generate PDF Report (Rewarded)",
+  "timeline_pdf_success_title": "Clinical Report Ready",
+  "timeline_pdf_success_desc": "Printable clinical summary for your doctor consultation was created successfully.",
+  "video_reward_unlock_title": "Generate HD Time-Lapse Video",
+  "video_reward_unlock_sub": "Watch a short ad to render your high-resolution pregnancy journey video with lullaby music."
 }

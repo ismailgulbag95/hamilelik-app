@@ -570,5 +570,21 @@
   "legal_info_tooltip": "Yasal & Tıbbi Bilgilendirme",
   "disclaimer_bp_fever": "Tansiyon ve ateş ölçüm kayıtları kişisel izlem içindir. Yüksek veya beklenmeyen değerlerde hekiminize başvurunuz.",
   "disclaimer_kick_counter": "Tekme sayacı fetal hareket farkındalığı içindir. Hareketlerde belirgin azalma hissederseniz derhal doktorunuza başvurunuz.",
-  "onboarding_disclaimer_notice": "Uygulamayı kullanarak Tıbbi Sorumluluk Reddi ve Bilgilendirme şartlarını kabul etmiş sayılırsınız."
+  "onboarding_disclaimer_notice": "Uygulamayı kullanarak Tıbbi Sorumluluk Reddi ve Bilgilendirme şartlarını kabul etmiş sayılırsınız.",
+  "ad_native_sponsor_badge": "Sponsorlu Destekçi",
+  "ad_sponsored_info": "Bu içerik Aura'yı ücretsiz sunmamızı sağlayan destekçi sponsor duyurusudur.",
+  "ad_thank_support": "Desteğiniz için teşekkürler! İçerik sayfasına yönlendiriliyorsunuz.",
+  "ad_native_title_1": "Aura Bebek Bakım ve Organik Beslenme Rehberi",
+  "ad_native_desc_1": "Hamilelik ve lohusalık dönemi için uzman onaylı organik vitamin ve bakım önerilerini keşfedin.",
+  "ad_native_btn_1": "İncele",
+  "ad_native_title_2": "Anne & Bebek Uyku ve Masaj Terapileri",
+  "ad_native_desc_2": "Gebelikte bel ağrısı ve rahat uyku için hekim tavsiyeli rahatlama egzersizleri.",
+  "ad_native_btn_2": "Keşfet",
+  "timeline_pdf_report_title": "Hekim İçin Klinik Özet Raporu",
+  "timeline_pdf_report_sub": "Tansiyon, su, kilo ve tekmelerinizin tek sayfalık klinik özet çıktısını hazırlayın.",
+  "timeline_pdf_report_btn": "PDF Raporu Oluştur (Ödüllü)",
+  "timeline_pdf_success_title": "Klinik Rapor Hazır",
+  "timeline_pdf_success_desc": "Doktor randevunuz için yazdırılabilir klinik sağlık özeti başarıyla oluşturuldu.",
+  "video_reward_unlock_title": "HD Time-Lapse Video Oluştur",
+  "video_reward_unlock_sub": "Kısa bir tanıtım izleyerek yüksek çözünürlüklü romantik anı videonuzu hazırlayın."
 }

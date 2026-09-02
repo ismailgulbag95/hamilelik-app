@@ -9,6 +9,7 @@ import 'widgets/baby_growth_card.dart';
 import 'widgets/medical_tests_checklist_card.dart';
 import 'widgets/ad_reward_dialog.dart';
 import '../widgets/medical_disclaimer_sheet.dart';
+import '../widgets/clay_native_ad_card.dart';
 
 /// Hafta Hafta Tıbbi Bilgilendirme ve Test Takvimi Ekranı
 class WeeklyPanelScreen extends StatefulWidget {
@@ -144,6 +145,13 @@ class _WeeklyPanelScreenState extends State<WeeklyPanelScreen> {
                       week: _controller.selectedWeek,
                       weekData: data,
                       babyDisplayName: babyDisplayName,
+                    ),
+                    const SizedBox(height: 12),
+
+                    // Kil Temalı Yerel Gelişmiş Reklam Kartı (Sponsorlu Destekçi)
+                    const ClayNativeAdCard(
+                      cardColor: Color(0xFFFEE6E0),
+                      icon: Icons.spa_rounded,
                     ),
                     const SizedBox(height: 16),
 
