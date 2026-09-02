@@ -427,6 +427,7 @@
   "timeline_stat_diaries_sub": "Kaydedilen günlük",
   "timeline_stat_audio": "Sesli Mektup",
   "timeline_stat_audio_sub": "Bebeğe özel kayıt",
+  "timeline_stat_count": "{} Adet",
   "filter_all": "Tümü",
   "filter_diaries": "Anılar & Sesler",
   "filter_steps": "Yürüyüş & Adım",

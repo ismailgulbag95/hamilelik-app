@@ -427,6 +427,7 @@
   "timeline_stat_diaries_sub": "Recorded memories",
   "timeline_stat_audio": "Voice Letters",
   "timeline_stat_audio_sub": "Special for baby",
+  "timeline_stat_count": "{} Entries",
   "filter_all": "All",
   "filter_diaries": "Memories & Audio",
   "filter_steps": "Walking & Steps",
