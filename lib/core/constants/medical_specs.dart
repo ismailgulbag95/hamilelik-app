@@ -7,46 +7,46 @@ class PregnancyMedicalSpecs {
   static const double emergencyFeverCelsius = 38.0;
 
   /// VKİ Kilo Alım Rehberi (Institute of Medicine - IOM Standartları)
-  static const Map<String, Map<String, dynamic>> vkiWeightGainGuidelines = {
+  static Map<String, Map<String, dynamic>> get vkiWeightGainGuidelines => {
     'Underweight': {
-      'category_tr': 'Zayıf (VKİ < 18.5)',
+      'category_tr': 'vki_underweight_cat'.tr(),
       'range': '12.5 - 18.0 kg',
       'min_kg': 12.5,
       'max_kg': 18.0,
       'weekly': 0.51,
-      'weekly_desc': 'Haftalık İdeal Artış: ~0.51 kg'
+      'weekly_desc': 'vki_underweight_weekly'.tr(),
     },
     'Normal': {
-      'category_tr': 'Normal (VKİ 18.5 - 24.9)',
+      'category_tr': 'vki_normal_cat'.tr(),
       'range': '11.5 - 16.0 kg',
       'min_kg': 11.5,
       'max_kg': 16.0,
       'weekly': 0.42,
-      'weekly_desc': 'Haftalık İdeal Artış: ~0.42 kg'
+      'weekly_desc': 'vki_normal_weekly'.tr(),
     },
     'Overweight': {
-      'category_tr': 'Kilolu (VKİ 25.0 - 29.9)',
+      'category_tr': 'vki_overweight_cat'.tr(),
       'range': '7.0 - 11.5 kg',
       'min_kg': 7.0,
       'max_kg': 11.5,
       'weekly': 0.28,
-      'weekly_desc': 'Haftalık İdeal Artış: ~0.28 kg'
+      'weekly_desc': 'vki_overweight_weekly'.tr(),
     },
     'Obese': {
-      'category_tr': 'Obez (VKİ ≥ 30.0)',
+      'category_tr': 'vki_obese_cat'.tr(),
       'range': '5.0 - 9.0 kg',
       'min_kg': 5.0,
       'max_kg': 9.0,
       'weekly': 0.22,
-      'weekly_desc': 'Haftalık İdeal Artış: ~0.22 kg'
+      'weekly_desc': 'vki_obese_weekly'.tr(),
     }
   };
 
   /// Trimester Kalori & Enerji Gereksinimleri
-  static const Map<int, String> trimesterEnergyRequirements = {
-    1: '1. Trimester (1-13. Haftalar): +0 kkal/gün ek enerji. Odak: Folik asit (400-800 mcg/gün) ve bulantı yönetimi.',
-    2: '2. Trimester (14-27. Haftalar): +340 kkal/gün ek enerji. Odak: Protein, kalsiyum, demir ve omega-3 alımı.',
-    3: '3. Trimester (28-40. Haftalar): +452 kkal/gün ek enerji. Odak: Hızlı bebek büyümesi, protein ve ödem riski için tuz kısıtlaması.'
+  static Map<int, String> get trimesterEnergyRequirements => {
+    1: 'nutrition_t1_energy'.tr(),
+    2: 'nutrition_t2_energy'.tr(),
+    3: 'nutrition_t3_energy'.tr(),
   };
 
   /// Hafta Hafta Kritik Tıbbi Tarama ve Test Takvimi

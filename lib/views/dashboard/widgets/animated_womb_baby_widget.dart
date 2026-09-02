@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
-import '../../../core/theme/clay_theme.dart';
 
 /// Aura Pregnancy - Anne Karnında Hafif Hareketli Bebek Animasyonu Widget'ı
 class AnimatedWombBabyWidget extends StatefulWidget {

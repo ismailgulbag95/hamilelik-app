@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/constants/app_colors.dart';
-import '../../../core/theme/clay_theme.dart';
 import '../../../services/media_service.dart';
 import '../../../services/video_story_generator_service.dart';
 

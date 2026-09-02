@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
+import '../../../core/theme/inset_box_shadow.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/theme/clay_theme.dart';
 import '../../../core/widgets/fruit_3d_widget.dart';
 import '../../../core/constants/weekly_medical_data.dart';
 import 'ad_reward_dialog.dart';
@@ -141,16 +143,9 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-      decoration: BoxDecoration(
-        color: const Color(0xFFFDF7F4),
-        borderRadius: BorderRadius.circular(34),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF9E7B83).withValues(alpha: 0.08),
-            offset: const Offset(0, 16),
-            blurRadius: 36,
-          ),
-        ],
+      decoration: ClayTheme.clayDecoration(
+        color: AppColors.clayCardSurface,
+        borderRadius: 34,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,7 +164,7 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
                       style: GoogleFonts.nunito(
                         fontSize: 20,
                         fontWeight: FontWeight.w900,
-                        color: const Color(0xFF2D232E),
+                        color: AppColors.primaryDark,
                         letterSpacing: -0.4,
                       ),
                     ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
-import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
+import '../../../core/theme/inset_box_shadow.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/clay_theme.dart';
@@ -187,7 +187,7 @@ class _EditEmergencyCardSheetState extends State<EditEmergencyCardSheet> {
                   _buildTextField(
                     controller: _nameController,
                     label: 'medical_card_patient'.tr(),
-                    hint: 'Örn: Zeynep Çelik',
+                    hint: 'emergency_hint_patient'.tr(),
                     icon: Icons.badge_rounded,
                   ),
                   const SizedBox(height: 10),
@@ -231,21 +231,21 @@ class _EditEmergencyCardSheetState extends State<EditEmergencyCardSheet> {
                   _buildTextField(
                     controller: _allergiesController,
                     label: 'medical_card_allergies'.tr(),
-                    hint: 'Örn: Penisilin, Fıstık (Yoksa Yok yazınız)',
+                    hint: 'emergency_hint_allergies'.tr(),
                     icon: Icons.warning_amber_rounded,
                   ),
                   const SizedBox(height: 10),
                   _buildTextField(
                     controller: _chronicController,
                     label: 'medical_card_chronic'.tr(),
-                    hint: 'Örn: Astım, Hipotiroidi, Hipertansiyon',
+                    hint: 'emergency_hint_chronic'.tr(),
                     icon: Icons.favorite_border_rounded,
                   ),
                   const SizedBox(height: 10),
                   _buildTextField(
                     controller: _medicationsController,
                     label: 'medical_card_meds'.tr(),
-                    hint: 'Örn: Folik Asit 400 mcg, Demir, Tiroid ilacı',
+                    hint: 'emergency_hint_meds'.tr(),
                     icon: Icons.medication_rounded,
                   ),
                   const SizedBox(height: 16),
@@ -254,14 +254,14 @@ class _EditEmergencyCardSheetState extends State<EditEmergencyCardSheet> {
                   _buildTextField(
                     controller: _doctorNameController,
                     label: 'medical_card_doctor'.tr(),
-                    hint: 'Örn: Uzm. Dr. Zeynep Kaya',
+                    hint: 'emergency_hint_doctor'.tr(),
                     icon: Icons.person_pin_rounded,
                   ),
                   const SizedBox(height: 10),
                   _buildTextField(
                     controller: _doctorPhoneController,
                     label: 'medical_card_doc_phone'.tr(),
-                    hint: 'Örn: +90 532 111 22 33',
+                    hint: 'emergency_hint_doc_phone'.tr(),
                     icon: Icons.phone_rounded,
                     keyboardType: TextInputType.phone,
                   ),
@@ -269,7 +269,7 @@ class _EditEmergencyCardSheetState extends State<EditEmergencyCardSheet> {
                   _buildTextField(
                     controller: _hospitalController,
                     label: 'medical_card_hospital'.tr(),
-                    hint: 'Örn: Merkez Kadın Doğum & Çocuk Hastanesi',
+                    hint: 'emergency_hint_hospital'.tr(),
                     icon: Icons.local_hospital_rounded,
                   ),
                   const SizedBox(height: 16),
@@ -278,14 +278,14 @@ class _EditEmergencyCardSheetState extends State<EditEmergencyCardSheet> {
                   _buildTextField(
                     controller: _contactNameController,
                     label: 'emergency_contact_name_label'.tr(),
-                    hint: 'Örn: Ahmet Yılmaz (Eş)',
+                    hint: 'emergency_hint_contact_name'.tr(),
                     icon: Icons.account_circle_rounded,
                   ),
                   const SizedBox(height: 10),
                   _buildTextField(
                     controller: _contactPhoneController,
                     label: 'emergency_contact_phone_label'.tr(),
-                    hint: 'Örn: +90 555 123 45 67',
+                    hint: 'emergency_hint_contact_phone'.tr(),
                     icon: Icons.phone_android_rounded,
                     keyboardType: TextInputType.phone,
                   ),
@@ -295,7 +295,7 @@ class _EditEmergencyCardSheetState extends State<EditEmergencyCardSheet> {
                   _buildTextField(
                     controller: _symptomsController,
                     label: 'emergency_symptoms_label'.tr(),
-                    hint: 'Örn: Tansiyon 110/70, kan şekeri normal, alerjik reaksiyon yok',
+                    hint: 'emergency_hint_symptoms'.tr(),
                     icon: Icons.description_rounded,
                     maxLines: 2,
                   ),

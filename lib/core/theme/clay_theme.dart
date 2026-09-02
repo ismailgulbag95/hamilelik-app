@@ -77,6 +77,36 @@ class ClayTheme {
     );
   }
 
+  /// İçbükey / Oyuk (Concave / Inset) Claymorphism Dekorasyonu
+  /// Metin girişleri, çukur rozetler ve iç kutular için kullanılır
+  static BoxDecoration concaveDecoration({
+    required Color color,
+    double borderRadius = defaultRadius,
+    Border? border,
+  }) {
+    return BoxDecoration(
+      color: color,
+      borderRadius: BorderRadius.circular(borderRadius),
+      border: border,
+      boxShadow: [
+        // 1. Üst & Sol İç Çukur Gölgesi (Derinlik hissi)
+        BoxShadow(
+          color: Colors.black.withValues(alpha: 0.12),
+          offset: const Offset(0, 4),
+          blurRadius: 8,
+          inset: true,
+        ),
+        // 2. Alt & Sağ İç Işık (Çukur kenar yansıması)
+        BoxShadow(
+          color: Colors.white.withValues(alpha: 0.85),
+          offset: const Offset(0, -3),
+          blurRadius: 6,
+          inset: true,
+        ),
+      ],
+    );
+  }
+
   /// ThemeData Yapılandırması
   static ThemeData get themeData {
     return ThemeData(

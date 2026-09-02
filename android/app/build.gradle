@@ -23,7 +23,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.example.aura_pregnancy"
+    namespace "com.balax.pregnancy"
     compileSdkVersion 36
     ndkVersion "28.2.13676358"
 
@@ -37,7 +37,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.aura_pregnancy"
+        applicationId "com.balax.pregnancy"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion 36
         versionCode flutterVersionCode.toInteger()

@@ -96,16 +96,9 @@ class _AdRewardDialogState extends State<AdRewardDialog> with SingleTickerProvid
       insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
       child: Container(
         padding: const EdgeInsets.all(22),
-        decoration: BoxDecoration(
-          color: const Color(0xFFFDF7F4),
-          borderRadius: BorderRadius.circular(32),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFF9E7B83).withValues(alpha: 0.25),
-              offset: const Offset(0, 16),
-              blurRadius: 36,
-            ),
-          ],
+        decoration: ClayTheme.clayDecoration(
+          color: AppColors.clayCardSurface,
+          borderRadius: 32,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -118,7 +111,7 @@ class _AdRewardDialogState extends State<AdRewardDialog> with SingleTickerProvid
                   width: 64,
                   height: 64,
                   decoration: ClayTheme.clayDecoration(
-                    color: const Color(0xFFFEE6E0),
+                    color: AppColors.clayRose,
                     borderRadius: 22,
                   ),
                   child: const Center(
@@ -134,7 +127,7 @@ class _AdRewardDialogState extends State<AdRewardDialog> with SingleTickerProvid
                 style: GoogleFonts.nunito(
                   fontSize: 19,
                   fontWeight: FontWeight.w900,
-                  color: const Color(0xFF2D232E),
+                  color: AppColors.primaryDark,
                 ),
               ),
               const SizedBox(height: 8),
@@ -145,7 +138,7 @@ class _AdRewardDialogState extends State<AdRewardDialog> with SingleTickerProvid
                 style: GoogleFonts.quicksand(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  color: const Color(0xFF7A6E78),
+                  color: AppColors.textSecondary,
                   height: 1.4,
                 ),
               ),
@@ -153,9 +146,9 @@ class _AdRewardDialogState extends State<AdRewardDialog> with SingleTickerProvid
 
               Container(
                 padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFD4EBD6),
-                  borderRadius: BorderRadius.circular(18),
+                decoration: ClayTheme.clayDecoration(
+                  color: AppColors.clayMint,
+                  borderRadius: 18,
                 ),
                 child: Row(
                   children: [
@@ -241,7 +234,7 @@ class _AdRewardDialogState extends State<AdRewardDialog> with SingleTickerProvid
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
-                        '$_countdown ' + 'ad_seconds_short'.tr(),
+                        '$_countdown ${'ad_seconds_short'.tr()}',
                         style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w900),
                       ),
                     ),

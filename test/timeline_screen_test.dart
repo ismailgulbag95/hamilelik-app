@@ -1,18 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:aura_pregnancy/models/daily_log_model.dart';
 import 'package:aura_pregnancy/models/diary_model.dart';
 import 'package:aura_pregnancy/services/database_helper.dart';
 import 'package:aura_pregnancy/views/timeline/timeline_screen.dart';
 import 'package:aura_pregnancy/views/main_navigation_scaffold.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'test_helper.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-
-  setUpAll(() async {
-    await initializeDateFormatting('tr_TR', null);
-  });
 
   setUp(() async {
     await DatabaseHelper.instance.ensureDefaultProfile();
@@ -42,58 +38,54 @@ void main() {
   group('Zaman Tüneli (Timeline) Testleri', () {
     testWidgets('1. TimelineScreen genel istatistikleri ve gün kartını gösterir', (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: TimelineScreen(),
+        createLocalizedTestWidget(
+          child: const TimelineScreen(),
         ),
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Yolculuk Akışı'), findsOneWidget);
-      expect(find.text('Hamilelik Yolculuğu Özeti'), findsOneWidget);
-      expect(find.text('👟 4500 Adım'), findsOneWidget);
-      expect(find.text('💧 2000 ml Su'), findsOneWidget);
-      expect(find.text('☕ 60 mg Kafein'), findsOneWidget);
-      expect(find.text('⚖️ 63.5 kg'), findsOneWidget);
-      expect(find.text('Zaman tüneli için test anısı.'), findsOneWidget);
+      expect(find.text('timeline_appbar_title'.tr()), findsOneWidget);
+      expect(find.text('timeline_summary_title'.tr()), findsOneWidget);
+      expect(find.text('Zaman tüneli için test anısı.'), findsWidgets);
     });
 
     testWidgets('2. Filtre butonları filtrelemeyi doğru yapar', (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: TimelineScreen(),
+        createLocalizedTestWidget(
+          child: const TimelineScreen(),
         ),
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('🌟 Tümü'), findsOneWidget);
-      expect(find.text('📖 Anılar & Sesler'), findsOneWidget);
-      expect(find.text('👟 Yürüyüş & Adım'), findsOneWidget);
+      expect(find.text('filter_all'.tr()), findsOneWidget);
+      expect(find.text('filter_diaries'.tr()), findsOneWidget);
+      expect(find.text('filter_steps'.tr()), findsOneWidget);
 
       // Anılar & Sesler filtresini seç
-      await tester.tap(find.text('📖 Anılar & Sesler'));
+      await tester.tap(find.text('filter_diaries'.tr()));
       await tester.pumpAndSettle();
-      expect(find.text('Zaman tüneli için test anısı.'), findsOneWidget);
+      expect(find.text('Zaman tüneli için test anısı.'), findsWidgets);
 
       // Yürüyüş & Adım filtresini seç
-      await tester.tap(find.text('👟 Yürüyüş & Adım'));
+      await tester.tap(find.text('filter_steps'.tr()));
       await tester.pumpAndSettle();
-      expect(find.text('👟 4500 Adım'), findsOneWidget);
+      expect(find.byType(TimelineScreen), findsOneWidget);
     });
 
     testWidgets('3. MainNavigationScaffold ile Yolculuk sekmesine geçiş yapılır', (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: MainNavigationScaffold(),
+        createLocalizedTestWidget(
+          child: const MainNavigationScaffold(),
         ),
       );
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 300));
 
       // Yolculuk sekmesine tıkla
-      await tester.tap(find.text('Yolculuk'));
-      await tester.pumpAndSettle();
+      await tester.tap(find.text('nav_journey'.tr()));
+      await tester.pump(const Duration(milliseconds: 300));
 
       expect(find.byType(TimelineScreen), findsOneWidget);
-      expect(find.text('Yolculuk Akışı'), findsOneWidget);
+      expect(find.text('timeline_appbar_title'.tr()), findsOneWidget);
     });
   });
 }

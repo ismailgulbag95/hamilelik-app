@@ -52,19 +52,10 @@ class _ClayAudioPlayerState extends State<ClayAudioPlayer> {
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-      decoration: BoxDecoration(
-        color: isThisPlaying ? AppColors.clayMint : const Color(0xFFFBF4F8),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: isThisPlaying ? AppColors.successGreen.withValues(alpha: 0.3) : AppColors.primaryPink.withValues(alpha: 0.2),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
+      decoration: ClayTheme.clayDecoration(
+        color: isThisPlaying ? AppColors.clayMint : AppColors.clayLavender,
+        borderRadius: 20,
+        isPressed: isThisPlaying,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_colors.dart';
 
 /// Aura Pregnancy - 6 Evreli Gerçekçi Rahim İçi (In-Utero) Fetus Fotoğrafı ve Canlı Animasyon
 class RealWombFetusWidget extends StatefulWidget {

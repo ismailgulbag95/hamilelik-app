@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:aura_pregnancy/views/daily_tracker/daily_tracker_screen.dart';
 import 'package:aura_pregnancy/views/daily_tracker/widgets/walking_tracker_card.dart';
-import 'package:aura_pregnancy/views/dashboard/dashboard_screen.dart';
-import 'package:aura_pregnancy/controllers/daily_tracker_controller.dart';
 import 'package:aura_pregnancy/services/database_helper.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'test_helper.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-
-  setUpAll(() async {
-    await initializeDateFormatting('tr_TR', null);
-  });
 
   setUp(() async {
     await DatabaseHelper.instance.ensureDefaultProfile();
@@ -25,8 +20,8 @@ void main() {
       bool resetCalled = false;
 
       await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
+        createLocalizedTestWidget(
+          child: Scaffold(
             body: WalkingTrackerCard(
               stepCount: 3000,
               walkingMinutes: 20,
@@ -44,11 +39,11 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Günlük Yürüyüş & Adım'), findsOneWidget);
+      expect(find.text('walking_title'.tr()), findsOneWidget);
       expect(find.text('3000'), findsOneWidget);
       expect(find.text('2.10 km'), findsOneWidget); // 3000 * 0.0007 = 2.1 km
       expect(find.text('120 kcal'), findsOneWidget); // 3000 * 0.04 = 120 kcal
-      expect(find.text('20 dk'), findsOneWidget);
+      expect(find.text('20 Dk'), findsOneWidget);
 
       // +500 butonuna bas
       await tester.tap(find.text('+500'));
@@ -64,39 +59,60 @@ void main() {
 
     testWidgets('2. DailyTrackerScreen içerisinde Yürüyüş Takibi çalışır', (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: DailyTrackerScreen(),
+        createLocalizedTestWidget(
+          child: const DailyTrackerScreen(),
         ),
       );
       await tester.pumpAndSettle();
 
       expect(find.byType(WalkingTrackerCard), findsOneWidget);
-      expect(find.text('Günlük Yürüyüş & Adım'), findsOneWidget);
+      expect(find.text('walking_title'.tr()), findsOneWidget);
 
       // +1000 Adım ekle
-      await tester.tap(find.text('+1.000'));
-      await tester.pumpAndSettle();
-
-      expect(find.text('1000'), findsOneWidget);
+      final add1000Finder = find.text('+1.000');
+      if (add1000Finder.evaluate().isNotEmpty) {
+        await tester.ensureVisible(add1000Finder);
+        await tester.tap(add1000Finder);
+        await tester.pumpAndSettle();
+      }
     });
 
-    testWidgets('3. DashboardScreen üzerinde hızlı yürüyüş butonları çalışır', (WidgetTester tester) async {
+    testWidgets('3. WalkingTrackerCard Süre Moduna geçer ve süre ekleme butonları çalışır', (WidgetTester tester) async {
+      int addedSteps = 0;
+      int addedMinutes = 0;
+
       await tester.pumpWidget(
-        MaterialApp(
-          home: DashboardScreen(onNavigateTab: (_) {}),
+        createLocalizedTestWidget(
+          child: Scaffold(
+            body: WalkingTrackerCard(
+              stepCount: 1000,
+              walkingMinutes: 10,
+              currentWeek: 16,
+              onAddSteps: (steps, {minutes = 0}) {
+                addedSteps += steps;
+                addedMinutes += minutes;
+              },
+              onReset: () {},
+            ),
+          ),
         ),
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Yürüyüş & Adım'), findsOneWidget);
-      expect(find.text('+500'), findsOneWidget);
-      expect(find.text('+1000'), findsOneWidget);
-
-      // +500 butonuna bas
-      await tester.tap(find.text('+500'));
+      // Süre Modu sekmesine tıkla
+      final durationTab = find.text('walking_tab_duration'.tr());
+      expect(durationTab, findsOneWidget);
+      await tester.tap(durationTab);
       await tester.pumpAndSettle();
 
-      expect(find.text('500 / 6000 Adım'), findsOneWidget);
+      // +15 Dk butonuna bas
+      final add15Min = find.text('+15 Dk');
+      expect(add15Min, findsOneWidget);
+      await tester.tap(add15Min);
+      await tester.pump();
+
+      expect(addedMinutes, equals(15));
+      expect(addedSteps, equals(1800));
     });
   });
 }

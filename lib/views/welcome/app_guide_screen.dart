@@ -141,9 +141,13 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: TextButton(
+            padding: const EdgeInsets.only(right: 16, top: 8, bottom: 8),
+            child: ClayButton(
               onPressed: _finishGuide,
+              color: AppColors.clayRose,
+              height: 36,
+              borderRadius: 14,
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -152,11 +156,11 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
                     style: const TextStyle(
                       color: AppColors.primaryPink,
                       fontWeight: FontWeight.w800,
-                      fontSize: 14,
+                      fontSize: 13,
                     ),
                   ),
                   const SizedBox(width: 4),
-                  const Icon(Icons.arrow_forward_rounded, color: AppColors.primaryPink, size: 16),
+                  const Icon(Icons.arrow_forward_rounded, color: AppColors.primaryPink, size: 14),
                 ],
               ),
             ),

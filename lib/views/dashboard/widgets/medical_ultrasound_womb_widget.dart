@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_colors.dart';
 
 /// Aura Pregnancy - Gerçekçi Canlı Tıbbi Ultrason & Fetal Sonografi Simülatörü
 class MedicalUltrasoundWombWidget extends StatefulWidget {

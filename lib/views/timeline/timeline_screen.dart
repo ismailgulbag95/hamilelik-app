@@ -211,9 +211,10 @@ class _TimelineScreenState extends State<TimelineScreen> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: AppColors.primaryPink,
-        elevation: 4,
+      floatingActionButton: ClayButton(
+        color: AppColors.primaryPink,
+        height: 48,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         onPressed: () async {
           await Navigator.push(
             context,
@@ -229,10 +230,16 @@ class _TimelineScreenState extends State<TimelineScreen> {
           );
           _loadTimelineData();
         },
-        icon: const Icon(Icons.edit_note_rounded, color: Colors.white),
-        label: Text(
-          'journal_write_memory'.tr(),
-          style: const TextStyle(fontWeight: FontWeight.w800, color: Colors.white),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.edit_note_rounded, color: Colors.white, size: 20),
+            const SizedBox(width: 8),
+            Text(
+              'journal_write_memory'.tr(),
+              style: const TextStyle(fontWeight: FontWeight.w800, color: Colors.white, fontSize: 14),
+            ),
+          ],
         ),
       ),
     );
@@ -290,23 +297,23 @@ class _TimelineScreenState extends State<TimelineScreen> {
   Widget _buildSummaryBox(String title, String mainValue, String subValue, IconData icon, Color color) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.85),
-        borderRadius: BorderRadius.circular(16),
+      decoration: ClayTheme.clayDecoration(
+        color: color,
+        borderRadius: 16,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(icon, size: 13, color: AppColors.textSecondary),
+              Icon(icon, size: 14, color: AppColors.primaryDark),
               const SizedBox(width: 4),
               Text(title, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: AppColors.textSecondary)),
             ],
           ),
           const SizedBox(height: 4),
           Text(mainValue, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: AppColors.primaryDark)),
-          Text(subValue, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textMuted)),
+          Text(subValue, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textSecondary)),
         ],
       ),
     );
@@ -337,28 +344,22 @@ class _TimelineScreenState extends State<TimelineScreen> {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-          decoration: BoxDecoration(
-            color: isSelected ? AppColors.primaryPink : Colors.white,
-            borderRadius: BorderRadius.circular(18),
-            boxShadow: [
-              BoxShadow(
-                color: isSelected ? AppColors.primaryPink.withValues(alpha: 0.3) : Colors.black.withValues(alpha: 0.04),
-                blurRadius: 6,
-                offset: const Offset(0, 2),
-              ),
-            ],
+          decoration: ClayTheme.clayDecoration(
+            color: isSelected ? AppColors.clayRose : Colors.white,
+            borderRadius: 18,
+            isPressed: isSelected,
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, size: 14, color: isSelected ? Colors.white : AppColors.textSecondary),
+              Icon(icon, size: 14, color: isSelected ? AppColors.primaryPink : AppColors.textSecondary),
               const SizedBox(width: 5),
               Text(
                 label,
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w800,
-                  color: isSelected ? Colors.white : AppColors.textPrimary,
+                  color: isSelected ? AppColors.primaryPink : AppColors.textPrimary,
                 ),
               ),
             ],
@@ -539,9 +540,10 @@ class _TimelineScreenState extends State<TimelineScreen> {
   Widget _buildBadgeChip(String label, IconData icon, Color bg, Color textColor) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
+      decoration: ClayTheme.clayDecoration(
         color: bg,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: 14,
+        isPressed: true,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

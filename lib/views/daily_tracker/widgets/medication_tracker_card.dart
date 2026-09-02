@@ -178,7 +178,7 @@ class _MedicationTrackerCardState extends State<MedicationTrackerCard> {
                       const SizedBox(width: 10),
                       Expanded(
                         child: DropdownButtonFormField<String>(
-                          value: selectedCategory,
+                          initialValue: selectedCategory,
                           decoration: InputDecoration(
                             labelText: 'med_category_label'.tr(),
                             filled: true,
@@ -335,19 +335,10 @@ class _MedicationTrackerCardState extends State<MedicationTrackerCard> {
                 return Container(
                   margin: const EdgeInsets.only(bottom: 8),
                   padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                  decoration: BoxDecoration(
+                  decoration: ClayTheme.clayDecoration(
                     color: isTaken ? AppColors.clayMint : Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: isTaken ? AppColors.successGreen.withValues(alpha: 0.3) : Colors.transparent,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.03),
-                        blurRadius: 6,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
+                    borderRadius: 16,
+                    isPressed: isTaken,
                   ),
                   child: Row(
                     children: [

@@ -7,7 +7,6 @@ import '../../core/constants/medical_specs.dart';
 import '../../services/database_helper.dart';
 import '../../services/medical_calculator.dart';
 import '../../models/profile_model.dart';
-import '../../models/daily_log_model.dart';
 import '../../utils/date_utils.dart';
 import 'widgets/profile_edit_sheet.dart';
 import 'widgets/interactive_3d_fetus_widget.dart';

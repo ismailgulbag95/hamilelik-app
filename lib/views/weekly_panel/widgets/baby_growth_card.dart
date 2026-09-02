@@ -19,7 +19,6 @@ class BabyGrowthCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fruitIcon = (weekData['icon'] as IconData?) ?? Icons.eco_rounded;
     final fruitName = weekData['fruit_name'] as String? ?? 'baby_growth_fallback'.tr();
     final length = weekData['length'] as String? ?? '-';
     final weight = weekData['weight'] as String? ?? '-';

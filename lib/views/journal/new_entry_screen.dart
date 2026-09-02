@@ -469,7 +469,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                     ),
                     Switch(
                       value: _isRomanticHighlight,
-                      activeColor: AppColors.primaryPink,
+                      activeThumbColor: AppColors.primaryPink,
                       onChanged: (val) => setState(() => _isRomanticHighlight = val),
                     ),
                   ],

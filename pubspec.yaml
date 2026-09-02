@@ -16,7 +16,6 @@ dependencies:
   path: ^1.8.3
   intl: ^0.20.3
   google_fonts: ^6.1.0
-  flutter_inset_box_shadow: ^1.0.8
   sqflite_common_ffi: ^2.3.4
   image_picker: ^1.1.2
   record: ^7.1.1

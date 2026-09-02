@@ -54,16 +54,10 @@ class _MedicalTestsChecklistCardState extends State<MedicalTestsChecklistCard> {
                 onTap: () => setState(() => _isCompleted = !_isCompleted),
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: _isCompleted ? AppColors.successGreen : Colors.white,
-                    borderRadius: BorderRadius.circular(14),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.08),
-                        blurRadius: 4,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
+                  decoration: ClayTheme.clayDecoration(
+                    color: _isCompleted ? AppColors.clayMint : Colors.white,
+                    borderRadius: 14,
+                    isPressed: _isCompleted,
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -71,7 +65,7 @@ class _MedicalTestsChecklistCardState extends State<MedicalTestsChecklistCard> {
                       Icon(
                         _isCompleted ? Icons.check_circle_rounded : Icons.radio_button_unchecked_rounded,
                         size: 16,
-                        color: _isCompleted ? Colors.white : AppColors.textSecondary,
+                        color: _isCompleted ? AppColors.successGreen : AppColors.textSecondary,
                       ),
                       const SizedBox(width: 4),
                       Text(
@@ -79,7 +73,7 @@ class _MedicalTestsChecklistCardState extends State<MedicalTestsChecklistCard> {
                         style: TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w800,
-                          color: _isCompleted ? Colors.white : AppColors.textPrimary,
+                          color: _isCompleted ? AppColors.successGreen : AppColors.textPrimary,
                         ),
                       ),
                     ],

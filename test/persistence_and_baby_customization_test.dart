@@ -3,11 +3,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:aura_pregnancy/main.dart';
 import 'package:aura_pregnancy/models/profile_model.dart';
+import 'package:aura_pregnancy/models/diary_model.dart';
 import 'package:aura_pregnancy/services/database_helper.dart';
 import 'package:aura_pregnancy/services/debug_seeder_service.dart';
 import 'package:aura_pregnancy/services/video_story_generator_service.dart';
 import 'package:aura_pregnancy/views/main_navigation_scaffold.dart';
 import 'package:aura_pregnancy/views/weekly_panel/widgets/baby_growth_card.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'test_helper.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -116,6 +119,14 @@ void main() {
         babyGender: 'boy',
       );
       await DatabaseHelper.instance.saveProfile(profile);
+      await DatabaseHelper.instance.insertDiary(
+        DiaryModel(
+          pregnancyWeek: 20,
+          date: '2026-08-29',
+          noteText: 'Mehmet bebeğimiz tekmeliyor.',
+          isRomanticHighlight: true,
+        ),
+      );
 
       final frames = await VideoStoryGeneratorService.instance.generateStoryFrames();
       expect(frames, isNotEmpty);
@@ -124,8 +135,8 @@ void main() {
 
     testWidgets('5. BabyGrowthCard bebeğin ismiyle özel hitap render eder', (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
+        createLocalizedTestWidget(
+          child: const Scaffold(
             body: BabyGrowthCard(
               week: 16,
               weekData: {
@@ -143,8 +154,8 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('16. Hafta Mehmet Bebek:'), findsOneWidget);
-      expect(find.text('Mehmet Bebek Gelişim Durumu'), findsOneWidget);
+      expect(find.text('baby_week_name_label'.tr(args: ['16', 'Mehmet Bebek'])), findsOneWidget);
+      expect(find.text('baby_dev_status'.tr(args: ['Mehmet Bebek'])), findsOneWidget);
       expect(find.text('Avokado'), findsOneWidget);
     });
 
@@ -152,11 +163,12 @@ void main() {
       await DatabaseHelper.instance.ensureDefaultProfile();
 
       await tester.pumpWidget(
-        const MaterialApp(
-          home: RootGateScreen(),
+        createLocalizedTestWidget(
+          child: const RootGateScreen(),
         ),
       );
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 300));
+      await tester.pump(const Duration(milliseconds: 300));
 
       expect(find.byType(MainNavigationScaffold), findsOneWidget);
     });

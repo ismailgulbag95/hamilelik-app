@@ -25,7 +25,6 @@ class AudioRecordingSheet extends StatefulWidget {
 class _AudioRecordingSheetState extends State<AudioRecordingSheet> with SingleTickerProviderStateMixin {
   final AudioRecordingService _service = AudioRecordingService.instance;
   late AnimationController _pulseController;
-  bool _isInit = false;
 
   @override
   void initState() {
@@ -41,9 +40,7 @@ class _AudioRecordingSheetState extends State<AudioRecordingSheet> with SingleTi
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final success = await _service.startRecording();
       if (mounted) {
-        setState(() {
-          _isInit = true;
-        });
+        setState(() {});
         if (!success && _service.lastErrorMessage != null) {
           // İzin veya donanım uyarısı
         }
@@ -265,8 +262,10 @@ class _AudioRecordingSheetState extends State<AudioRecordingSheet> with SingleTi
                 child: ClayButton(
                   color: AppColors.clayCardSurface,
                   onPressed: () async {
+                    final nav = Navigator.of(context);
                     await _service.cancelRecording();
-                    if (mounted) Navigator.pop(context);
+                    if (!mounted) return;
+                    nav.pop();
                   },
                   child: Text(
                     'common_cancel'.tr(),
@@ -281,10 +280,10 @@ class _AudioRecordingSheetState extends State<AudioRecordingSheet> with SingleTi
                   child: ClayButton(
                     color: AppColors.clayMint,
                     onPressed: () async {
+                      final nav = Navigator.of(context);
                       final result = await _service.stopRecording();
-                      if (mounted) {
-                        Navigator.pop(context, result);
-                      }
+                      if (!mounted) return;
+                      nav.pop(result);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

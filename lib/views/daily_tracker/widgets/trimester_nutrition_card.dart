@@ -90,9 +90,10 @@ class TrimesterNutritionCard extends StatelessWidget {
           // Kalori Bandı
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.85),
-              borderRadius: BorderRadius.circular(16),
+            decoration: ClayTheme.clayDecoration(
+              color: Colors.white,
+              borderRadius: 16,
+              isPressed: true,
             ),
             child: Row(
               children: [

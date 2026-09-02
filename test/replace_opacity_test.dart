@@ -9,7 +9,7 @@ void main() {
     
     for (final file in files) {
       String content = file.readAsStringSync();
-      if (content.contains('.withOpacity(')) {
+      if (content.contains('.withValues(alpha: ')) {
         content = content.replaceAllMapped(opacityRegex, (match) {
           return '.withValues(alpha: ${match.group(1)})';
         });
@@ -22,7 +22,7 @@ void main() {
     final testFiles = testDir.listSync(recursive: true).whereType<File>().where((f) => f.path.endsWith('.dart'));
     for (final file in testFiles) {
       String content = file.readAsStringSync();
-      if (content.contains('.withOpacity(')) {
+      if (content.contains('.withValues(alpha: ')) {
         content = content.replaceAllMapped(opacityRegex, (match) {
           return '.withValues(alpha: ${match.group(1)})';
         });

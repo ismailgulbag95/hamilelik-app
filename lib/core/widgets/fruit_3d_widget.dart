@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
+import '../theme/clay_theme.dart';
 import '../../services/fruit_asset_sync.dart';
 
 /// Aura Pregnancy - 3D Render Meyve & Sebze Fotoğraf Bileşeni
@@ -36,24 +37,15 @@ class Fruit3DWidget extends StatelessWidget {
     return Container(
       width: size,
       height: size,
-      decoration: BoxDecoration(
-        color: _getFruitBgColor(key),
-        borderRadius: BorderRadius.circular(borderRadius),
-        boxShadow: showShadow
-            ? [
-                BoxShadow(
-                  color: _getFruitShadowColor(key).withValues(alpha: 0.24),
-                  offset: const Offset(0, 8),
-                  blurRadius: 16,
-                ),
-                BoxShadow(
-                  color: Colors.white.withValues(alpha: 0.85),
-                  offset: const Offset(0, -2),
-                  blurRadius: 6,
-                ),
-              ]
-            : null,
-      ),
+      decoration: showShadow
+          ? ClayTheme.clayDecoration(
+              color: _getFruitBgColor(key),
+              borderRadius: borderRadius,
+            )
+          : BoxDecoration(
+              color: _getFruitBgColor(key),
+              borderRadius: BorderRadius.circular(borderRadius),
+            ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(borderRadius),
         child: Image.asset(

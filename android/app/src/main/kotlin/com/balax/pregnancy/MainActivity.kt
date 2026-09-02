@@ -1,4 +1,4 @@
-package com.example.aura_pregnancy
+package com.balax.pregnancy
 
 import io.flutter.embedding.android.FlutterActivity
 

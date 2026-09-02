@@ -246,16 +246,10 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.symmetric(vertical: 10),
-          decoration: BoxDecoration(
+          decoration: ClayTheme.clayDecoration(
             color: isSelected ? activeColor : bgColor,
-            borderRadius: BorderRadius.circular(14),
-            boxShadow: [
-              BoxShadow(
-                color: isSelected ? activeColor.withValues(alpha: 0.3) : Colors.black.withValues(alpha: 0.04),
-                blurRadius: isSelected ? 6 : 2,
-                offset: const Offset(0, 2),
-              ),
-            ],
+            borderRadius: 14,
+            isPressed: isSelected,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

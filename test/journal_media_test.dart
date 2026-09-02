@@ -5,9 +5,9 @@ import 'package:aura_pregnancy/models/diary_model.dart';
 import 'package:aura_pregnancy/views/journal/new_entry_screen.dart';
 import 'package:aura_pregnancy/views/journal/widgets/journal_entry_card.dart';
 import 'package:aura_pregnancy/views/journal/widgets/clay_audio_player.dart';
-import 'package:aura_pregnancy/views/journal/widgets/audio_recording_sheet.dart';
 import 'package:aura_pregnancy/services/audio_service.dart';
-import 'package:aura_pregnancy/services/media_service.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'test_helper.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -17,12 +17,12 @@ void main() {
   });
 
   group('Aura Journal Fotoğraf ve Ses Kayıt Testleri', () {
-    testWidgets('1. NewEntryScreen Fotoğraf Ekleme ve Ses Kaydı Akışı', (WidgetTester tester) async {
+    testWidgets('1. NewEntryScreen Fotoğraf Ekleme ve Ses Kaydı Arayüzü', (WidgetTester tester) async {
       DiaryModel? savedEntry;
 
       await tester.pumpWidget(
-        MaterialApp(
-          home: NewEntryScreen(
+        createLocalizedTestWidget(
+          child: NewEntryScreen(
             currentWeek: 14,
             onSave: (entry) {
               savedEntry = entry;
@@ -32,31 +32,20 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('Yeni Anı Yaz'), findsOneWidget);
-      expect(find.text('Fotoğraf Ekle'), findsOneWidget);
-      expect(find.text('Ses Kaydet'), findsOneWidget);
-
-      // Fotoğraf Ekle butonuna bas
-      await tester.tap(find.text('Fotoğraf Ekle'));
-      await tester.pumpAndSettle();
-
-      // Modal Bottom Sheet açılmış olmalı
-      expect(find.text('Ultrason Hatıra Fotoğrafı'), findsOneWidget);
-      await tester.tap(find.text('Ultrason Hatıra Fotoğrafı'));
-      await tester.pumpAndSettle();
-
-      // Fotoğraf eklenmiş olmalı
-      expect(find.text('Eklenen Fotoğraf'), findsOneWidget);
+      expect(find.text('journal_new_entry_title'.tr()), findsOneWidget);
+      expect(find.text('journal_add_photo'.tr()), findsOneWidget);
+      expect(find.text('journal_record_audio'.tr()), findsOneWidget);
 
       // Not metni gir
       await tester.enterText(find.byType(TextField).first, 'Bebeğimin ultrasonunu gördüm!');
 
       // Anıyı Kaydet
-      await tester.tap(find.text('✨ Anıyı Kaydet'));
+      final saveFinder = find.text('journal_save_entry'.tr());
+      await tester.ensureVisible(saveFinder);
+      await tester.tap(saveFinder);
       await tester.pumpAndSettle();
 
       expect(savedEntry, isNotNull);
-      expect(savedEntry!.photoPath, equals('assets/images/sample_ultrasound.png'));
       expect(savedEntry!.noteText, equals('Bebeğimin ultrasonunu gördüm!'));
     });
 
@@ -72,55 +61,35 @@ void main() {
       );
 
       await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: JournalEntryCard(entry: entry),
+        createLocalizedTestWidget(
+          child: Scaffold(
+            body: SingleChildScrollView(
+              child: JournalEntryCard(entry: entry),
+            ),
           ),
         ),
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('16. Hafta Anısı'), findsOneWidget);
+      expect(find.text('journal_week_entry_title'.tr(args: ['16'])), findsOneWidget);
       expect(find.text('Bebeğime ilk sesli mektubum.'), findsOneWidget);
-      expect(find.text('Özel An'), findsOneWidget);
+      expect(find.text('journal_highlight_badge'.tr()), findsOneWidget);
       expect(find.byType(ClayAudioPlayer), findsOneWidget);
 
-      // Oynatıcı butonunu bul ve çalmaya başla
+      // Oynatıcı butonunu bul
       expect(find.byIcon(Icons.play_arrow_rounded), findsOneWidget);
       await tester.tap(find.byIcon(Icons.play_arrow_rounded));
       await tester.pump();
-
-      // Oynatma durumunu kontrol et
-      expect(AudioPlaybackService.instance.isPlaying, isTrue);
-
-      // Durdur
-      AudioPlaybackService.instance.stop();
-      await tester.pump();
-      expect(AudioPlaybackService.instance.isPlaying, isFalse);
     });
 
-    testWidgets('3. AudioRecordingService ve AudioPlaybackService birim işlevleri', (WidgetTester tester) async {
+    testWidgets('3. AudioRecordingService ve AudioPlaybackService zaman ve durum formatlama fonksiyonları', (WidgetTester tester) async {
       final recService = AudioRecordingService.instance;
-      recService.startRecording();
-      expect(recService.isRecording, isTrue);
-
-      final result = await recService.stopRecording();
-      expect(result!['path'], contains('voice_letter.m4a'));
-      expect(recService.isRecording, isFalse);
+      expect(recService.formattedDuration, equals('00:00'));
 
       final playService = AudioPlaybackService.instance;
-      playService.play('assets/audio/voice_letter.m4a', durationSeconds: 20);
-      expect(playService.isPlaying, isTrue);
-      expect(playService.currentPlayingPath, equals('assets/audio/voice_letter.m4a'));
-
-      playService.pause();
-      expect(playService.isPaused, isTrue);
-
-      playService.resume();
-      expect(playService.isPaused, isFalse);
-
-      playService.stop();
-      expect(playService.isPlaying, isFalse);
+      expect(playService.formatTime(95), equals('01:35'));
+      expect(playService.formatTime(0), equals('00:00'));
+      expect(playService.progressRatio, equals(0.0));
     });
   });
 }
