@@ -10,6 +10,7 @@ import 'widgets/medical_tests_checklist_card.dart';
 import 'widgets/ad_reward_dialog.dart';
 import '../widgets/medical_disclaimer_sheet.dart';
 import '../widgets/clay_native_ad_card.dart';
+import '../../core/widgets/micro_animations.dart';
 
 /// Hafta Hafta Tıbbi Bilgilendirme ve Test Takvimi Ekranı
 class WeeklyPanelScreen extends StatefulWidget {
@@ -125,38 +126,53 @@ class _WeeklyPanelScreenState extends State<WeeklyPanelScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // 3D Claymorphic Fetal Journey Tracker (Gelecek Meyveler Gizli + Soru İşaretli Reklam Kutusu)
-                    PregnancyJourneyTracker(
-                      currentWeek: _controller.actualPregnancyWeek,
-                      initialIndex: stageIndex,
+                    StaggeredSlideFade(
+                      index: 0,
+                      child: PregnancyJourneyTracker(
+                        currentWeek: _controller.actualPregnancyWeek,
+                        initialIndex: stageIndex,
+                      ),
                     ),
                     const SizedBox(height: 16),
 
                     // Tıbbi Tarama & Test Takip Kartı (Varsa)
                     if (milestoneTest != null) ...[
-                      MedicalTestsChecklistCard(
-                        milestoneTest: milestoneTest,
-                        week: _controller.selectedWeek,
+                      StaggeredSlideFade(
+                        index: 1,
+                        child: MedicalTestsChecklistCard(
+                          milestoneTest: milestoneTest,
+                          week: _controller.selectedWeek,
+                        ),
                       ),
                       const SizedBox(height: 14),
                     ],
 
                     // Bebek Büyüklüğü ve Gelişim Kartı
-                    BabyGrowthCard(
-                      week: _controller.selectedWeek,
-                      weekData: data,
-                      babyDisplayName: babyDisplayName,
+                    StaggeredSlideFade(
+                      index: 2,
+                      child: BabyGrowthCard(
+                        week: _controller.selectedWeek,
+                        weekData: data,
+                        babyDisplayName: babyDisplayName,
+                      ),
                     ),
                     const SizedBox(height: 12),
 
                     // Kil Temalı Yerel Gelişmiş Reklam Kartı (Sponsorlu Destekçi)
-                    const ClayNativeAdCard(
-                      cardColor: Color(0xFFFEE6E0),
-                      icon: Icons.spa_rounded,
+                    const StaggeredSlideFade(
+                      index: 3,
+                      child: ClayNativeAdCard(
+                        cardColor: Color(0xFFFEE6E0),
+                        icon: Icons.spa_rounded,
+                      ),
                     ),
                     const SizedBox(height: 16),
 
                     // Yasal & Tıbbi Sorumluluk Reddi Bildirimi
-                    const MedicalDisclaimerBanner(),
+                    const StaggeredSlideFade(
+                      index: 4,
+                      child: MedicalDisclaimerBanner(),
+                    ),
                     const SizedBox(height: 20),
                   ],
                 ),

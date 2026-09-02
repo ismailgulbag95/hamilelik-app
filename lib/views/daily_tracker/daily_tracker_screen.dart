@@ -11,6 +11,7 @@ import 'widgets/trimester_nutrition_card.dart';
 import 'widgets/weight_tracker_card.dart';
 import '../widgets/medical_disclaimer_sheet.dart';
 import '../../services/database_helper.dart';
+import '../../core/widgets/micro_animations.dart';
 
 /// Claymorphic Günlük Takip & Rutin Yönetim Ekranı (Daily Tracker)
 class DailyTrackerScreen extends StatefulWidget {
@@ -95,52 +96,73 @@ class _DailyTrackerScreenState extends State<DailyTrackerScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // 1. İlaç & Vitamin Takip Modülü (WhatsApp İsteği)
-              const MedicationTrackerCard(),
+              const StaggeredSlideFade(
+                index: 0,
+                child: MedicationTrackerCard(),
+              ),
               const SizedBox(height: 16),
 
               // 2. Kilo Takip Modülü (WhatsApp İsteği)
-              WeightTrackerCard(
-                currentWeightEntry: log.weightEntry,
-                profile: _controller.profile,
-                onSaveWeight: (w) => _controller.setWeightEntry(w),
+              StaggeredSlideFade(
+                index: 1,
+                child: WeightTrackerCard(
+                  currentWeightEntry: log.weightEntry,
+                  profile: _controller.profile,
+                  onSaveWeight: (w) => _controller.setWeightEntry(w),
+                ),
               ),
               const SizedBox(height: 16),
 
               // 3. Su Takip Modülü
-              WaterTrackerCard(
-                currentWaterMl: log.waterIntakeMl,
-                onAddWater: (ml) => _controller.addWater(ml),
-                onReset: () => _controller.resetWater(),
+              StaggeredSlideFade(
+                index: 2,
+                child: WaterTrackerCard(
+                  currentWaterMl: log.waterIntakeMl,
+                  onAddWater: (ml) => _controller.addWater(ml),
+                  onReset: () => _controller.resetWater(),
+                ),
               ),
               const SizedBox(height: 16),
 
               // 4. Yürüyüş & Adım Takip Modülü
-              WalkingTrackerCard(
-                stepCount: log.stepCount,
-                walkingMinutes: log.walkingMinutes,
-                currentWeek: _controller.currentWeek,
-                onAddSteps: (steps, {minutes = 0}) => _controller.addSteps(steps, minutes: minutes),
-                onReset: () => _controller.resetSteps(),
+              StaggeredSlideFade(
+                index: 3,
+                child: WalkingTrackerCard(
+                  stepCount: log.stepCount,
+                  walkingMinutes: log.walkingMinutes,
+                  currentWeek: _controller.currentWeek,
+                  onAddSteps: (steps, {minutes = 0}) => _controller.addSteps(steps, minutes: minutes),
+                  onReset: () => _controller.resetSteps(),
+                ),
               ),
               const SizedBox(height: 16),
 
               // 5. Kafein Takip Modülü (200 mg sınırı ve alarmı)
-              CaffeineTrackerCard(
-                currentCaffeineMg: log.caffeineMg,
-                onAddCaffeine: (mg) => _controller.addCaffeine(mg),
-                onReset: () => _controller.resetCaffeine(),
+              StaggeredSlideFade(
+                index: 4,
+                child: CaffeineTrackerCard(
+                  currentCaffeineMg: log.caffeineMg,
+                  onAddCaffeine: (mg) => _controller.addCaffeine(mg),
+                  onReset: () => _controller.resetCaffeine(),
+                ),
               ),
               const SizedBox(height: 16),
 
               // 6. Trimester Beslenme ve Kalori Rehberi
-              TrimesterNutritionCard(
-                currentWeek: _controller.currentWeek,
-                trimester: _controller.trimester,
+              StaggeredSlideFade(
+                index: 5,
+                child: TrimesterNutritionCard(
+                  currentWeek: _controller.currentWeek,
+                  trimester: _controller.trimester,
+                ),
               ),
               const SizedBox(height: 16),
 
               // Yasal & Tıbbi Sorumluluk Reddi Bildirimi
-              const MedicalDisclaimerBanner(),
+              const StaggeredSlideFade(
+                index: 6,
+                child: MedicalDisclaimerBanner(),
+              ),
               const SizedBox(height: 24),
             ],
           ),

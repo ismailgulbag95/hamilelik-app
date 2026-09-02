@@ -468,11 +468,11 @@ class _ClayButtonState extends State<ClayButton> {
       onTap: widget.onPressed,
       child: AnimatedScale(
         scale: _isPressed ? 0.955 : 1.0,
-        duration: const Duration(milliseconds: 110),
-        curve: Curves.easeOutCubic,
+        duration: Duration(milliseconds: _isPressed ? 90 : 160),
+        curve: _isPressed ? Curves.easeOutQuad : Curves.easeOutBack,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 110),
-          curve: Curves.easeOutCubic,
+          duration: Duration(milliseconds: _isPressed ? 90 : 160),
+          curve: _isPressed ? Curves.easeOutQuad : Curves.easeOutBack,
           width: widget.width,
           height: widget.height,
           padding: effectivePadding,

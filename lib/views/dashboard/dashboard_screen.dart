@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../core/constants/app_colors.dart';
@@ -13,6 +14,7 @@ import '../../utils/date_utils.dart';
 import 'widgets/profile_edit_sheet.dart';
 import 'widgets/interactive_3d_fetus_widget.dart';
 import '../../core/widgets/fruit_3d_widget.dart';
+import '../../core/widgets/micro_animations.dart';
 
 /// Aura Pregnancy - Sade, Ferah & Romantik Ana Sayfa (Dashboard)
 class DashboardScreen extends StatefulWidget {
@@ -72,6 +74,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
         onSaved: _loadDashboardData,
       ),
     );
+  }
+
+  void _triggerHeartbeatHaptic() {
+    HapticFeedback.lightImpact();
+    Future.delayed(const Duration(milliseconds: 120), () {
+      HapticFeedback.lightImpact();
+    });
   }
 
   @override
@@ -190,261 +199,280 @@ class _DashboardScreenState extends State<DashboardScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 // 1. 360° İNTERAKTİF 3D FETUS & CANLI ANİMASYON KARTI
-                ClayCard(
-                  color: AppColors.clayCardSurface,
-                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-                  onTap: () => widget.onNavigateTab(1), // Haftalık Detay sekmesine
-                  child: Column(
-                    children: [
-                      // Üst Trimester ve Doğuma Kalan Rozetleri
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                StaggeredSlideFade(
+                  index: 0,
+                  child: PulseAura(
+                    auraColor: const Color(0x30FFB6C1),
+                    child: ClayCard(
+                      color: AppColors.clayCardSurface,
+                      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                      onTap: () {
+                        _triggerHeartbeatHaptic();
+                        widget.onNavigateTab(1); // Haftalık Detay sekmesine
+                      },
+                      child: Column(
                         children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                            decoration: ClayTheme.clayButtonDecoration(
-                              color: AppColors.clayLavender,
-                              borderRadius: 14,
-                            ),
-                            child: Text(
-                              'dashboard_trimester'.tr(args: [trimester.toString()]),
-                              style: const TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w800,
-                                color: AppColors.lavenderPurple,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                            decoration: ClayTheme.clayButtonDecoration(
-                              color: AppColors.clayRose,
-                              borderRadius: 14,
-                            ),
-                            child: Row(
-                              children: [
-                                const Icon(Icons.hourglass_top_rounded, size: 13, color: AppColors.primaryDark),
-                                const SizedBox(width: 4),
-                                Text(
-                                  'dashboard_days_remaining'.tr(args: [daysRemaining.toString()]),
+                          // Üst Trimester ve Doğuma Kalan Rozetleri
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                decoration: ClayTheme.clayButtonDecoration(
+                                  color: AppColors.clayLavender,
+                                  borderRadius: 14,
+                                ),
+                                child: Text(
+                                  'dashboard_trimester'.tr(args: [trimester.toString()]),
                                   style: const TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.w800,
-                                    color: AppColors.primaryDark,
+                                    color: AppColors.lavenderPurple,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                decoration: ClayTheme.clayButtonDecoration(
+                                  color: AppColors.clayRose,
+                                  borderRadius: 14,
+                                ),
+                                child: Row(
+                                  children: [
+                                    const Icon(Icons.hourglass_top_rounded, size: 13, color: AppColors.primaryDark),
+                                    const SizedBox(width: 4),
+                                    CountingNumberText(
+                                      value: daysRemaining,
+                                      suffix: ' ${'timeline_days_left'.tr().isNotEmpty ? 'timeline_days_left'.tr() : 'gün kaldı'}',
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w800,
+                                        color: AppColors.primaryDark,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+
+                          // 360° İnteraktif 3D Fetus Modeli
+                          Interactive3DFetusWidget(
+                            currentWeek: weekNumber,
+                            currentDay: dayNumber,
+                            babyName: babyName,
+                            eddDate: dueDateStr,
+                          ),
+                          const SizedBox(height: 18),
+
+                          // Kaçıncı Haftanın Kaçıncı Gününde Başlığı
+                          Text(
+                            'dashboard_week_day'.tr(args: [weekNumber.toString(), dayNumber.toString()]),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w900,
+                              color: AppColors.primaryDark,
+                              letterSpacing: -0.5,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+
+                          // Bebeğin Meyve Büyüklüğü (Güncellenen Format)
+                          Container(
+                            margin: const EdgeInsets.only(top: 6),
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            decoration: ClayTheme.clayButtonDecoration(
+                              color: AppColors.clayPeach,
+                              borderRadius: 18,
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Fruit3DWidget(
+                                  week: weekNumber,
+                                  size: 34,
+                                  borderRadius: 10,
+                                ),
+                                const SizedBox(width: 8),
+                                Flexible(
+                                  child: Text(
+                                    'dashboard_fruit_size'.tr(args: [fruitName]),
+                                    style: const TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w800,
+                                      color: AppColors.primaryDark,
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
+                          const SizedBox(height: 8),
+
+                          // Boy & Kilo Detayı
+                          Text(
+                            'dashboard_measurements'.tr(args: [weekData['length']?.toString() ?? '~30.0 cm', weekData['weight']?.toString() ?? '~600 gr']),
+                            style: const TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.textSecondary,
+                            ),
+                          ),
                         ],
                       ),
-                      const SizedBox(height: 16),
-
-                      // 360° İnteraktif 3D Fetus Modeli
-                      Interactive3DFetusWidget(
-                        currentWeek: weekNumber,
-                        currentDay: dayNumber,
-                        babyName: babyName,
-                        eddDate: dueDateStr,
-                      ),
-                      const SizedBox(height: 18),
-
-                      // Kaçıncı Haftanın Kaçıncı Gününde Başlığı
-                      Text(
-                        'dashboard_week_day'.tr(args: [weekNumber.toString(), dayNumber.toString()]),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w900,
-                          color: AppColors.primaryDark,
-                          letterSpacing: -0.5,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-
-                      // Bebeğin Meyve Büyüklüğü (Güncellenen Format)
-                      Container(
-                        margin: const EdgeInsets.only(top: 6),
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        decoration: ClayTheme.clayButtonDecoration(
-                          color: AppColors.clayPeach,
-                          borderRadius: 18,
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Fruit3DWidget(
-                              week: weekNumber,
-                              size: 34,
-                              borderRadius: 10,
-                            ),
-                            const SizedBox(width: 8),
-                            Flexible(
-                              child: Text(
-                                'dashboard_fruit_size'.tr(args: [fruitName]),
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w800,
-                                  color: AppColors.primaryDark,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-
-                      // Boy & Kilo Detayı
-                      Text(
-                        'dashboard_measurements'.tr(args: [weekData['length']?.toString() ?? '~30.0 cm', weekData['weight']?.toString() ?? '~600 gr']),
-                        style: const TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16),
 
                 // 2. HAFTANIN YAPILMASI GEREKEN TIBBİ TESTİ / KONTROLÜ (VARSA GÖSTER, YOKSA GİZLE)
                 if (medicalMilestone != null) ...[
-                  ClayCard(
-                    isGlazed: true,
-                    color: const Color(0xFFFFF3E0), // Sıcak uyarı turuncusu
-                    padding: const EdgeInsets.all(16),
-                    onTap: () => widget.onNavigateTab(1),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 44,
-                          height: 44,
-                          decoration: ClayTheme.clayDecoration(
-                            color: Colors.white,
-                            borderRadius: 14,
+                  StaggeredSlideFade(
+                    index: 1,
+                    child: ClayCard(
+                      isGlazed: true,
+                      color: const Color(0xFFFFF3E0), // Sıcak uyarı turuncusu
+                      padding: const EdgeInsets.all(16),
+                      onTap: () => widget.onNavigateTab(1),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: 44,
+                            height: 44,
+                            decoration: ClayTheme.clayDecoration(
+                              color: Colors.white,
+                              borderRadius: 14,
+                            ),
+                            child: const Center(
+                              child: Icon(Icons.medical_services_rounded, color: Color(0xFFE65100), size: 22),
+                            ),
                           ),
-                          child: const Center(
-                            child: Icon(Icons.medical_services_rounded, color: Color(0xFFE65100), size: 22),
-                          ),
-                        ),
-                        const SizedBox(width: 14),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                                    decoration: ClayTheme.clayButtonDecoration(
-                                      color: const Color(0xFFE65100),
-                                      borderRadius: 8,
-                                    ),
-                                    child: Text(
-                                      'dashboard_medical_test_title'.tr(),
-                                      style: GoogleFonts.plusJakartaSans(
-                                        color: Colors.white,
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w800,
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                      decoration: ClayTheme.clayButtonDecoration(
+                                        color: const Color(0xFFE65100),
+                                        borderRadius: 8,
+                                      ),
+                                      child: Text(
+                                        'dashboard_medical_test_title'.tr(),
+                                        style: GoogleFonts.plusJakartaSans(
+                                          color: Colors.white,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w800,
+                                        ),
                                       ),
                                     ),
+                                  ],
+                                ),
+                                const SizedBox(height: 6),
+                                Text(
+                                  medicalMilestone['test'] ?? '',
+                                  style: GoogleFonts.outfit(
+                                    fontSize: 14.5,
+                                    fontWeight: FontWeight.w800,
+                                    color: const Color(0xFF5D4037),
                                   ),
-                                ],
-                              ),
-                              const SizedBox(height: 6),
-                              Text(
-                                medicalMilestone['test'] ?? '',
-                                style: GoogleFonts.outfit(
-                                  fontSize: 14.5,
-                                  fontWeight: FontWeight.w800,
-                                  color: const Color(0xFF5D4037),
                                 ),
-                              ),
-                              const SizedBox(height: 3),
-                              Text(
-                                medicalMilestone['desc'] ?? '',
-                                style: GoogleFonts.plusJakartaSans(
-                                  fontSize: 11.5,
-                                  fontWeight: FontWeight.w600,
-                                  color: const Color(0xFF795548),
-                                  height: 1.4,
+                                const SizedBox(height: 3),
+                                Text(
+                                  medicalMilestone['desc'] ?? '',
+                                  style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 11.5,
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xFF795548),
+                                    height: 1.4,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Color(0xFFE65100)),
-                      ],
+                          const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Color(0xFFE65100)),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),
                 ],
 
                 // 3. HAMİLELİĞİN BU GÜNÜ & DİNGİN GÜNLÜK ÖZET KARTI (Liquid Glass Katmanı)
-                ClayCard(
-                  isGlazed: true,
-                  color: AppColors.clayRose,
-                  padding: const EdgeInsets.all(18),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          const Icon(Icons.auto_awesome_rounded, color: AppColors.primaryPink, size: 18),
-                          const SizedBox(width: 8),
-                          Text(
-                            'dashboard_today_title'.tr(),
-                            style: GoogleFonts.outfit(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w800,
-                              color: AppColors.primaryDark,
+                StaggeredSlideFade(
+                  index: 2,
+                  child: ClayCard(
+                    isGlazed: true,
+                    color: AppColors.clayRose,
+                    padding: const EdgeInsets.all(18),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(Icons.auto_awesome_rounded, color: AppColors.primaryPink, size: 18),
+                            const SizedBox(width: 8),
+                            Text(
+                              'dashboard_today_title'.tr(),
+                              style: GoogleFonts.outfit(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.primaryDark,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        weekData['summary'] as String? ??
-                            'dashboard_today_desc_default'.tr(),
-                        style: GoogleFonts.plusJakartaSans(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.textPrimary,
-                          height: 1.5,
+                          ],
                         ),
-                      ),
-                      const SizedBox(height: 12),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          ClayButton(
-                            color: Colors.white,
-                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                            onPressed: () => widget.onNavigateTab(2), // Günlük Takip Sekmesine
-                            child: Row(
-                              children: [
-                                Text(
-                                  'dashboard_view_daily_routines'.tr(),
-                                  style: GoogleFonts.plusJakartaSans(
-                                    fontSize: 11.5,
-                                    fontWeight: FontWeight.w800,
-                                    color: AppColors.primaryPink,
-                                  ),
-                                ),
-                                const SizedBox(width: 4),
-                                const Icon(Icons.arrow_forward_rounded, size: 14, color: AppColors.primaryPink),
-                              ],
-                            ),
+                        const SizedBox(height: 8),
+                        Text(
+                          weekData['summary'] as String? ??
+                              'dashboard_today_desc_default'.tr(),
+                          style: GoogleFonts.plusJakartaSans(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.textPrimary,
+                            height: 1.5,
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+                        const SizedBox(height: 12),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            ClayButton(
+                              color: Colors.white,
+                              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                              onPressed: () => widget.onNavigateTab(2), // Günlük Takip Sekmesine
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'dashboard_view_daily_routines'.tr(),
+                                    style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 11.5,
+                                      fontWeight: FontWeight.w800,
+                                      color: AppColors.primaryPink,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
+                                  const Icon(Icons.arrow_forward_rounded, size: 14, color: AppColors.primaryPink),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: 12),
-                const MedicalDisclaimerBanner(),
+                const StaggeredSlideFade(
+                  index: 3,
+                  child: MedicalDisclaimerBanner(),
+                ),
                 const SizedBox(height: 24),
               ],
             ),
