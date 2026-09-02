@@ -174,28 +174,31 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
           const SizedBox(height: 16),
 
-          // Seçim Modu Değiştirici (Clay Switcher)
-          ClayCard(
-            color: AppColors.clayLavender,
-            padding: const EdgeInsets.all(8),
+          // Seçim Modu Değiştirici (Concave Yuvalı Clay Switcher)
+          Container(
+            padding: const EdgeInsets.all(5),
+            decoration: ClayTheme.concaveDecoration(
+              color: AppColors.backgroundSubtle,
+              borderRadius: 22,
+            ),
             child: Row(
               children: [
                 Expanded(
                   child: GestureDetector(
                     onTap: () => _controller.setDateInputMode(DateInputMode.lmp),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      padding: const EdgeInsets.symmetric(vertical: 11),
                       decoration: _controller.inputMode == DateInputMode.lmp
-                          ? ClayTheme.clayDecoration(
-                              color: AppColors.clayRose,
-                              borderRadius: 20,
+                          ? ClayTheme.clayButtonDecoration(
+                              color: Colors.white,
+                              borderRadius: 18,
                             )
                           : null,
                       child: Center(
                         child: Text(
                           'onboarding_step1_lmp'.tr(),
                           style: TextStyle(
-                            fontWeight: FontWeight.w700,
+                            fontWeight: _controller.inputMode == DateInputMode.lmp ? FontWeight.w800 : FontWeight.w600,
                             fontSize: 13,
                             color: _controller.inputMode == DateInputMode.lmp
                                 ? AppColors.primaryDark
@@ -210,18 +213,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: GestureDetector(
                     onTap: () => _controller.setDateInputMode(DateInputMode.dueDate),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      padding: const EdgeInsets.symmetric(vertical: 11),
                       decoration: _controller.inputMode == DateInputMode.dueDate
-                          ? ClayTheme.clayDecoration(
-                              color: AppColors.clayRose,
-                              borderRadius: 20,
+                          ? ClayTheme.clayButtonDecoration(
+                              color: Colors.white,
+                              borderRadius: 18,
                             )
                           : null,
                       child: Center(
                         child: Text(
                           'onboarding_step1_due_date'.tr(),
                           style: TextStyle(
-                            fontWeight: FontWeight.w700,
+                            fontWeight: _controller.inputMode == DateInputMode.dueDate ? FontWeight.w800 : FontWeight.w600,
                             fontSize: 13,
                             color: _controller.inputMode == DateInputMode.dueDate
                                 ? AppColors.primaryDark
@@ -259,9 +262,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     color: AppColors.primaryDark,
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 14),
                 ClayButton(
                   color: AppColors.clayPeach,
+                  height: 44,
+                  padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
                   onPressed: () async {
                     final picked = await showDatePicker(
                       context: context,
@@ -276,13 +281,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.calendar_month_rounded, color: AppColors.secondaryPeach, size: 20),
-                      SizedBox(width: 8),
+                      const Icon(Icons.calendar_month_rounded, color: AppColors.primaryDark, size: 18),
+                      const SizedBox(width: 8),
                       Text(
                         'onboarding_step1_change_date'.tr(),
                         style: const TextStyle(
-                          color: AppColors.secondaryPeach,
-                          fontWeight: FontWeight.w700,
+                          color: AppColors.primaryDark,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 13.5,
                         ),
                       ),
                     ],
@@ -310,7 +316,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     Text(
                       'onboarding_step1_week'.tr(args: [_controller.currentWeek.toString(), _controller.trimester.toString()]),
                       style: const TextStyle(
-                        fontSize: 18,
+                        fontSize: 17,
                         fontWeight: FontWeight.w800,
                         color: AppColors.successGreen,
                       ),
@@ -318,27 +324,28 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ],
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                  decoration: ClayTheme.clayDecoration(
-                    color: Colors.white.withValues(alpha: 0.8),
-                    borderRadius: 16,
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+                  decoration: ClayTheme.clayButtonDecoration(
+                    color: Colors.white,
+                    borderRadius: 14,
                   ),
                   child: Text(
                     'onboarding_step1_days_left'.tr(args: [AppDateUtils.daysUntil(AppDateUtils.toIso(_controller.calculatedDueDate)).toString()]),
                     style: const TextStyle(
                       fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.textPrimary,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.primaryDark,
                     ),
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 20),
 
           ClayButton(
             color: AppColors.clayRose,
+            height: 52,
             onPressed: _nextPage,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -351,8 +358,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     color: AppColors.primaryDark,
                   ),
                 ),
-                SizedBox(width: 6),
-                Icon(Icons.arrow_forward_rounded, color: AppColors.primaryDark, size: 18),
+                const SizedBox(width: 6),
+                const Icon(Icons.arrow_forward_rounded, color: AppColors.primaryDark, size: 18),
               ],
             ),
           ),
@@ -666,24 +673,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: GestureDetector(
         onTap: () => _controller.setBabyGender(value),
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
+          duration: const Duration(milliseconds: 180),
           padding: const EdgeInsets.symmetric(vertical: 12),
-          decoration: BoxDecoration(
-            color: isSelected ? activeColor : bgColor,
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: isSelected ? activeColor.withValues(alpha: 0.3) : Colors.black.withValues(alpha: 0.04),
-                blurRadius: isSelected ? 8 : 4,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
+          decoration: isSelected
+              ? ClayTheme.clayButtonDecoration(
+                  color: activeColor,
+                  borderRadius: 16,
+                )
+              : ClayTheme.concaveDecoration(
+                  color: bgColor.withValues(alpha: 0.7),
+                  borderRadius: 16,
+                ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(icon, size: 16, color: isSelected ? Colors.white : AppColors.textPrimary),
-              const SizedBox(width: 4),
+              const SizedBox(width: 5),
               Text(
                 label,
                 style: TextStyle(
@@ -808,14 +813,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
           ClayButton(
             color: AppColors.clayMint,
+            height: 52,
             onPressed: _controller.isLoading ? null : _saveAndContinue,
             child: _controller.isLoading
-                ? CircularProgressIndicator(color: AppColors.successGreen)
+                ? const SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(strokeWidth: 2.5, color: AppColors.successGreen),
+                  )
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.check_circle_rounded, color: AppColors.successGreen, size: 20),
-                      SizedBox(width: 8),
+                      const Icon(Icons.check_circle_rounded, color: AppColors.successGreen, size: 20),
+                      const SizedBox(width: 8),
                       Text(
                         'onboarding_step4_save'.tr(),
                         style: const TextStyle(

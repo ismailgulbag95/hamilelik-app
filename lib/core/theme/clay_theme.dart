@@ -10,37 +10,37 @@ class ClayTheme {
   static const double cardRadius = 32.0;
   static const double buttonRadius = 24.0;
 
-  /// Standart Claymorphism Kutu Dekorasyonu
+  /// Standart Claymorphism Kart Kutu Dekorasyonu (Çift İç Işık + Yumuşak Sıcak Dış Gölge)
   static BoxDecoration clayDecoration({
     required Color color,
     double borderRadius = defaultRadius,
     bool isPressed = false,
   }) {
     if (isPressed) {
-      // Kural E (Pressed State): Dış gölge küçülür (yere yaklaşır), iç gölgeler derinleşir
+      // Kural E (Pressed State): Dış gölge küçülür, iç gölgeler derinleşir
       return BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(borderRadius),
         boxShadow: [
-          // 1. Dış Gölge (Buton ezildiği için yere yaklaşır)
+          // 1. Dış Gölge
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.18),
-            offset: const Offset(0, 8),
-            blurRadius: 16,
+            color: const Color(0x22C49A9E),
+            offset: const Offset(0, 4),
+            blurRadius: 10,
             inset: false,
           ),
-          // 2. Üst İç Işık (Ezilme ile derinleşir)
+          // 2. Üst İç Işık
           BoxShadow(
-            color: Colors.white.withValues(alpha: 0.80),
-            offset: const Offset(0, 12),
-            blurRadius: 20,
+            color: Colors.white.withValues(alpha: 0.90),
+            offset: const Offset(0, 8),
+            blurRadius: 14,
             inset: true,
           ),
-          // 3. Alt İç Gölge (Ezilme ile derinleşir)
+          // 3. Alt İç Gölge
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.25),
-            offset: const Offset(0, -12),
-            blurRadius: 20,
+            color: Colors.black.withValues(alpha: 0.16),
+            offset: const Offset(0, -8),
+            blurRadius: 14,
             inset: true,
           ),
         ],
@@ -52,25 +52,84 @@ class ClayTheme {
       color: color,
       borderRadius: BorderRadius.circular(borderRadius),
       boxShadow: [
-        // 1. Yumuşak Dış Gölge (Nesneyi havaya kaldırır)
+        // 1. Yumuşak Sıcak Dış Gölge (Nesneyi havaya kaldırır)
         BoxShadow(
-          color: Colors.black.withValues(alpha: 0.18),
-          offset: const Offset(0, 24),
-          blurRadius: 40,
+          color: const Color(0x24C49A9E),
+          offset: const Offset(0, 14),
+          blurRadius: 28,
           inset: false,
         ),
-        // 2. Üst İç Işık (Kil plastisitesi - açık beyaz ışık)
+        // 2. Üst İç Işık (Kil parlaklığı - açık beyaz ışık)
         BoxShadow(
-          color: Colors.white.withValues(alpha: 0.65),
-          offset: const Offset(0, 8),
-          blurRadius: 16,
+          color: Colors.white.withValues(alpha: 0.75),
+          offset: const Offset(0, 6),
+          blurRadius: 14,
           inset: true,
         ),
-        // 3. Alt İç Gölge (Kil alt kıvrımı - koyu gölge)
+        // 3. Alt İç Gölge (Kil alt kıvrımı)
         BoxShadow(
-          color: Colors.black.withValues(alpha: 0.15),
-          offset: const Offset(0, -8),
+          color: Colors.black.withValues(alpha: 0.10),
+          offset: const Offset(0, -6),
+          blurRadius: 14,
+          inset: true,
+        ),
+      ],
+    );
+  }
+
+  /// Butonlar ve Küçük Etkileşim Öğeleri İçin Optimize Edilmiş Keskin Claymorphism Dekorasyonu
+  static BoxDecoration clayButtonDecoration({
+    required Color color,
+    double borderRadius = buttonRadius,
+    bool isPressed = false,
+  }) {
+    if (isPressed) {
+      return BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(borderRadius),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0x22C49A9E),
+            offset: const Offset(0, 2),
+            blurRadius: 6,
+            inset: false,
+          ),
+          BoxShadow(
+            color: Colors.white.withValues(alpha: 0.92),
+            offset: const Offset(0, 5),
+            blurRadius: 8,
+            inset: true,
+          ),
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.16),
+            offset: const Offset(0, -5),
+            blurRadius: 8,
+            inset: true,
+          ),
+        ],
+      );
+    }
+
+    return BoxDecoration(
+      color: color,
+      borderRadius: BorderRadius.circular(borderRadius),
+      boxShadow: [
+        BoxShadow(
+          color: const Color(0x28C49A9E),
+          offset: const Offset(0, 8),
           blurRadius: 16,
+          inset: false,
+        ),
+        BoxShadow(
+          color: Colors.white.withValues(alpha: 0.85),
+          offset: const Offset(0, 4),
+          blurRadius: 8,
+          inset: true,
+        ),
+        BoxShadow(
+          color: Colors.black.withValues(alpha: 0.08),
+          offset: const Offset(0, -4),
+          blurRadius: 8,
           inset: true,
         ),
       ],
@@ -245,7 +304,7 @@ class _ClayButtonState extends State<ClayButton> {
         width: widget.width,
         height: widget.height,
         padding: widget.padding,
-        decoration: ClayTheme.clayDecoration(
+        decoration: ClayTheme.clayButtonDecoration(
           color: widget.color,
           borderRadius: widget.borderRadius,
           isPressed: _isPressed,

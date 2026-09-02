@@ -186,47 +186,53 @@ class _NavItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Seçili sekme hafif yukarı süzülür (floating lift)
-    final translateY = -4.0 * activeFactor;
-    final scale = 1.0 + (0.12 * activeFactor);
+    // Seçili sekmede ikon hafif yukarı süzülür
+    final translateY = -3.0 * activeFactor;
+    final scale = 1.0 + (0.08 * activeFactor);
 
     // Aktif baloncuk üzerinde bembeyaz yüksek kontrastlı ikon, pasifken koyu kömür
     final iconColor = item.isEmergency
-        ? (activeFactor > 0.5 ? Colors.white : AppColors.medicalAlertRed)
-        : Color.lerp(const Color(0xFF5C4F53), Colors.white, activeFactor);
+        ? (activeFactor > 0.4 ? Colors.white : AppColors.medicalAlertRed)
+        : (activeFactor > 0.4 ? Colors.white : const Color(0xFF5C4F53));
 
-    // Başlık metni rengi
+    // Başlık metni rengi (aktif baloncuk dışındadır, altta net ve belirgindir)
     final textColor = item.isEmergency
         ? AppColors.medicalAlertRed
-        : Color.lerp(const Color(0xFF7A6E78), AppColors.primaryPink, activeFactor);
+        : (isSelected ? AppColors.primaryPink : const Color(0xFF6B5E62));
 
-    return Transform.translate(
-      offset: Offset(0, translateY),
-      child: Transform.scale(
-        scale: scale,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              item.icon,
-              size: 22,
-              color: iconColor,
-            ),
-            const SizedBox(height: 3),
-            Text(
-              item.label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 10.5,
-                fontWeight: isSelected ? FontWeight.w900 : FontWeight.w600,
-                color: textColor,
-                fontFamily: 'Quicksand',
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Transform.translate(
+          offset: Offset(0, translateY),
+          child: Transform.scale(
+            scale: scale,
+            child: SizedBox(
+              width: 38,
+              height: 28,
+              child: Center(
+                child: Icon(
+                  item.icon,
+                  size: 21,
+                  color: iconColor,
+                ),
               ),
             ),
-          ],
+          ),
         ),
-      ),
+        const SizedBox(height: 2),
+        Text(
+          item.label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontSize: 10.5,
+            fontWeight: isSelected ? FontWeight.w900 : FontWeight.w600,
+            color: textColor,
+            fontFamily: 'Quicksand',
+          ),
+        ),
+      ],
     );
   }
 }
@@ -262,14 +268,14 @@ class _FluidMeltBarPainter extends CustomPainter {
 
     // --- 1. YUMUŞAK DIŞ CLAY GÖLGESİ (Outer Drop Shadow) ---
     final shadowPaint1 = Paint()
-      ..color = shadowTint.withValues(alpha: 0.18)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 28);
-    canvas.drawRRect(rrect.shift(const Offset(0, 14)), shadowPaint1);
+      ..color = shadowTint.withValues(alpha: 0.16)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 20);
+    canvas.drawRRect(rrect.shift(const Offset(0, 8)), shadowPaint1);
 
     final shadowPaint2 = Paint()
       ..color = shadowTint.withValues(alpha: 0.08)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10);
-    canvas.drawRRect(rrect.shift(const Offset(0, 4)), shadowPaint2);
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
+    canvas.drawRRect(rrect.shift(const Offset(0, 3)), shadowPaint2);
 
     // --- 2. ANA CLAY BAR GÖVDESİ ---
     final barPaint = Paint()
@@ -277,10 +283,10 @@ class _FluidMeltBarPainter extends CustomPainter {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: [
-          Colors.white.withValues(alpha: 0.40),
+          Colors.white.withValues(alpha: 0.50),
           barColor,
           barColor,
-          Colors.black.withValues(alpha: 0.04),
+          Colors.black.withValues(alpha: 0.03),
         ],
         stops: const [0.0, 0.20, 0.85, 1.0],
       ).createShader(Rect.fromLTWH(0, 0, barWidth, barHeight));
@@ -291,13 +297,16 @@ class _FluidMeltBarPainter extends CustomPainter {
     canvas.save();
     canvas.clipRRect(rrect);
 
-    // Baloncuk boyutları ve esneme teğeti
-    final bubbleRadiusX = 28.0 * (1.0 + stretchFactor);
-    final bubbleRadiusY = 24.0;
-    final bubbleCenterY = barHeight / 2;
+    // Baloncuk sadece ikonun arkasına kompakt oturur (yükseklik ~32px)
+    final bubbleRadiusX = 22.0 * (1.0 + stretchFactor);
+    final bubbleRadiusY = 16.0;
+    final bubbleCenterY = 22.0;
+
+    // Sınır güvenliği (clamp)
+    final clampedCenterX = activeCenterX.clamp(bubbleRadiusX + 8, barWidth - bubbleRadiusX - 8);
 
     final bubbleRect = Rect.fromCenter(
-      center: Offset(activeCenterX, bubbleCenterY),
+      center: Offset(clampedCenterX, bubbleCenterY),
       width: bubbleRadiusX * 2,
       height: bubbleRadiusY * 2,
     );
@@ -308,31 +317,31 @@ class _FluidMeltBarPainter extends CustomPainter {
 
     // Sıvı Yastık (Liquid Socket) Yumuşak Teğet Erime Katmanı
     final fluidPath = Path();
-    final socketSpan = bubbleRadiusX * 1.4;
-    final leftSocket = activeCenterX - socketSpan;
-    final rightSocket = activeCenterX + socketSpan;
+    final socketSpan = bubbleRadiusX * 1.25;
+    final leftSocket = (clampedCenterX - socketSpan).clamp(0.0, barWidth);
+    final rightSocket = (clampedCenterX + socketSpan).clamp(0.0, barWidth);
 
     // Teğetsel Bézier eğrisi ile sıvı akışı
     fluidPath.moveTo(leftSocket, barHeight);
     fluidPath.cubicTo(
-      leftSocket + socketSpan * 0.4, barHeight,
-      activeCenterX - bubbleRadiusX * 0.8, bubbleCenterY - 4,
-      activeCenterX, bubbleCenterY - 4,
+      leftSocket + socketSpan * 0.35, barHeight,
+      clampedCenterX - bubbleRadiusX * 0.8, bubbleCenterY - 2,
+      clampedCenterX, bubbleCenterY - 2,
     );
     fluidPath.cubicTo(
-      activeCenterX + bubbleRadiusX * 0.8, bubbleCenterY - 4,
-      rightSocket - socketSpan * 0.4, barHeight,
+      clampedCenterX + bubbleRadiusX * 0.8, bubbleCenterY - 2,
+      rightSocket - socketSpan * 0.35, barHeight,
       rightSocket, barHeight,
     );
     fluidPath.close();
 
     // Eriyik sıvı gölgesi
     final fluidGlowPaint = Paint()
-      ..color = bubbleColor.withValues(alpha: 0.35)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 12);
+      ..color = bubbleColor.withValues(alpha: 0.30)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10);
     canvas.drawPath(fluidPath, fluidGlowPaint);
 
-    // Aktif Claymorphic Puf Baloncuk Gövdesi (Vurgulu ve belirgin 3D gölgeli)
+    // Aktif Claymorphic Puf Baloncuk Gövdesi
     final bubblePaint = Paint()
       ..shader = LinearGradient(
         begin: Alignment.topLeft,
@@ -341,16 +350,16 @@ class _FluidMeltBarPainter extends CustomPainter {
           Colors.white.withValues(alpha: 0.45),
           bubbleColor,
           bubbleColor,
-          const Color(0xFF6B1B36).withValues(alpha: 0.25),
+          const Color(0xFF6B1B36).withValues(alpha: 0.20),
         ],
         stops: const [0.0, 0.22, 0.78, 1.0],
       ).createShader(bubbleRect);
 
-    // Baloncuğun belirgin 3D taban gölgesi
+    // Baloncuğun taban gölgesi
     final bubbleShadowPaint = Paint()
-      ..color = const Color(0xFF5C2636).withValues(alpha: 0.22)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10);
-    canvas.drawRRect(bubbleRRect.shift(const Offset(0, 4)), bubbleShadowPaint);
+      ..color = const Color(0xFF5C2636).withValues(alpha: 0.20)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
+    canvas.drawRRect(bubbleRRect.shift(const Offset(0, 3)), bubbleShadowPaint);
 
     canvas.drawRRect(bubbleRRect, bubblePaint);
 
@@ -360,7 +369,7 @@ class _FluidMeltBarPainter extends CustomPainter {
         center: const Alignment(0.0, -0.6),
         radius: 0.8,
         colors: [
-          Colors.white.withValues(alpha: 0.65),
+          Colors.white.withValues(alpha: 0.70),
           Colors.white.withValues(alpha: 0.0),
         ],
       ).createShader(bubbleRect);
@@ -377,8 +386,8 @@ class _FluidMeltBarPainter extends CustomPainter {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          Colors.white.withValues(alpha: 0.60),
-          Colors.white.withValues(alpha: 0.10),
+          Colors.white.withValues(alpha: 0.70),
+          Colors.white.withValues(alpha: 0.15),
         ],
       ).createShader(Rect.fromLTWH(0, 0, barWidth, barHeight));
 
