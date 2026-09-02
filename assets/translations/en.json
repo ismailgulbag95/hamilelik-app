@@ -567,6 +567,7 @@
   "legal_item_4_title": "4. 100% On-Device Local Data Privacy",
   "legal_item_4_desc": "All vital health logs (blood pressure, temperature, weight, kicks, medications, memories, and photos) are stored securely on your local device. Your personal data is never transmitted to external servers or third parties.",
   "legal_disclaimer_understood": "I Understand",
+  "legal_privacy_policy_btn": "Official Privacy Policy (KVKK / GDPR)",
   "legal_info_tooltip": "Legal & Medical Notice",
   "disclaimer_bp_fever": "Blood pressure and temperature records are for personal logging. Consult your physician for abnormal or concerning readings.",
   "disclaimer_kick_counter": "Kick counter is intended for fetal movement awareness. Contact your doctor immediately if you notice a significant decrease in movements.",

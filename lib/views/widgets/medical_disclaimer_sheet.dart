@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/theme/clay_theme.dart';
 
@@ -131,27 +132,66 @@ class MedicalDisclaimerSheet extends StatelessWidget {
           ),
           const SizedBox(height: 12),
 
-          // Anladım Kapat Butonu
-          ClayButton(
-            color: AppColors.clayMint,
-            height: 50,
-            borderRadius: 18,
-            onPressed: () => Navigator.pop(context),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.check_circle_outline_rounded, color: AppColors.successGreen, size: 20),
-                const SizedBox(width: 8),
-                Text(
-                  'legal_disclaimer_understood'.tr(),
-                  style: GoogleFonts.nunito(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w900,
-                    color: AppColors.successGreen,
+          // Gizlilik Politikası Butonu & Anladım Kapat Butonu
+          Row(
+            children: [
+              Expanded(
+                child: ClayButton(
+                  color: AppColors.claySky,
+                  height: 48,
+                  borderRadius: 16,
+                  onPressed: () async {
+                    final uri = Uri.parse('https://balax-studio.github.io/privacy.html');
+                    if (await canLaunchUrl(uri)) {
+                      await launchUrl(uri, mode: LaunchMode.externalApplication);
+                    }
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.privacy_tip_outlined, color: AppColors.primaryDark, size: 16),
+                      const SizedBox(width: 6),
+                      Flexible(
+                        child: Text(
+                          'legal_privacy_policy_btn'.tr(),
+                          style: GoogleFonts.nunito(
+                            fontSize: 12.5,
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.primaryDark,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: ClayButton(
+                  color: AppColors.clayMint,
+                  height: 48,
+                  borderRadius: 16,
+                  onPressed: () => Navigator.pop(context),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.check_circle_outline_rounded, color: AppColors.successGreen, size: 18),
+                      const SizedBox(width: 6),
+                      Text(
+                        'legal_disclaimer_understood'.tr(),
+                        style: GoogleFonts.nunito(
+                          fontSize: 13.5,
+                          fontWeight: FontWeight.w900,
+                          color: AppColors.successGreen,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

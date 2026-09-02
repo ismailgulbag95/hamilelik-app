@@ -567,6 +567,7 @@
   "legal_item_4_title": "4. KVKK / GDPR Uyumlu Yerel Veri Saklama",
   "legal_item_4_desc": "Tüm vital sağlık kayıtlarınız (tansiyon, ateş, kilo, tekmeler, ilaçlar, anılar ve fotoğraflar) yalnızca kendi cihazınızda şifrelenerek yerel olarak saklanır. Kişisel verileriniz hiçbir harici sunucuya veya üçüncü tarafa iletilmez.",
   "legal_disclaimer_understood": "Okudum, Anladım",
+  "legal_privacy_policy_btn": "Resmi Gizlilik Politikası (KVKK / GDPR)",
   "legal_info_tooltip": "Yasal & Tıbbi Bilgilendirme",
   "disclaimer_bp_fever": "Tansiyon ve ateş ölçüm kayıtları kişisel izlem içindir. Yüksek veya beklenmeyen değerlerde hekiminize başvurunuz.",
   "disclaimer_kick_counter": "Tekme sayacı fetal hareket farkındalığı içindir. Hareketlerde belirgin azalma hissederseniz derhal doktorunuza başvurunuz.",
