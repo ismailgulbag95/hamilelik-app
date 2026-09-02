@@ -81,5 +81,7 @@
 	<string>Aura Pregnancy requires photo library access to save generated time-lapse pregnancy journey stories and milestone cards to your device.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Aura Pregnancy accesses your contacts so you can quickly select and set emergency contacts and your doctor's phone number.</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-2626843024156194~2005391358</string>
 </dict>
 </plist>

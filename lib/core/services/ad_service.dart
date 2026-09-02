@@ -13,6 +13,10 @@ class AdService {
   static const String androidNativeProdId = 'ca-app-pub-2626843024156194/5241928781';
   static const String androidRewardedProdId = 'ca-app-pub-2626843024156194/6798553034';
 
+  static const String iosAppId = 'ca-app-pub-2626843024156194~2005391358';
+  static const String iosNativeProdId = 'ca-app-pub-2626843024156194/1254687514';
+  static const String iosRewardedProdId = '';
+
   /// Google Mobile Ads Resmi Test Reklam Birimi Kimlikleri (Ad Unit IDs)
   static const String androidRewardedTestId = 'ca-app-pub-3940256099942544/5224354917';
   static const String iosRewardedTestId = 'ca-app-pub-3940256099942544/1712485313';
@@ -23,20 +27,22 @@ class AdService {
   static const String androidBannerTestId = 'ca-app-pub-3940256099942544/6300978111';
   static const String iosBannerTestId = 'ca-app-pub-3940256099942544/2934735716';
 
-  /// Ortama göre aktif Native Ad Unit ID'yi döner (Canlı / Test ayrımı)
+  /// Ortama göre aktif Native Ad Unit ID'yi döner (Platform & Canlı / Test ayrımı)
   static String get nativeAdUnitId {
+    final isIos = defaultTargetPlatform == TargetPlatform.iOS;
     if (kReleaseMode) {
-      return androidNativeProdId;
+      return isIos ? (iosNativeProdId.isNotEmpty ? iosNativeProdId : iosNativeTestId) : androidNativeProdId;
     }
-    return androidNativeTestId;
+    return isIos ? iosNativeTestId : androidNativeTestId;
   }
 
-  /// Ortama göre aktif Rewarded Ad Unit ID'yi döner (Canlı / Test ayrımı)
+  /// Ortama göre aktif Rewarded Ad Unit ID'yi döner (Platform & Canlı / Test ayrımı)
   static String get rewardedAdUnitId {
+    final isIos = defaultTargetPlatform == TargetPlatform.iOS;
     if (kReleaseMode) {
-      return androidRewardedProdId;
+      return isIos ? (iosRewardedProdId.isNotEmpty ? iosRewardedProdId : iosRewardedTestId) : androidRewardedProdId;
     }
-    return androidRewardedTestId;
+    return isIos ? iosRewardedTestId : androidRewardedTestId;
   }
 
   bool _isInitialized = false;
