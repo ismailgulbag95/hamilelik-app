@@ -300,8 +300,9 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
                   const SizedBox(height: 10),
                   ClayButton(
                     color: AppColors.claySky,
-                    height: 44,
+                    height: 46,
                     borderRadius: 14,
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
                     onPressed: () async {
                       final uri = Uri.parse(
                         'https://docs.google.com/document/d/e/2PACX-1vS6uFWNKKhE-D5MateR98z1d6ytQNssL6iSWYryOd-Uy2UcAewmrHo6YvSHG0YRmz3CNmWtCxdkn-l_/pub',
@@ -314,13 +315,13 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Icon(Icons.open_in_new_rounded, size: 16, color: AppColors.waterBlue),
-                        const SizedBox(width: 6),
+                        const SizedBox(width: 8),
                         Flexible(
                           child: Text(
                             'profile_edit_online_privacy_btn'.tr(),
-                            style: GoogleFonts.nunito(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w900,
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.w800,
                               color: AppColors.primaryDark,
                             ),
                             maxLines: 1,
@@ -333,20 +334,25 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
                   const SizedBox(height: 8),
                   ClayButton(
                     color: AppColors.clayRose,
-                    height: 40,
+                    height: 46,
                     borderRadius: 14,
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
                     onPressed: () => MedicalDisclaimerSheet.show(context),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.health_and_safety_outlined, size: 15, color: AppColors.primaryPink),
-                        const SizedBox(width: 6),
-                        Text(
-                          'profile_edit_medical_disclaimer_btn'.tr(),
-                          style: GoogleFonts.plusJakartaSans(
-                            fontSize: 11.5,
-                            fontWeight: FontWeight.w800,
-                            color: AppColors.primaryDark,
+                        const Icon(Icons.health_and_safety_outlined, size: 17, color: AppColors.primaryPink),
+                        const SizedBox(width: 8),
+                        Flexible(
+                          child: Text(
+                            'profile_edit_medical_disclaimer_btn'.tr(),
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.w800,
+                              color: AppColors.primaryDark,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ],
@@ -355,20 +361,25 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
                   const SizedBox(height: 8),
                   ClayButton(
                     color: const Color(0xFFFFEBEE),
-                    height: 38,
+                    height: 46,
                     borderRadius: 14,
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
                     onPressed: _confirmResetData,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.delete_forever_rounded, size: 15, color: AppColors.medicalAlertRed),
-                        const SizedBox(width: 6),
-                        Text(
-                          'profile_edit_reset_title'.tr(),
-                          style: GoogleFonts.plusJakartaSans(
-                            fontSize: 11.5,
-                            fontWeight: FontWeight.w800,
-                            color: AppColors.medicalAlertRed,
+                        const Icon(Icons.delete_forever_rounded, size: 17, color: AppColors.medicalAlertRed),
+                        const SizedBox(width: 8),
+                        Flexible(
+                          child: Text(
+                            'profile_edit_reset_title'.tr(),
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.w800,
+                              color: AppColors.medicalAlertRed,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ],

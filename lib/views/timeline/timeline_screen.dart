@@ -367,19 +367,19 @@ class _TimelineScreenState extends State<TimelineScreen> {
           const SizedBox(width: 8),
           ClayButton(
             color: Colors.white,
-            height: 36,
+            height: 40,
             borderRadius: 12,
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             onPressed: _openDoctorReportWithReward,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Icon(Icons.play_circle_fill_rounded, color: Color(0xFF2E6135), size: 16),
-                const SizedBox(width: 4),
+                const SizedBox(width: 6),
                 Text(
                   'timeline_pdf_report_btn'.tr(),
                   style: const TextStyle(
-                    fontSize: 11,
+                    fontSize: 12,
                     fontWeight: FontWeight.w900,
                     color: Color(0xFF2E6135),
                   ),

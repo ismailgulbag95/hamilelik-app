@@ -418,7 +418,7 @@ class ClayButton extends StatefulWidget {
   final VoidCallback? onPressed;
   final Color color;
   final double borderRadius;
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? padding;
   final double? height;
   final double? width;
 
@@ -428,7 +428,7 @@ class ClayButton extends StatefulWidget {
     required this.onPressed,
     this.color = AppColors.clayRose,
     this.borderRadius = ClayTheme.buttonRadius,
-    this.padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+    this.padding,
     this.height,
     this.width,
   });
@@ -456,6 +456,11 @@ class _ClayButtonState extends State<ClayButton> {
 
   @override
   Widget build(BuildContext context) {
+    final effectivePadding = widget.padding ??
+        (widget.height != null
+            ? const EdgeInsets.symmetric(horizontal: 14)
+            : const EdgeInsets.symmetric(horizontal: 24, vertical: 14));
+
     return GestureDetector(
       onTapDown: _handleTapDown,
       onTapUp: _handleTapUp,
@@ -470,7 +475,7 @@ class _ClayButtonState extends State<ClayButton> {
           curve: Curves.easeOutCubic,
           width: widget.width,
           height: widget.height,
-          padding: widget.padding,
+          padding: effectivePadding,
           decoration: ClayTheme.clayButtonDecoration(
             color: widget.color,
             borderRadius: widget.borderRadius,

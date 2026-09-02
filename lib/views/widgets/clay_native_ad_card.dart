@@ -136,40 +136,36 @@ class ClayNativeAdCard extends StatelessWidget {
           // Alt Satır: ClayButton Eylemi
           Align(
             alignment: Alignment.centerRight,
-            child: SizedBox(
-              height: 38,
-              child: ClayButton(
-                color: AppColors.clayPeach,
-                borderRadius: 14,
-                onPressed: onTap ??
-                    () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('ad_thank_support'.tr()),
-                          backgroundColor: AppColors.clayCardSurface,
-                          behavior: SnackBarBehavior.floating,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                        ),
-                      );
-                    },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 14),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        effectiveBtn,
-                        style: GoogleFonts.nunito(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w900,
-                          color: AppColors.primaryDark,
-                        ),
+            child: ClayButton(
+              color: AppColors.clayPeach,
+              height: 42,
+              borderRadius: 14,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              onPressed: onTap ??
+                  () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('ad_thank_support'.tr()),
+                        backgroundColor: AppColors.clayCardSurface,
+                        behavior: SnackBarBehavior.floating,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                       ),
-                      const SizedBox(width: 4),
-                      const Icon(Icons.arrow_forward_rounded, size: 14, color: AppColors.primaryDark),
-                    ],
+                    );
+                  },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    effectiveBtn,
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.primaryDark,
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 6),
+                  const Icon(Icons.arrow_forward_rounded, size: 14, color: AppColors.primaryDark),
+                ],
               ),
             ),
           ),
