@@ -15,6 +15,7 @@ void main() {
       expect(AdService.androidRewardedProdId, 'ca-app-pub-2626843024156194/6798553034');
       expect(AdService.iosAppId, 'ca-app-pub-2626843024156194~2005391358');
       expect(AdService.iosNativeProdId, 'ca-app-pub-2626843024156194/1254687514');
+      expect(AdService.iosRewardedProdId, 'ca-app-pub-2626843024156194/8379228012');
       expect(AdService.androidRewardedTestId, isNotEmpty);
       expect(AdService.iosRewardedTestId, isNotEmpty);
       expect(AdService.androidNativeTestId, isNotEmpty);

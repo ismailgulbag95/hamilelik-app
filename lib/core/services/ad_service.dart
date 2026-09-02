@@ -15,7 +15,7 @@ class AdService {
 
   static const String iosAppId = 'ca-app-pub-2626843024156194~2005391358';
   static const String iosNativeProdId = 'ca-app-pub-2626843024156194/1254687514';
-  static const String iosRewardedProdId = '';
+  static const String iosRewardedProdId = 'ca-app-pub-2626843024156194/8379228012';
 
   /// Google Mobile Ads Resmi Test Reklam Birimi Kimlikleri (Ad Unit IDs)
   static const String androidRewardedTestId = 'ca-app-pub-3940256099942544/5224354917';
