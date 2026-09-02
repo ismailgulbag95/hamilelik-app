@@ -590,5 +590,11 @@
   "timeline_pdf_success_title": "Clinical Report Ready",
   "timeline_pdf_success_desc": "Printable clinical summary for your doctor consultation was created successfully.",
   "video_reward_unlock_title": "Generate HD Time-Lapse Video",
-  "video_reward_unlock_sub": "Watch a short ad to render your high-resolution pregnancy journey video with lullaby music."
+  "video_reward_unlock_sub": "Watch a short ad to render your high-resolution pregnancy journey video with lullaby music.",
+  "profile_edit_reset_title": "Reset & Wipe All Local Data",
+  "profile_edit_reset_confirm_title": "Delete All App Data?",
+  "profile_edit_reset_confirm_desc": "This action permanently deletes all ultrasound photos, journals, blood pressure/kick logs, and baby profile settings from your device. This cannot be undone.",
+  "profile_edit_reset_confirm_btn": "Yes, Delete Everything",
+  "profile_edit_reset_cancel_btn": "Cancel",
+  "profile_edit_reset_success": "All stored data has been completely erased."
 }

@@ -67,6 +67,58 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
     }
   }
 
+  Future<void> _confirmResetData() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        backgroundColor: AppColors.background,
+        title: Text(
+          'profile_edit_reset_confirm_title'.tr(),
+          style: GoogleFonts.outfit(fontWeight: FontWeight.w900, color: AppColors.primaryDark),
+        ),
+        content: Text(
+          'profile_edit_reset_confirm_desc'.tr(),
+          style: GoogleFonts.plusJakartaSans(fontSize: 13, height: 1.45, color: AppColors.textPrimary),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text(
+              'profile_edit_reset_cancel_btn'.tr(),
+              style: const TextStyle(color: AppColors.textSecondary, fontWeight: FontWeight.w700),
+            ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.medicalAlertRed,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+            onPressed: () => Navigator.pop(ctx, true),
+            child: Text(
+              'profile_edit_reset_confirm_btn'.tr(),
+              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      await DatabaseHelper.instance.clearAllData();
+      widget.onSaved();
+      if (mounted) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('profile_edit_reset_success'.tr()),
+            backgroundColor: AppColors.medicalAlertRed,
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -291,10 +343,32 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
                         const SizedBox(width: 6),
                         Text(
                           'profile_edit_medical_disclaimer_btn'.tr(),
-                          style: GoogleFonts.nunito(
+                          style: GoogleFonts.plusJakartaSans(
                             fontSize: 11.5,
                             fontWeight: FontWeight.w800,
                             color: AppColors.primaryDark,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  ClayButton(
+                    color: const Color(0xFFFFEBEE),
+                    height: 38,
+                    borderRadius: 14,
+                    onPressed: _confirmResetData,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.delete_forever_rounded, size: 15, color: AppColors.medicalAlertRed),
+                        const SizedBox(width: 6),
+                        Text(
+                          'profile_edit_reset_title'.tr(),
+                          style: GoogleFonts.plusJakartaSans(
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.medicalAlertRed,
                           ),
                         ),
                       ],

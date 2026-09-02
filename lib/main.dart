@@ -9,6 +9,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart' if (dart.library.html) 'ser
 import 'core/theme/clay_theme.dart';
 import 'core/constants/app_colors.dart';
 import 'services/database_helper.dart';
+import 'services/att_tracking_service.dart';
 import 'models/profile_model.dart';
 import 'views/welcome/language_selection_screen.dart';
 import 'views/main_navigation_scaffold.dart';
@@ -80,6 +81,10 @@ class _RootGateScreenState extends State<RootGateScreen> {
       setState(() {
         _profile = profile;
         _isLoading = false;
+      });
+      // iOS ATT (App Tracking Transparency) izin kontrolü
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        AttTrackingService.instance.requestConsentIfNeeded();
       });
     } catch (e) {
       debugPrint('RootGateScreen error: $e');

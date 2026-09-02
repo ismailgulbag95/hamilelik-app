@@ -590,5 +590,11 @@
   "timeline_pdf_success_title": "Klinik Rapor Hazır",
   "timeline_pdf_success_desc": "Doktor randevunuz için yazdırılabilir klinik sağlık özeti başarıyla oluşturuldu.",
   "video_reward_unlock_title": "HD Time-Lapse Video Oluştur",
-  "video_reward_unlock_sub": "Kısa bir tanıtım izleyerek yüksek çözünürlüklü romantik anı videonuzu hazırlayın."
+  "video_reward_unlock_sub": "Kısa bir tanıtım izleyerek yüksek çözünürlüklü romantik anı videonuzu hazırlayın.",
+  "profile_edit_reset_title": "Tüm Verileri Sıfırla ve Temizle",
+  "profile_edit_reset_confirm_title": "Tüm Veriler Silinsin mi?",
+  "profile_edit_reset_confirm_desc": "Bu işlem cihazınızda kayıtlı olan tüm ultrason fotoğraflarını, günlük anılarını, tansiyon/kilo takiplerini ve bebek profilini kalıcı olarak siler. Bu işlem geri alınamaz.",
+  "profile_edit_reset_confirm_btn": "Evet, Tümünü Sil",
+  "profile_edit_reset_cancel_btn": "Vazgeç",
+  "profile_edit_reset_success": "Tüm kayıtlı veriler başarıyla temizlendi."
 }
