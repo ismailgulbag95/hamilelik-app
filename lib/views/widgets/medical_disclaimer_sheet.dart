@@ -141,7 +141,7 @@ class MedicalDisclaimerSheet extends StatelessWidget {
                   height: 48,
                   borderRadius: 16,
                   onPressed: () async {
-                    final uri = Uri.parse('https://balax-studio.github.io/privacy.html');
+                    final uri = Uri.parse('https://docs.google.com/document/d/e/2PACX-1vS6uFWNKKhE-D5MateR98z1d6ytQNssL6iSWYryOd-Uy2UcAewmrHo6YvSHG0YRmz3CNmWtCxdkn-l_/pub');
                     if (await canLaunchUrl(uri)) {
                       await launchUrl(uri, mode: LaunchMode.externalApplication);
                     }

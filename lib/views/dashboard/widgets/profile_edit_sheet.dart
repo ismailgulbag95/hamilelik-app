@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/clay_theme.dart';
 import '../../../models/profile_model.dart';
 import '../../../services/database_helper.dart';
+import '../../widgets/medical_disclaimer_sheet.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 /// Aura Pregnancy - Bebek & Anne Bilgilerini Düzenleme Modalı
@@ -218,7 +220,84 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 14),
+
+            // 4. Hukuki & Online Gizlilik Sözleşmesi Kartı
+            ClayCard(
+              color: AppColors.clayLavender,
+              padding: const EdgeInsets.all(14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(Icons.security_rounded, size: 15, color: AppColors.lavenderPurple),
+                      const SizedBox(width: 6),
+                      Text(
+                        'profile_edit_legal_title'.tr(),
+                        style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  ClayButton(
+                    color: AppColors.claySky,
+                    height: 44,
+                    borderRadius: 14,
+                    onPressed: () async {
+                      final uri = Uri.parse(
+                        'https://docs.google.com/document/d/e/2PACX-1vS6uFWNKKhE-D5MateR98z1d6ytQNssL6iSWYryOd-Uy2UcAewmrHo6YvSHG0YRmz3CNmWtCxdkn-l_/pub',
+                      );
+                      if (await canLaunchUrl(uri)) {
+                        await launchUrl(uri, mode: LaunchMode.externalApplication);
+                      }
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.open_in_new_rounded, size: 16, color: AppColors.waterBlue),
+                        const SizedBox(width: 6),
+                        Flexible(
+                          child: Text(
+                            'profile_edit_online_privacy_btn'.tr(),
+                            style: GoogleFonts.nunito(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w900,
+                              color: AppColors.primaryDark,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  ClayButton(
+                    color: AppColors.clayRose,
+                    height: 40,
+                    borderRadius: 14,
+                    onPressed: () => MedicalDisclaimerSheet.show(context),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.health_and_safety_outlined, size: 15, color: AppColors.primaryPink),
+                        const SizedBox(width: 6),
+                        Text(
+                          'profile_edit_medical_disclaimer_btn'.tr(),
+                          style: GoogleFonts.nunito(
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.primaryDark,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 18),
 
             // Kaydet Butonu
             ClayButton(
