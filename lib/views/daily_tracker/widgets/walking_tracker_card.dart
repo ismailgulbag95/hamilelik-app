@@ -1,9 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
+import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/clay_theme.dart';
 
 /// Claymorphic Günlük Yürüyüş & Adım Takip Kartı
-class WalkingTrackerCard extends StatelessWidget {
+/// Hem süre (dakika) hem de adım sayısı ile hızlı veya manuel ekleme desteği sunar.
+class WalkingTrackerCard extends StatefulWidget {
   final int stepCount;
   final int walkingMinutes;
   final int currentWeek;
@@ -19,38 +22,72 @@ class WalkingTrackerCard extends StatelessWidget {
     required this.onReset,
   });
 
+  @override
+  State<WalkingTrackerCard> createState() => _WalkingTrackerCardState();
+}
+
+class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
+  // Kart içi hızlı ekleme mod seçimi: false = Adım Modu, true = Süre Modu
+  bool _isDurationMode = false;
+
   String _getTrimesterTip() {
-    if (currentWeek <= 13) {
-      return '1. Trimester: Günde 20-30 dakikalık hafif tempolu yürüyüşler sabah bulantılarını ve yorgunluğu azaltır. Yeterli su içmeyi unutmayın.';
-    } else if (currentWeek <= 26) {
-      return '2. Trimester: Enerjinizin en yüksek olduğu dönem! 30-40 dakikalık düzenli yürüyüşler doğum kaslarını ve kan dolaşımını güçlendirir.';
+    if (widget.currentWeek <= 13) {
+      return 'walking_tip_t1'.tr();
+    } else if (widget.currentWeek <= 26) {
+      return 'walking_tip_t2'.tr();
     } else {
-      return '3. Trimester: Kısa ve rahat adımlarla 15-25 dakikalık yürüyüşler yapın. Pelvik baskı hissettiğinizde dinlenin ve rahat ayakkabı giyin.';
+      return 'walking_tip_t3'.tr();
     }
+  }
+
+  void _openManualAddSheet(BuildContext context, {bool initialDurationMode = false}) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => _WalkingManualAddSheet(
+        initialDurationMode: initialDurationMode,
+        onConfirm: (steps, minutes) {
+          widget.onAddSteps(steps, minutes: minutes);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'walking_added_toast'.tr(),
+                style: const TextStyle(fontWeight: FontWeight.w700),
+              ),
+              backgroundColor: AppColors.primaryPink,
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              duration: const Duration(seconds: 2),
+            ),
+          );
+        },
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     const targetSteps = 6000;
-    final progress = (stepCount / targetSteps).clamp(0.0, 1.0);
-    final isTargetReached = stepCount >= targetSteps;
-    final distanceKm = (stepCount * 0.0007).toStringAsFixed(2);
-    final burnedKcal = (stepCount * 0.04).round();
+    final progress = (widget.stepCount / targetSteps).clamp(0.0, 1.0);
+    final isTargetReached = widget.stepCount >= targetSteps;
+    final distanceKm = (widget.stepCount * 0.0007).toStringAsFixed(2);
+    final burnedKcal = (widget.stepCount * 0.04).round();
 
     return ClayCard(
       color: isTargetReached ? AppColors.clayMint : AppColors.clayCardSurface,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Başlık ve Sıfırlama Butonu
+          // 1. Başlık, Manuel Ekle ve Sıfırlama Butonları
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
                   Container(
-                    width: 36,
-                    height: 36,
+                    width: 38,
+                    height: 38,
                     decoration: ClayTheme.clayDecoration(
                       color: isTargetReached ? AppColors.successGreen : AppColors.clayPeach,
                       borderRadius: 12,
@@ -59,7 +96,7 @@ class WalkingTrackerCard extends StatelessWidget {
                       child: Icon(
                         Icons.directions_walk_rounded,
                         color: isTargetReached ? Colors.white : AppColors.secondaryPeach,
-                        size: 20,
+                        size: 22,
                       ),
                     ),
                   ),
@@ -67,16 +104,16 @@ class WalkingTrackerCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Günlük Yürüyüş & Adım',
-                        style: TextStyle(
+                      Text(
+                        'walking_title'.tr(),
+                        style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w800,
                           color: AppColors.primaryDark,
                         ),
                       ),
                       Text(
-                        'Hedef: $targetSteps Adım / 30 Dk',
+                        'walking_target_desc'.tr(args: [targetSteps.toString()]),
                         style: const TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w600,
@@ -87,25 +124,54 @@ class WalkingTrackerCard extends StatelessWidget {
                   ),
                 ],
               ),
-              if (stepCount > 0)
-                IconButton(
-                  icon: const Icon(Icons.refresh_rounded, size: 20, color: AppColors.textMuted),
-                  onPressed: onReset,
-                  tooltip: 'Adımları Sıfırla',
-                ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Manuel / Detaylı Ekleme Butonu
+                  ClayButton(
+                    color: AppColors.clayRose,
+                    borderRadius: 14,
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    onPressed: () => _openManualAddSheet(context, initialDurationMode: _isDurationMode),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.add_rounded, size: 16, color: AppColors.primaryDark),
+                        const SizedBox(width: 2),
+                        Text(
+                          'walking_add_manual'.tr(),
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.primaryDark,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (widget.stepCount > 0 || widget.walkingMinutes > 0) ...[
+                    const SizedBox(width: 4),
+                    IconButton(
+                      icon: const Icon(Icons.refresh_rounded, size: 20, color: AppColors.textMuted),
+                      onPressed: widget.onReset,
+                      tooltip: 'walking_reset_tooltip'.tr(),
+                    ),
+                  ],
+                ],
+              ),
             ],
           ),
           const SizedBox(height: 16),
 
-          // Adım Sayacı ve İlerleme Kartı
+          // 2. Adım Sayacı ve İlerleme Kartı
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.85),
+              color: Colors.white.withValues(alpha: 0.85),
               borderRadius: BorderRadius.circular(22),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.03),
+                  color: Colors.black.withValues(alpha: 0.03),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
@@ -120,7 +186,7 @@ class WalkingTrackerCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '$stepCount',
+                          '${widget.stepCount}',
                           style: TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.w900,
@@ -129,7 +195,9 @@ class WalkingTrackerCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          isTargetReached ? 'Harika! Günlük hedef tamamlandı' : '/ $targetSteps adım (%${(progress * 100).toInt()})',
+                          isTargetReached
+                              ? 'walking_target_reached'.tr()
+                              : 'walking_steps_progress'.tr(args: [targetSteps.toString(), (progress * 100).toInt().toString()]),
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
@@ -154,7 +222,7 @@ class WalkingTrackerCard extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            isTargetReached ? 'Başarıldı' : 'Yolda',
+                            isTargetReached ? 'walking_status_done'.tr() : 'walking_status_ongoing'.tr(),
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w800,
@@ -186,11 +254,11 @@ class WalkingTrackerCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _buildStatItem('Mesafe', '$distanceKm km', Icons.straighten_rounded),
+                    _buildStatItem('walking_stat_distance'.tr(), '$distanceKm km', Icons.straighten_rounded),
                     Container(width: 1, height: 24, color: Colors.black12),
-                    _buildStatItem('Kalori', '$burnedKcal kcal', Icons.local_fire_department_rounded),
+                    _buildStatItem('walking_stat_calorie'.tr(), '$burnedKcal kcal', Icons.local_fire_department_rounded),
                     Container(width: 1, height: 24, color: Colors.black12),
-                    _buildStatItem('Süre', '$walkingMinutes dk', Icons.timer_rounded),
+                    _buildStatItem('walking_stat_duration'.tr(), 'walking_minutes_short'.tr(args: [widget.walkingMinutes.toString()]), Icons.timer_rounded),
                   ],
                 ),
               ],
@@ -198,76 +266,264 @@ class WalkingTrackerCard extends StatelessWidget {
           ),
           const SizedBox(height: 16),
 
-          // Hızlı Adım & Yürüyüş Ekleme Butonları
-          Row(
-            children: [
-              Expanded(
-                child: ClayButton(
-                  color: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  onPressed: () => onAddSteps(500, minutes: 4),
-                  child: const Column(
-                    children: [
-                      Text('+500', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: AppColors.primaryDark)),
-                      Text('4 Dk', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textSecondary)),
-                    ],
+          // 3. Mod Seçici (Toggle): Adım Sayısı vs Yürüyüş Süresi
+          Container(
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.7),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: Colors.black.withValues(alpha: 0.05)),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () => setState(() => _isDurationMode = false),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 180),
+                      padding: const EdgeInsets.symmetric(vertical: 7),
+                      decoration: BoxDecoration(
+                        color: !_isDurationMode ? AppColors.clayPeach : Colors.transparent,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: !_isDurationMode
+                            ? [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.05),
+                                  blurRadius: 6,
+                                  offset: const Offset(0, 2),
+                                )
+                              ]
+                            : null,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.directions_walk_rounded,
+                            size: 15,
+                            color: !_isDurationMode ? AppColors.primaryDark : AppColors.textSecondary,
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            'walking_tab_steps'.tr(),
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: !_isDurationMode ? FontWeight.w800 : FontWeight.w600,
+                              color: !_isDurationMode ? AppColors.primaryDark : AppColors.textSecondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: ClayButton(
-                  color: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  onPressed: () => onAddSteps(1000, minutes: 8),
-                  child: const Column(
-                    children: [
-                      Text('+1.000', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: AppColors.primaryDark)),
-                      Text('8 Dk', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textSecondary)),
-                    ],
+                const SizedBox(width: 4),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () => setState(() => _isDurationMode = true),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 180),
+                      padding: const EdgeInsets.symmetric(vertical: 7),
+                      decoration: BoxDecoration(
+                        color: _isDurationMode ? AppColors.clayPeach : Colors.transparent,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: _isDurationMode
+                            ? [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.05),
+                                  blurRadius: 6,
+                                  offset: const Offset(0, 2),
+                                )
+                              ]
+                            : null,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.timer_rounded,
+                            size: 15,
+                            color: _isDurationMode ? AppColors.primaryDark : AppColors.textSecondary,
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            'walking_tab_duration'.tr(),
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: _isDurationMode ? FontWeight.w800 : FontWeight.w600,
+                              color: _isDurationMode ? AppColors.primaryDark : AppColors.textSecondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: ClayButton(
-                  color: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  onPressed: () => onAddSteps(2000, minutes: 15),
-                  child: const Column(
-                    children: [
-                      Text('+2.000', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: AppColors.primaryDark)),
-                      Text('15 Dk', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textSecondary)),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(height: 12),
 
-          // Trimester Yürüyüş Tavsiye Bandı
+          // 4. Hızlı Ekleme Butonları (Seçili moda göre değişir)
+          if (!_isDurationMode)
+            // Adım Modu Butonları
+            Row(
+              children: [
+                Expanded(
+                  child: ClayButton(
+                    color: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    onPressed: () => widget.onAddSteps(500, minutes: 4),
+                    child: Column(
+                      children: [
+                        const Text('+500', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: AppColors.primaryDark)),
+                        Text('walking_minutes_short'.tr(args: ['4']), style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textSecondary)),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: ClayButton(
+                    color: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    onPressed: () => widget.onAddSteps(1000, minutes: 8),
+                    child: Column(
+                      children: [
+                        const Text('+1.000', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: AppColors.primaryDark)),
+                        Text('walking_minutes_short'.tr(args: ['8']), style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textSecondary)),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: ClayButton(
+                    color: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    onPressed: () => widget.onAddSteps(2000, minutes: 16),
+                    child: Column(
+                      children: [
+                        const Text('+2.000', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: AppColors.primaryDark)),
+                        Text('walking_minutes_short'.tr(args: ['16']), style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textSecondary)),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                ClayButton(
+                  color: AppColors.clayRose,
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  borderRadius: 18,
+                  onPressed: () => _openManualAddSheet(context, initialDurationMode: false),
+                  child: const Icon(Icons.edit_note_rounded, size: 20, color: AppColors.primaryDark),
+                ),
+              ],
+            )
+          else
+            // Süre Modu Butonları (Dakika bazlı hızlı ekleme)
+            Row(
+              children: [
+                Expanded(
+                  child: ClayButton(
+                    color: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    onPressed: () => widget.onAddSteps(1800, minutes: 15),
+                    child: Column(
+                      children: [
+                        const Text('+15 Dk', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: AppColors.primaryDark)),
+                        const Text('~1.800 Adım', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textSecondary)),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: ClayButton(
+                    color: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    onPressed: () => widget.onAddSteps(3600, minutes: 30),
+                    child: Column(
+                      children: [
+                        const Text('+30 Dk', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: AppColors.primaryDark)),
+                        const Text('~3.600 Adım', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textSecondary)),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: ClayButton(
+                    color: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    onPressed: () => widget.onAddSteps(5400, minutes: 45),
+                    child: Column(
+                      children: [
+                        const Text('+45 Dk', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: AppColors.primaryDark)),
+                        const Text('~5.400 Adım', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textSecondary)),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                ClayButton(
+                  color: AppColors.clayRose,
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  borderRadius: 18,
+                  onPressed: () => _openManualAddSheet(context, initialDurationMode: true),
+                  child: const Icon(Icons.edit_note_rounded, size: 20, color: AppColors.primaryDark),
+                ),
+              ],
+            ),
+          const SizedBox(height: 12),
+
+          // 5. Trimester Yürüyüş Tavsiye Bandı
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: AppColors.claySky,
               borderRadius: BorderRadius.circular(16),
             ),
-            child: Row(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(Icons.tips_and_updates_rounded, color: AppColors.waterBlue, size: 18),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    _getTrimesterTip(),
-                    style: const TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.waterBlue,
-                      height: 1.35,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(Icons.tips_and_updates_rounded, color: AppColors.waterBlue, size: 18),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        _getTrimesterTip(),
+                        style: const TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.waterBlue,
+                          height: 1.35,
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(Icons.info_outline_rounded, color: AppColors.waterBlue.withValues(alpha: 0.8), size: 14),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        'disclaimer_walking'.tr(),
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.waterBlue.withValues(alpha: 0.9),
+                          height: 1.3,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -295,6 +551,464 @@ class WalkingTrackerCard extends StatelessWidget {
         Text(
           value,
           style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
+        ),
+      ],
+    );
+  }
+}
+
+/// Claymorphic Özel Yürüyüş / Adım Ekleme Bottom Sheet'i
+class _WalkingManualAddSheet extends StatefulWidget {
+  final bool initialDurationMode;
+  final Function(int steps, int minutes) onConfirm;
+
+  const _WalkingManualAddSheet({
+    required this.initialDurationMode,
+    required this.onConfirm,
+  });
+
+  @override
+  State<_WalkingManualAddSheet> createState() => _WalkingManualAddSheetState();
+}
+
+class _WalkingManualAddSheetState extends State<_WalkingManualAddSheet> {
+  late bool _isDurationMode;
+  final TextEditingController _textController = TextEditingController();
+
+  // Sabit oran: Hamilelik temposu ortalama ~120 adım / dakika
+  static const int _stepsPerMinute = 120;
+
+  @override
+  void initState() {
+    super.initState();
+    _isDurationMode = widget.initialDurationMode;
+    // Varsayılan değer
+    _textController.text = _isDurationMode ? '20' : '2000';
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
+  int get _parsedValue => int.tryParse(_textController.text.trim()) ?? 0;
+
+  int get _calculatedSteps {
+    if (_isDurationMode) {
+      return _parsedValue * _stepsPerMinute;
+    } else {
+      return _parsedValue;
+    }
+  }
+
+  int get _calculatedMinutes {
+    if (_isDurationMode) {
+      return _parsedValue;
+    } else {
+      return _parsedValue > 0 ? (_parsedValue / _stepsPerMinute).round() : 0;
+    }
+  }
+
+  double get _calculatedKm => (_calculatedSteps * 0.0007);
+  int get _calculatedKcal => (_calculatedSteps * 0.04).round();
+
+  void _onSwitchMode(bool durationMode) {
+    if (_isDurationMode == durationMode) return;
+    setState(() {
+      _isDurationMode = durationMode;
+      _textController.text = _isDurationMode ? '20' : '2000';
+    });
+  }
+
+  void _submit() {
+    final value = _parsedValue;
+    if (value <= 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('walking_input_invalid'.tr()),
+          backgroundColor: Colors.redAccent,
+        ),
+      );
+      return;
+    }
+
+    widget.onConfirm(_calculatedSteps, _calculatedMinutes);
+    Navigator.of(context).pop();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(
+        left: 20,
+        right: 20,
+        top: 20,
+        bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+      ),
+      decoration: const BoxDecoration(
+        color: AppColors.background,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 20,
+            offset: Offset(0, -4),
+          ),
+        ],
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Handle Bar
+            Center(
+              child: Container(
+                width: 44,
+                height: 5,
+                decoration: BoxDecoration(
+                  color: Colors.black12,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // Başlık & Kapat Butonu
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'walking_sheet_title'.tr(),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                        color: AppColors.primaryDark,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      'walking_sheet_subtitle'.tr(),
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                  ],
+                ),
+                IconButton(
+                  icon: const Icon(Icons.close_rounded, color: AppColors.textMuted),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+
+            // Mod Seçim Sekmesi (Süre vs Adım)
+            Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(18),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.04),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => _onSwitchMode(true),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 180),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        decoration: BoxDecoration(
+                          color: _isDurationMode ? AppColors.clayPeach : Colors.transparent,
+                          borderRadius: BorderRadius.circular(14),
+                          boxShadow: _isDurationMode
+                              ? [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.06),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 2),
+                                  )
+                                ]
+                              : null,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.timer_rounded,
+                              size: 18,
+                              color: _isDurationMode ? AppColors.primaryDark : AppColors.textSecondary,
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              'walking_tab_duration'.tr(),
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: _isDurationMode ? FontWeight.w800 : FontWeight.w600,
+                                color: _isDurationMode ? AppColors.primaryDark : AppColors.textSecondary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => _onSwitchMode(false),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 180),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        decoration: BoxDecoration(
+                          color: !_isDurationMode ? AppColors.clayPeach : Colors.transparent,
+                          borderRadius: BorderRadius.circular(14),
+                          boxShadow: !_isDurationMode
+                              ? [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.06),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 2),
+                                  )
+                                ]
+                              : null,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.directions_walk_rounded,
+                              size: 18,
+                              color: !_isDurationMode ? AppColors.primaryDark : AppColors.textSecondary,
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              'walking_tab_steps'.tr(),
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: !_isDurationMode ? FontWeight.w800 : FontWeight.w600,
+                                color: !_isDurationMode ? AppColors.primaryDark : AppColors.textSecondary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 18),
+
+            // Hızlı Seçim Çipleri
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              alignment: WrapAlignment.center,
+              children: _isDurationMode
+                  ? [10, 15, 20, 30, 45, 60].map((mins) {
+                      final isSelected = _textController.text == mins.toString();
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _textController.text = mins.toString();
+                          });
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                          decoration: BoxDecoration(
+                            color: isSelected ? AppColors.primaryPink : Colors.white,
+                            borderRadius: BorderRadius.circular(14),
+                            border: Border.all(
+                              color: isSelected ? AppColors.primaryPink : Colors.black12,
+                            ),
+                          ),
+                          child: Text(
+                            '$mins dk',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: isSelected ? Colors.white : AppColors.primaryDark,
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList()
+                  : [500, 1000, 2000, 3000, 5000].map((steps) {
+                      final isSelected = _textController.text == steps.toString();
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _textController.text = steps.toString();
+                          });
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                          decoration: BoxDecoration(
+                            color: isSelected ? AppColors.primaryPink : Colors.white,
+                            borderRadius: BorderRadius.circular(14),
+                            border: Border.all(
+                              color: isSelected ? AppColors.primaryPink : Colors.black12,
+                            ),
+                          ),
+                          child: Text(
+                            '$steps adım',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: isSelected ? Colors.white : AppColors.primaryDark,
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+            ),
+            const SizedBox(height: 16),
+
+            // Sayısal Giriş Alanı
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: AppColors.secondaryPeach.withValues(alpha: 0.3), width: 1.5),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.02),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: TextField(
+                controller: _textController,
+                keyboardType: TextInputType.number,
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.primaryDark,
+                ),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  labelText: _isDurationMode
+                      ? 'walking_field_duration'.tr()
+                      : 'walking_field_steps'.tr(),
+                  labelStyle: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textSecondary,
+                  ),
+                  hintText: _isDurationMode
+                      ? 'walking_field_duration_hint'.tr()
+                      : 'walking_field_steps_hint'.tr(),
+                  suffixIcon: Icon(
+                    _isDurationMode ? Icons.timer_outlined : Icons.directions_walk_rounded,
+                    color: AppColors.secondaryPeach,
+                  ),
+                ),
+                onChanged: (_) => setState(() {}),
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // Dinamik Canlı Bilgi & Hesaplama Kartı
+            ClayCard(
+              color: AppColors.clayMint,
+              borderRadius: 20,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  if (_isDurationMode) ...[
+                    _buildPreviewItem(
+                      'walking_est_steps'.tr(),
+                      '~$_calculatedSteps',
+                      Icons.directions_walk_rounded,
+                    ),
+                  ] else ...[
+                    _buildPreviewItem(
+                      'walking_est_duration'.tr(),
+                      '~$_calculatedMinutes dk',
+                      Icons.timer_rounded,
+                    ),
+                  ],
+                  Container(width: 1, height: 26, color: Colors.black12),
+                  _buildPreviewItem(
+                    'walking_stat_distance'.tr(),
+                    '${_calculatedKm.toStringAsFixed(2)} km',
+                    Icons.straighten_rounded,
+                  ),
+                  Container(width: 1, height: 26, color: Colors.black12),
+                  _buildPreviewItem(
+                    'walking_stat_calorie'.tr(),
+                    '$_calculatedKcal kcal',
+                    Icons.local_fire_department_rounded,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // Kaydet / Ekle Butonu
+            ClayButton(
+              color: AppColors.secondaryPeach,
+              borderRadius: 22,
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              onPressed: _submit,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.check_circle_outline_rounded, color: Colors.white, size: 20),
+                  const SizedBox(width: 8),
+                  Text(
+                    'walking_confirm_add'.tr(),
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                      letterSpacing: 0.3,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPreviewItem(String title, String value, IconData icon) {
+    return Column(
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 12, color: AppColors.textSecondary),
+            const SizedBox(width: 3),
+            Text(
+              title,
+              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: AppColors.textSecondary),
+            ),
+          ],
+        ),
+        const SizedBox(height: 2),
+        Text(
+          value,
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w900, color: AppColors.primaryDark),
         ),
       ],
     );

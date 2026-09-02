@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/clay_theme.dart';
 import '../../../core/widgets/fruit_3d_widget.dart';
@@ -19,12 +20,12 @@ class BabyGrowthCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fruitIcon = (weekData['icon'] as IconData?) ?? Icons.eco_rounded;
-    final fruitName = weekData['fruit_name'] as String? ?? 'Gelişim';
+    final fruitName = weekData['fruit_name'] as String? ?? 'baby_growth_fallback'.tr();
     final length = weekData['length'] as String? ?? '-';
     final weight = weekData['weight'] as String? ?? '-';
     final babyDev = weekData['baby_dev'] as String? ?? '';
     final motherChanges = weekData['mother_changes'] as String? ?? '';
-    final babyName = babyDisplayName ?? 'Bebeğiniz';
+    final babyName = babyDisplayName ?? 'baby_default_name'.tr();
 
     return Column(
       children: [
@@ -47,7 +48,7 @@ class BabyGrowthCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '$week. Hafta $babyName:',
+                          'baby_week_name_label'.tr(args: [week.toString(), babyName]),
                           style: const TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
@@ -77,12 +78,12 @@ class BabyGrowthCard extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.85),
+                        color: Colors.white.withValues(alpha: 0.85),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Column(
                         children: [
-                          const Text('Tahmini Boy', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.textSecondary)),
+                          Text('baby_est_length'.tr(), style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.textSecondary)),
                           const SizedBox(height: 2),
                           Text(length, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: AppColors.primaryDark)),
                         ],
@@ -94,12 +95,12 @@ class BabyGrowthCard extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.85),
+                        color: Colors.white.withValues(alpha: 0.85),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Column(
                         children: [
-                          const Text('Tahmini Ağırlık', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.textSecondary)),
+                          Text('baby_est_weight'.tr(), style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.textSecondary)),
                           const SizedBox(height: 2),
                           Text(weight, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: AppColors.primaryDark)),
                         ],
@@ -134,7 +135,7 @@ class BabyGrowthCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    '$babyName Gelişim Durumu',
+                    'baby_dev_status'.tr(args: [babyName]),
                     style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppColors.textPrimary),
                   ),
                 ],
@@ -169,9 +170,9 @@ class BabyGrowthCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  const Text(
-                    'Annede Görülen Değişimler',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
+                  Text(
+                    'baby_mother_changes'.tr(),
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
                   ),
                 ],
               ),
@@ -179,6 +180,35 @@ class BabyGrowthCard extends StatelessWidget {
               Text(
                 motherChanges,
                 style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textPrimary, height: 1.45),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 12),
+
+        // 4. Doktor Bilgilendirme ve Tıbbi Feragat Uyarısı
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.8),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: AppColors.lavenderPurple.withValues(alpha: 0.3)),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(Icons.medical_information_outlined, color: AppColors.lavenderPurple, size: 18),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  'disclaimer_weekly'.tr(),
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textSecondary,
+                    height: 1.35,
+                  ),
+                ),
               ),
             ],
           ),

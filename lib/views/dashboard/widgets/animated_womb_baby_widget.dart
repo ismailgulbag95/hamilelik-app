@@ -91,19 +91,19 @@ class _AnimatedWombBabyWidgetState extends State<AnimatedWombBabyWidget>
             boxShadow: [
               // Dış yumuşak Claymorphic gölge
               BoxShadow(
-                color: AppColors.primaryPink.withOpacity(0.22),
+                color: AppColors.primaryPink.withValues(alpha: 0.22),
                 offset: const Offset(0, 16),
                 blurRadius: 30,
               ),
               // Üst iç ışık
               BoxShadow(
-                color: Colors.white.withOpacity(0.8),
+                color: Colors.white.withValues(alpha: 0.8),
                 offset: const Offset(-8, -8),
                 blurRadius: 16,
               ),
               // Alt iç gölge
               BoxShadow(
-                color: const Color(0xFFE899AE).withOpacity(0.35),
+                color: const Color(0xFFE899AE).withValues(alpha: 0.35),
                 offset: const Offset(8, 8),
                 blurRadius: 16,
               ),
@@ -159,11 +159,11 @@ class _AnimatedWombBabyWidgetState extends State<AnimatedWombBabyWidget>
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.75),
+                          color: Colors.white.withValues(alpha: 0.75),
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.primaryPink.withOpacity(0.3),
+                              color: AppColors.primaryPink.withValues(alpha: 0.3),
                               blurRadius: 6,
                             ),
                           ],
@@ -195,11 +195,11 @@ class _AnimatedWombBabyWidgetState extends State<AnimatedWombBabyWidget>
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.85),
+                    color: Colors.white.withValues(alpha: 0.85),
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withValues(alpha: 0.05),
                         blurRadius: 6,
                       ),
                     ],
@@ -237,10 +237,10 @@ class _AnimatedWombBabyWidgetState extends State<AnimatedWombBabyWidget>
         height: 80,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: const Color(0xFFFF8FA3).withOpacity(0.85),
+          color: const Color(0xFFFF8FA3).withValues(alpha: 0.85),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFFFF758F).withOpacity(0.4),
+              color: const Color(0xFFFF758F).withValues(alpha: 0.4),
               blurRadius: 18,
               spreadRadius: 2,
             ),
@@ -257,10 +257,10 @@ class _AnimatedWombBabyWidgetState extends State<AnimatedWombBabyWidget>
         height: 105,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: const Color(0xFFFFB3C1).withOpacity(0.9),
+          color: const Color(0xFFFFB3C1).withValues(alpha: 0.9),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primaryPink.withOpacity(0.35),
+              color: AppColors.primaryPink.withValues(alpha: 0.35),
               blurRadius: 20,
               spreadRadius: 2,
             ),
@@ -277,10 +277,10 @@ class _AnimatedWombBabyWidgetState extends State<AnimatedWombBabyWidget>
         height: 120,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: const Color(0xFFFFCCD5).withOpacity(0.95),
+          color: const Color(0xFFFFCCD5).withValues(alpha: 0.95),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primaryPink.withOpacity(0.3),
+              color: AppColors.primaryPink.withValues(alpha: 0.3),
               blurRadius: 22,
               spreadRadius: 3,
             ),
@@ -300,7 +300,7 @@ class _AnimatedWombBabyWidgetState extends State<AnimatedWombBabyWidget>
           color: const Color(0xFFFFF0F3),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primaryPink.withOpacity(0.35),
+              color: AppColors.primaryPink.withValues(alpha: 0.35),
               blurRadius: 25,
               spreadRadius: 4,
             ),
@@ -341,7 +341,7 @@ class _AmnioticFluidPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     final paint = Paint()
-      ..color = Colors.white.withOpacity(0.35 * (1.0 - progress))
+      ..color = Colors.white.withValues(alpha: 0.35 * (1.0 - progress))
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0;
 
@@ -350,7 +350,7 @@ class _AmnioticFluidPainter extends CustomPainter {
     canvas.drawCircle(center, radius, paint);
 
     // Parıltı Noktaları (Yıldız tozları)
-    final dotPaint = Paint()..color = const Color(0xFFFF758F).withOpacity(0.45);
+    final dotPaint = Paint()..color = const Color(0xFFFF758F).withValues(alpha: 0.45);
     for (int i = 0; i < 6; i++) {
       final angle = (i * (pi / 3)) + (progress * pi * 0.5);
       final r = (size.width / 3.2) + sin(progress * 2 * pi + i) * 12;

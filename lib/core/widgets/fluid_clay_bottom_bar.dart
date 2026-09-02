@@ -262,12 +262,12 @@ class _FluidMeltBarPainter extends CustomPainter {
 
     // --- 1. YUMUŞAK DIŞ CLAY GÖLGESİ (Outer Drop Shadow) ---
     final shadowPaint1 = Paint()
-      ..color = shadowTint.withOpacity(0.18)
+      ..color = shadowTint.withValues(alpha: 0.18)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 28);
     canvas.drawRRect(rrect.shift(const Offset(0, 14)), shadowPaint1);
 
     final shadowPaint2 = Paint()
-      ..color = shadowTint.withOpacity(0.08)
+      ..color = shadowTint.withValues(alpha: 0.08)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10);
     canvas.drawRRect(rrect.shift(const Offset(0, 4)), shadowPaint2);
 
@@ -277,10 +277,10 @@ class _FluidMeltBarPainter extends CustomPainter {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: [
-          Colors.white.withOpacity(0.40),
+          Colors.white.withValues(alpha: 0.40),
           barColor,
           barColor,
-          Colors.black.withOpacity(0.04),
+          Colors.black.withValues(alpha: 0.04),
         ],
         stops: const [0.0, 0.20, 0.85, 1.0],
       ).createShader(Rect.fromLTWH(0, 0, barWidth, barHeight));
@@ -328,7 +328,7 @@ class _FluidMeltBarPainter extends CustomPainter {
 
     // Eriyik sıvı gölgesi
     final fluidGlowPaint = Paint()
-      ..color = bubbleColor.withOpacity(0.35)
+      ..color = bubbleColor.withValues(alpha: 0.35)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 12);
     canvas.drawPath(fluidPath, fluidGlowPaint);
 
@@ -338,17 +338,17 @@ class _FluidMeltBarPainter extends CustomPainter {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: [
-          Colors.white.withOpacity(0.45),
+          Colors.white.withValues(alpha: 0.45),
           bubbleColor,
           bubbleColor,
-          const Color(0xFF6B1B36).withOpacity(0.25),
+          const Color(0xFF6B1B36).withValues(alpha: 0.25),
         ],
         stops: const [0.0, 0.22, 0.78, 1.0],
       ).createShader(bubbleRect);
 
     // Baloncuğun belirgin 3D taban gölgesi
     final bubbleShadowPaint = Paint()
-      ..color = const Color(0xFF5C2636).withOpacity(0.22)
+      ..color = const Color(0xFF5C2636).withValues(alpha: 0.22)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10);
     canvas.drawRRect(bubbleRRect.shift(const Offset(0, 4)), bubbleShadowPaint);
 
@@ -360,8 +360,8 @@ class _FluidMeltBarPainter extends CustomPainter {
         center: const Alignment(0.0, -0.6),
         radius: 0.8,
         colors: [
-          Colors.white.withOpacity(0.65),
-          Colors.white.withOpacity(0.0),
+          Colors.white.withValues(alpha: 0.65),
+          Colors.white.withValues(alpha: 0.0),
         ],
       ).createShader(bubbleRect);
 
@@ -377,8 +377,8 @@ class _FluidMeltBarPainter extends CustomPainter {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          Colors.white.withOpacity(0.60),
-          Colors.white.withOpacity(0.10),
+          Colors.white.withValues(alpha: 0.60),
+          Colors.white.withValues(alpha: 0.10),
         ],
       ).createShader(Rect.fromLTWH(0, 0, barWidth, barHeight));
 

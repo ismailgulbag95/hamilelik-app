@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/medical_specs.dart';
 import '../../../core/theme/clay_theme.dart';
@@ -21,6 +22,7 @@ class CaffeineTrackerCard extends StatelessWidget {
     const maxLimit = PregnancyMedicalSpecs.maxCaffeineMgPerDay;
     final isOverLimit = currentCaffeineMg > maxLimit;
     final remaining = (maxLimit - currentCaffeineMg).clamp(0, maxLimit.toInt());
+    final progress = (currentCaffeineMg / maxLimit).clamp(0.0, 1.0);
 
     return ClayCard(
       color: isOverLimit ? AppColors.medicalAlertBg : AppColors.clayPeach,
@@ -49,7 +51,7 @@ class CaffeineTrackerCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    'Kafein Takibi',
+                    'caffeine_tracker_title'.tr(),
                     style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w800,
@@ -61,7 +63,7 @@ class CaffeineTrackerCard extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.refresh_rounded, size: 20, color: AppColors.textSecondary),
                 onPressed: onReset,
-                tooltip: 'Sıfırla',
+                tooltip: 'tracker_reset'.tr(),
               ),
             ],
           ),
@@ -81,7 +83,7 @@ class CaffeineTrackerCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: isOverLimit ? AppColors.medicalAlertRed : Colors.white.withOpacity(0.8),
+                  color: isOverLimit ? AppColors.medicalAlertRed : Colors.white.withValues(alpha: 0.8),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -92,7 +94,7 @@ class CaffeineTrackerCard extends StatelessWidget {
                       const SizedBox(width: 4),
                     ],
                     Text(
-                      isOverLimit ? 'SINIR AŞILDI!' : 'Kalan: $remaining mg',
+                      isOverLimit ? 'caffeine_tracker_limit_exceeded'.tr() : 'caffeine_tracker_remaining'.tr(args: [remaining.toString()]),
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w800,
@@ -106,6 +108,44 @@ class CaffeineTrackerCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
 
+          // Claymorphic İlerleme Çubuğu (Progress Bar)
+          Container(
+            height: 16,
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.85),
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.06),
+                  offset: const Offset(0, 2),
+                  blurRadius: 4,
+                ),
+              ],
+            ),
+            child: FractionallySizedBox(
+              alignment: Alignment.centerLeft,
+              widthFactor: progress,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: isOverLimit
+                        ? const [Color(0xFFFF5252), Color(0xFFD32F2F)]
+                        : const [Color(0xFFFFB74D), Color(0xFFFF7043)],
+                  ),
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: (isOverLimit ? const Color(0xFFD32F2F) : const Color(0xFFFF7043)).withValues(alpha: 0.35),
+                      blurRadius: 6,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+
           // Aşım Görsel Alarm Kutusu
           if (isOverLimit) ...[
             Container(
@@ -115,14 +155,14 @@ class CaffeineTrackerCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: AppColors.medicalAlertRed, width: 2),
               ),
-              child: const Row(
+              child: Row(
                 children: [
-                  Icon(Icons.crisis_alert_rounded, color: AppColors.medicalAlertRed, size: 22),
-                  SizedBox(width: 10),
+                  const Icon(Icons.crisis_alert_rounded, color: AppColors.medicalAlertRed, size: 22),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: Text(
-                      'Tıbbi Güvenlik Uyarısı: Günlük 200 mg kafein sınırı aşıldı. Lütfen daha fazla kahve/çay tüketmeyiniz ve bol su içiniz.',
-                      style: TextStyle(
+                      'caffeine_tracker_warning'.tr(),
+                      style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
                         color: AppColors.medicalAlertRed,
@@ -141,10 +181,10 @@ class CaffeineTrackerCard extends StatelessWidget {
             spacing: 8,
             runSpacing: 8,
             children: [
-              _buildDrinkButton('Türk Kahvesi', '+60 mg', 60),
-              _buildDrinkButton('Filtre Kahve', '+95 mg', 95),
-              _buildDrinkButton('Siyah Çay', '+40 mg', 40),
-              _buildDrinkButton('Yeşil Çay', '+25 mg', 25),
+              _buildDrinkButton('caffeine_drink_turkish_coffee'.tr(), '+60 mg', 60),
+              _buildDrinkButton('caffeine_drink_filter_coffee'.tr(), '+95 mg', 95),
+              _buildDrinkButton('caffeine_drink_black_tea'.tr(), '+40 mg', 40),
+              _buildDrinkButton('caffeine_drink_green_tea'.tr(), '+25 mg', 25),
             ],
           ),
         ],

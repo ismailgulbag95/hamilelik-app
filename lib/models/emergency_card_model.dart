@@ -50,4 +50,57 @@ class EmergencyCardModel {
       'recent_symptoms': recentSymptoms,
     };
   }
+
+  factory EmergencyCardModel.fromMap(Map<String, dynamic> map) {
+    return EmergencyCardModel(
+      patientName: map['patient_name'] as String? ?? 'Anne Adayı',
+      bloodType: map['blood_type'] as String? ?? 'A Rh (+)',
+      lmpDate: map['lmp_date'] as String? ?? '',
+      dueDate: map['due_date'] as String? ?? '',
+      currentWeek: (map['current_week'] as num?)?.toInt() ?? 12,
+      allergies: map['allergies'] as String? ?? '',
+      chronicDiseases: map['chronic_diseases'] as String? ?? '',
+      medications: map['medications'] as String? ?? '',
+      emergencyContactName: map['emergency_contact_name'] as String? ?? '',
+      emergencyContactPhone: map['emergency_contact_phone'] as String? ?? '',
+      doctorName: map['doctor_name'] as String? ?? '',
+      doctorPhone: map['doctor_phone'] as String? ?? '',
+      hospitalName: map['hospital_name'] as String? ?? '',
+      recentSymptoms: map['recent_symptoms'] as String? ?? '',
+    );
+  }
+
+  EmergencyCardModel copyWith({
+    String? patientName,
+    String? bloodType,
+    String? lmpDate,
+    String? dueDate,
+    int? currentWeek,
+    String? allergies,
+    String? chronicDiseases,
+    String? medications,
+    String? emergencyContactName,
+    String? emergencyContactPhone,
+    String? doctorName,
+    String? doctorPhone,
+    String? hospitalName,
+    String? recentSymptoms,
+  }) {
+    return EmergencyCardModel(
+      patientName: patientName ?? this.patientName,
+      bloodType: bloodType ?? this.bloodType,
+      lmpDate: lmpDate ?? this.lmpDate,
+      dueDate: dueDate ?? this.dueDate,
+      currentWeek: currentWeek ?? this.currentWeek,
+      allergies: allergies ?? this.allergies,
+      chronicDiseases: chronicDiseases ?? this.chronicDiseases,
+      medications: medications ?? this.medications,
+      emergencyContactName: emergencyContactName ?? this.emergencyContactName,
+      emergencyContactPhone: emergencyContactPhone ?? this.emergencyContactPhone,
+      doctorName: doctorName ?? this.doctorName,
+      doctorPhone: doctorPhone ?? this.doctorPhone,
+      hospitalName: hospitalName ?? this.hospitalName,
+      recentSymptoms: recentSymptoms ?? this.recentSymptoms,
+    );
+  }
 }

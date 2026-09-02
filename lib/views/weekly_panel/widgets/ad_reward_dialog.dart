@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/clay_theme.dart';
 
@@ -100,7 +101,7 @@ class _AdRewardDialogState extends State<AdRewardDialog> with SingleTickerProvid
           borderRadius: BorderRadius.circular(32),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF9E7B83).withOpacity(0.25),
+              color: const Color(0xFF9E7B83).withValues(alpha: 0.25),
               offset: const Offset(0, 16),
               blurRadius: 36,
             ),
@@ -162,7 +163,7 @@ class _AdRewardDialogState extends State<AdRewardDialog> with SingleTickerProvid
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
-                        'Kısa bir video izleyerek "${widget.unlockTargetName}" içeriğini anında açabilirsiniz.',
+                        'ad_watch_info'.tr(args: [widget.unlockTargetName]),
                         style: GoogleFonts.nunito(
                           fontSize: 12,
                           fontWeight: FontWeight.w800,
@@ -185,7 +186,7 @@ class _AdRewardDialogState extends State<AdRewardDialog> with SingleTickerProvid
                     const Icon(Icons.play_circle_filled_rounded, color: Color(0xFF2E6135), size: 22),
                     const SizedBox(width: 8),
                     Text(
-                      'Reklamı İzle ve Kilidi Aç',
+                      'ad_watch_btn'.tr(),
                       style: GoogleFonts.nunito(
                         fontSize: 15,
                         fontWeight: FontWeight.w900,
@@ -200,7 +201,7 @@ class _AdRewardDialogState extends State<AdRewardDialog> with SingleTickerProvid
               TextButton(
                 onPressed: () => Navigator.pop(context, false),
                 child: Text(
-                  'Vazgeç',
+                  'common_cancel_opt'.tr(),
                   style: GoogleFonts.nunito(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
@@ -213,7 +214,7 @@ class _AdRewardDialogState extends State<AdRewardDialog> with SingleTickerProvid
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.06),
+                  color: Colors.black.withValues(alpha: 0.06),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -224,7 +225,7 @@ class _AdRewardDialogState extends State<AdRewardDialog> with SingleTickerProvid
                         const Icon(Icons.stars_rounded, color: AppColors.accentGold, size: 16),
                         const SizedBox(width: 6),
                         Text(
-                          'Sponsorlu Tanıtım',
+                          'ad_sponsored'.tr(),
                           style: GoogleFonts.nunito(
                             fontSize: 11,
                             fontWeight: FontWeight.w800,
@@ -240,7 +241,7 @@ class _AdRewardDialogState extends State<AdRewardDialog> with SingleTickerProvid
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
-                        '$_countdown sn',
+                        '$_countdown ' + 'ad_seconds_short'.tr(),
                         style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w900),
                       ),
                     ),
@@ -257,7 +258,7 @@ class _AdRewardDialogState extends State<AdRewardDialog> with SingleTickerProvid
                   borderRadius: BorderRadius.circular(24),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.06),
+                      color: Colors.black.withValues(alpha: 0.06),
                       blurRadius: 12,
                       offset: const Offset(0, 4),
                     ),
@@ -277,7 +278,7 @@ class _AdRewardDialogState extends State<AdRewardDialog> with SingleTickerProvid
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
-                                color: AppColors.waterBlue.withOpacity(0.3),
+                                color: AppColors.waterBlue.withValues(alpha: 0.3),
                                 blurRadius: 10,
                               ),
                             ],
@@ -297,7 +298,7 @@ class _AdRewardDialogState extends State<AdRewardDialog> with SingleTickerProvid
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Anne ve Bebeğe Özel Premium Bakım',
+                          'ad_brand_sub'.tr(),
                           style: GoogleFonts.quicksand(
                             fontSize: 11,
                             fontWeight: FontWeight.w700,
@@ -315,7 +316,7 @@ class _AdRewardDialogState extends State<AdRewardDialog> with SingleTickerProvid
                         child: LinearProgressIndicator(
                           value: (5 - _countdown) / 5.0,
                           minHeight: 6,
-                          backgroundColor: Colors.white.withOpacity(0.5),
+                          backgroundColor: Colors.white.withValues(alpha: 0.5),
                           valueColor: const AlwaysStoppedAnimation<Color>(AppColors.waterBlue),
                         ),
                       ),
@@ -326,7 +327,7 @@ class _AdRewardDialogState extends State<AdRewardDialog> with SingleTickerProvid
               const SizedBox(height: 16),
 
               Text(
-                'Ödülünüz yükleniyor, lütfen bekleyiniz...',
+                'ad_loading_reward'.tr(),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.quicksand(
                   fontSize: 12,
@@ -352,7 +353,7 @@ class _AdRewardDialogState extends State<AdRewardDialog> with SingleTickerProvid
               const SizedBox(height: 14),
 
               Text(
-                'Kilit Başarıyla Açıldı!',
+                'ad_unlocked_title'.tr(),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.nunito(
                   fontSize: 20,
@@ -363,7 +364,7 @@ class _AdRewardDialogState extends State<AdRewardDialog> with SingleTickerProvid
               const SizedBox(height: 6),
 
               Text(
-                '"${widget.unlockTargetName}" detayları artık görüntülenebilir.',
+                'ad_unlocked_desc'.tr(args: [widget.unlockTargetName]),
                 textAlign: TextAlign.center,
                 style: GoogleFonts.quicksand(
                   fontSize: 13,
@@ -378,7 +379,7 @@ class _AdRewardDialogState extends State<AdRewardDialog> with SingleTickerProvid
                 height: 52,
                 onPressed: () => Navigator.pop(context, true),
                 child: Text(
-                  'İncele ve Devam Et',
+                  'ad_continue_btn'.tr(),
                   style: GoogleFonts.nunito(
                     fontSize: 15,
                     fontWeight: FontWeight.w900,

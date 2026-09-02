@@ -42,7 +42,7 @@ void main() {
 
       // Akustik Eko Grid Halkaları
       final gridPaint = Paint()
-        ..color = Colors.white.withOpacity(0.06)
+        ..color = Colors.white.withValues(alpha: 0.06)
         ..style = PaintingStyle.stroke
         ..strokeWidth = 1.5;
       for (int i = 1; i <= 5; i++) {
@@ -60,14 +60,14 @@ void main() {
         canvas.drawOval(Rect.fromCenter(center: center, width: 220, height: 160), sacPaint);
         
         final sacBorder = Paint()
-          ..color = const Color(0xFFD4A373).withOpacity(0.6)
+          ..color = const Color(0xFFD4A373).withValues(alpha: 0.6)
           ..style = PaintingStyle.stroke
           ..strokeWidth = 6;
         canvas.drawOval(Rect.fromCenter(center: center, width: 220, height: 160), sacBorder);
 
         // Yolk Sac
         final yolkBorder = Paint()
-          ..color = const Color(0xFFFFE0B2).withOpacity(0.8)
+          ..color = const Color(0xFFFFE0B2).withValues(alpha: 0.8)
           ..style = PaintingStyle.stroke
           ..strokeWidth = 4;
         canvas.drawCircle(Offset(center.dx - 35, center.dy - 10), 24, yolkBorder);
@@ -87,7 +87,7 @@ void main() {
         canvas.drawCircle(Offset(center.dx + 16, center.dy), 8, heartPaint);
       } else if (stage == 2) {
         // 9-13 Hafta: 1. Trimester İkili Tarama (Kranium, NT, Omurga)
-        final tissue = Paint()..color = const Color(0xFFC68B59).withOpacity(0.75);
+        final tissue = Paint()..color = const Color(0xFFC68B59).withValues(alpha: 0.75);
         final bone = Paint()
           ..color = const Color(0xFFFFE8D6)
           ..style = PaintingStyle.stroke
@@ -99,7 +99,7 @@ void main() {
 
         // NT Eko Alanı
         final ntPaint = Paint()
-          ..color = const Color(0xFF40C4FF).withOpacity(0.7)
+          ..color = const Color(0xFF40C4FF).withValues(alpha: 0.7)
           ..style = PaintingStyle.stroke
           ..strokeWidth = 4.5;
         canvas.drawArc(
@@ -125,7 +125,7 @@ void main() {
         canvas.drawCircle(Offset(center.dx - 10, center.dy + 15), 10, Paint()..color = const Color(0xFFFF1744));
       } else if (stage == 3) {
         // 14-20 Hafta: 2. Trimester Erken Dönem (Yüz Profili & Kemikler)
-        final tissue = Paint()..color = const Color(0xFFD49A6A).withOpacity(0.8);
+        final tissue = Paint()..color = const Color(0xFFD49A6A).withValues(alpha: 0.8);
         final bone = Paint()
           ..color = const Color(0xFFFFF0E0)
           ..style = PaintingStyle.stroke
@@ -160,7 +160,7 @@ void main() {
         canvas.drawCircle(Offset(center.dx - 15, center.dy + 15), 11, Paint()..color = const Color(0xFFFF1744));
       } else if (stage == 4) {
         // 21-27 Hafta: 2. Trimester 4D Morfoloji
-        final tissue = Paint()..color = const Color(0xFFE0A878).withOpacity(0.85);
+        final tissue = Paint()..color = const Color(0xFFE0A878).withValues(alpha: 0.85);
         final bone = Paint()
           ..color = const Color(0xFFFFF5EC)
           ..style = PaintingStyle.stroke
@@ -198,13 +198,13 @@ void main() {
         final cord = Path();
         cord.moveTo(center.dx + 25, center.dy + 45);
         cord.quadraticBezierTo(center.dx + 65, center.dy + 85, center.dx + 105, center.dy + 65);
-        canvas.drawPath(cord, Paint()..color = const Color(0xFF40C4FF).withOpacity(0.85)..strokeWidth = 6..style = PaintingStyle.stroke);
+        canvas.drawPath(cord, Paint()..color = const Color(0xFF40C4FF).withValues(alpha: 0.85)..strokeWidth = 6..style = PaintingStyle.stroke);
 
         // Kalp
         canvas.drawCircle(Offset(center.dx - 15, center.dy + 20), 12, Paint()..color = const Color(0xFFFF1744));
       } else if (stage == 5) {
         // 28-34 Hafta: 3. Trimester Dolgun Yanaklı Fetüs
-        final tissue = Paint()..color = const Color(0xFFE8B588).withOpacity(0.9);
+        final tissue = Paint()..color = const Color(0xFFE8B588).withValues(alpha: 0.9);
         final bone = Paint()
           ..color = const Color(0xFFFFF8F0)
           ..style = PaintingStyle.stroke
@@ -237,7 +237,7 @@ void main() {
         canvas.drawCircle(Offset(center.dx - 10, center.dy + 25), 14, Paint()..color = const Color(0xFFFF1744));
       } else {
         // 35-40 Hafta: Doğuma Hazır Tam Bebek
-        final tissue = Paint()..color = const Color(0xFFEEBF94).withOpacity(0.95);
+        final tissue = Paint()..color = const Color(0xFFEEBF94).withValues(alpha: 0.95);
         final bone = Paint()
           ..color = Colors.white
           ..style = PaintingStyle.stroke

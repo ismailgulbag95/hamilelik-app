@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/clay_theme.dart';
 import '../../../models/medication_model.dart';
@@ -62,8 +63,8 @@ class _MedicationTrackerCardState extends State<MedicationTrackerCard> {
       SnackBar(
         content: Text(
           nextState
-              ? '${med.name} alındı olarak işaretlendi.'
-              : '${med.name} alımı geri alındı.',
+              ? 'med_marked_taken'.tr(args: [med.name])
+              : 'med_marked_untaken'.tr(args: [med.name]),
         ),
         backgroundColor: nextState ? AppColors.successGreen : AppColors.secondaryPeach,
         duration: const Duration(seconds: 2),
@@ -110,13 +111,13 @@ class _MedicationTrackerCardState extends State<MedicationTrackerCard> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Row(
+                  Row(
                     children: [
-                      Icon(Icons.medication_rounded, color: AppColors.primaryDark, size: 22),
-                      SizedBox(width: 8),
+                      const Icon(Icons.medication_rounded, color: AppColors.primaryDark, size: 22),
+                      const SizedBox(width: 8),
                       Text(
-                        'Yeni İlaç / Vitamin Ekle',
-                        style: TextStyle(
+                        'med_add_title'.tr(),
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w800,
                           color: AppColors.primaryDark,
@@ -130,8 +131,8 @@ class _MedicationTrackerCardState extends State<MedicationTrackerCard> {
                   TextField(
                     controller: nameController,
                     decoration: InputDecoration(
-                      labelText: 'İlaç veya Vitamin Adı',
-                      hintText: 'Örn: Folik Asit, Magnezyum, Ferrum',
+                      labelText: 'med_name_label'.tr(),
+                      hintText: 'med_name_hint'.tr(),
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
@@ -143,8 +144,8 @@ class _MedicationTrackerCardState extends State<MedicationTrackerCard> {
                   TextField(
                     controller: dosageController,
                     decoration: InputDecoration(
-                      labelText: 'Dozaj / Miktar',
-                      hintText: 'Örn: 1 Tablet, 400 mcg, 2 Damla',
+                      labelText: 'med_dosage_label'.tr(),
+                      hintText: 'med_dosage_hint'.tr(),
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
@@ -159,14 +160,18 @@ class _MedicationTrackerCardState extends State<MedicationTrackerCard> {
                         child: DropdownButtonFormField<String>(
                           value: selectedTime,
                           decoration: InputDecoration(
-                            labelText: 'Kullanım Zamanı',
+                            labelText: 'med_time_label'.tr(),
                             filled: true,
                             fillColor: Colors.white,
                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
                           ),
-                          items: ['Sabah Aç', 'Sabah Tok', 'Öğle', 'Akşam Tok', 'Gece Yatarken']
-                              .map((t) => DropdownMenuItem(value: t, child: Text(t, style: const TextStyle(fontSize: 13))))
-                              .toList(),
+                          items: [
+                            DropdownMenuItem(value: 'Sabah Aç', child: Text('med_time_morning_empty'.tr(), style: const TextStyle(fontSize: 13))),
+                            DropdownMenuItem(value: 'Sabah Tok', child: Text('med_time_morning_full'.tr(), style: const TextStyle(fontSize: 13))),
+                            DropdownMenuItem(value: 'Öğle', child: Text('med_time_noon'.tr(), style: const TextStyle(fontSize: 13))),
+                            DropdownMenuItem(value: 'Akşam Tok', child: Text('med_time_evening_full'.tr(), style: const TextStyle(fontSize: 13))),
+                            DropdownMenuItem(value: 'Gece Yatarken', child: Text('med_time_night'.tr(), style: const TextStyle(fontSize: 13))),
+                          ],
                           onChanged: (val) => setSheetState(() => selectedTime = val ?? selectedTime),
                         ),
                       ),
@@ -175,14 +180,18 @@ class _MedicationTrackerCardState extends State<MedicationTrackerCard> {
                         child: DropdownButtonFormField<String>(
                           value: selectedCategory,
                           decoration: InputDecoration(
-                            labelText: 'Kategori',
+                            labelText: 'med_category_label'.tr(),
                             filled: true,
                             fillColor: Colors.white,
                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
                           ),
-                          items: ['Vitamin', 'Mineral', 'Demir', 'İlaç', 'Takviye']
-                              .map((c) => DropdownMenuItem(value: c, child: Text(c, style: const TextStyle(fontSize: 13))))
-                              .toList(),
+                          items: [
+                            DropdownMenuItem(value: 'Vitamin', child: Text('med_cat_vitamin'.tr(), style: const TextStyle(fontSize: 13))),
+                            DropdownMenuItem(value: 'Mineral', child: Text('med_cat_mineral'.tr(), style: const TextStyle(fontSize: 13))),
+                            DropdownMenuItem(value: 'Demir', child: Text('med_cat_iron'.tr(), style: const TextStyle(fontSize: 13))),
+                            DropdownMenuItem(value: 'İlaç', child: Text('med_cat_medication'.tr(), style: const TextStyle(fontSize: 13))),
+                            DropdownMenuItem(value: 'Takviye', child: Text('med_cat_supplement'.tr(), style: const TextStyle(fontSize: 13))),
+                          ],
                           onChanged: (val) => setSheetState(() => selectedCategory = val ?? selectedCategory),
                         ),
                       ),
@@ -206,14 +215,14 @@ class _MedicationTrackerCardState extends State<MedicationTrackerCard> {
                       await DatabaseHelper.instance.insertMedication(newMed);
                       if (ctx.mounted) Navigator.pop(ctx);
                     },
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.check_rounded, color: AppColors.successGreen, size: 18),
-                        SizedBox(width: 6),
+                        const Icon(Icons.check_rounded, color: AppColors.successGreen, size: 18),
+                        const SizedBox(width: 6),
                         Text(
-                          'Kaydet ve Listeye Ekle',
-                          style: TextStyle(
+                          'med_save_button'.tr(),
+                          style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w800,
                             color: AppColors.successGreen,
@@ -264,16 +273,16 @@ class _MedicationTrackerCardState extends State<MedicationTrackerCard> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'İlaç & Vitamin Takibi',
-                        style: TextStyle(
+                      Text(
+                        'med_tracker_title'.tr(),
+                        style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w800,
                           color: AppColors.primaryDark,
                         ),
                       ),
                       Text(
-                        '$totalCount İlaçtan $takenCount Tanesi Alındı',
+                        'med_taken_summary'.tr(args: [takenCount.toString(), totalCount.toString()]),
                         style: const TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w600,
@@ -288,14 +297,14 @@ class _MedicationTrackerCardState extends State<MedicationTrackerCard> {
                 color: AppColors.clayRose,
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 onPressed: _openAddMedicationSheet,
-                child: const Row(
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.add_rounded, size: 16, color: AppColors.primaryPink),
-                    SizedBox(width: 2),
+                    const Icon(Icons.add_rounded, size: 16, color: AppColors.primaryPink),
+                    const SizedBox(width: 2),
                     Text(
-                      'İlaç Ekle',
-                      style: TextStyle(fontSize: 11, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
+                      'med_add_button'.tr(),
+                      style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
                     ),
                   ],
                 ),
@@ -309,12 +318,12 @@ class _MedicationTrackerCardState extends State<MedicationTrackerCard> {
           else if (_medications.isEmpty)
             Container(
               padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(color: Colors.white.withOpacity(0.6), borderRadius: BorderRadius.circular(16)),
-              child: const Center(
+              decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.6), borderRadius: BorderRadius.circular(16)),
+              child: Center(
                 child: Text(
-                  'Henüz kayıtlı ilaç veya vitamin yok. Yukarıdaki "+ İlaç Ekle" ile ekleyebilirsiniz.',
+                  'med_empty_state'.tr(),
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.textSecondary),
+                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.textSecondary),
                 ),
               ),
             )
@@ -330,11 +339,11 @@ class _MedicationTrackerCardState extends State<MedicationTrackerCard> {
                     color: isTaken ? AppColors.clayMint : Colors.white,
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: isTaken ? AppColors.successGreen.withOpacity(0.3) : Colors.transparent,
+                      color: isTaken ? AppColors.successGreen.withValues(alpha: 0.3) : Colors.transparent,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.03),
+                        color: Colors.black.withValues(alpha: 0.03),
                         blurRadius: 6,
                         offset: const Offset(0, 2),
                       ),
@@ -394,7 +403,7 @@ class _MedicationTrackerCardState extends State<MedicationTrackerCard> {
                       // Silme Butonu
                       IconButton(
                         icon: const Icon(Icons.close_rounded, size: 16, color: AppColors.textMuted),
-                        tooltip: 'Sil',
+                        tooltip: 'common_delete'.tr(),
                         onPressed: () async {
                           await DatabaseHelper.instance.deleteMedication(med.id!);
                         },
@@ -404,6 +413,32 @@ class _MedicationTrackerCardState extends State<MedicationTrackerCard> {
                 );
               }).toList(),
             ),
+          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.7),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(Icons.verified_user_outlined, color: AppColors.secondaryPeach, size: 14),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    'disclaimer_medication'.tr(),
+                    style: const TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textSecondary,
+                      height: 1.3,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/theme/clay_theme.dart';
@@ -90,14 +91,14 @@ class _AudioRecordingSheetState extends State<AudioRecordingSheet> with SingleTi
           const SizedBox(height: 18),
 
           // Başlık
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('🎙️', style: TextStyle(fontSize: 26)),
-              SizedBox(width: 8),
+              const Text('🎙️', style: TextStyle(fontSize: 26)),
+              const SizedBox(width: 8),
               Text(
-                'Sesli Mektup Kaydediliyor',
-                style: TextStyle(
+                'audio_sheet_title'.tr(),
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w800,
                   color: AppColors.primaryDark,
@@ -106,10 +107,10 @@ class _AudioRecordingSheetState extends State<AudioRecordingSheet> with SingleTi
             ],
           ),
           const SizedBox(height: 6),
-          const Text(
-            'Bebeğinize hissettiğiniz duyguları veya kalp atışlarını fısıldayın ✨',
+          Text(
+            'audio_sheet_subtitle'.tr(),
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.textSecondary),
+            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.textSecondary),
           ),
           const SizedBox(height: 20),
 
@@ -119,7 +120,7 @@ class _AudioRecordingSheetState extends State<AudioRecordingSheet> with SingleTi
               decoration: BoxDecoration(
                 color: const Color(0xFFFDE8E8),
                 borderRadius: BorderRadius.circular(18),
-                border: Border.all(color: AppColors.medicalAlertRed.withOpacity(0.3)),
+                border: Border.all(color: AppColors.medicalAlertRed.withValues(alpha: 0.3)),
               ),
               child: Column(
                 children: [
@@ -142,9 +143,9 @@ class _AudioRecordingSheetState extends State<AudioRecordingSheet> with SingleTi
                     onPressed: () {
                       openAppSettings();
                     },
-                    child: const Text(
-                      'Uygulama Ayarlarını Aç',
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
+                    child: Text(
+                      'audio_sheet_open_settings'.tr(),
+                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
                     ),
                   ),
                 ],
@@ -161,7 +162,7 @@ class _AudioRecordingSheetState extends State<AudioRecordingSheet> with SingleTi
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.primaryPink.withOpacity(0.15),
+                      color: AppColors.primaryPink.withValues(alpha: 0.15),
                       blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),
@@ -189,7 +190,7 @@ class _AudioRecordingSheetState extends State<AudioRecordingSheet> with SingleTi
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.04),
+                    color: Colors.black.withValues(alpha: 0.04),
                     offset: const Offset(0, 3),
                     blurRadius: 8,
                   ),
@@ -199,7 +200,7 @@ class _AudioRecordingSheetState extends State<AudioRecordingSheet> with SingleTi
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: waveforms.isEmpty
-                    ? [const Text('Mikrofon dinleniyor...', style: TextStyle(fontSize: 12, color: Colors.grey))]
+                    ? [Text('audio_sheet_listening'.tr(), style: const TextStyle(fontSize: 12, color: Colors.grey))]
                     : waveforms.map((amp) {
                         final h = (amp * 40).clamp(6.0, 44.0);
                         return Container(
@@ -250,7 +251,7 @@ class _AudioRecordingSheetState extends State<AudioRecordingSheet> with SingleTi
             const SizedBox(height: 8),
             Center(
               child: Text(
-                _service.isPaused ? 'Duraklatıldı (Devam etmek için dokunun)' : 'Mikrofon Açık • Kaydediliyor... (Duraklatmak için dokunun)',
+                _service.isPaused ? 'audio_sheet_paused'.tr() : 'audio_sheet_recording'.tr(),
                 style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.textSecondary),
               ),
             ),
@@ -267,9 +268,9 @@ class _AudioRecordingSheetState extends State<AudioRecordingSheet> with SingleTi
                     await _service.cancelRecording();
                     if (mounted) Navigator.pop(context);
                   },
-                  child: const Text(
-                    'İptal Et',
-                    style: TextStyle(fontWeight: FontWeight.w700, color: AppColors.textSecondary),
+                  child: Text(
+                    'common_cancel'.tr(),
+                    style: const TextStyle(fontWeight: FontWeight.w700, color: AppColors.textSecondary),
                   ),
                 ),
               ),
@@ -285,14 +286,14 @@ class _AudioRecordingSheetState extends State<AudioRecordingSheet> with SingleTi
                         Navigator.pop(context, result);
                       }
                     },
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.check_circle_rounded, color: AppColors.successGreen, size: 20),
-                        SizedBox(width: 6),
+                        const Icon(Icons.check_circle_rounded, color: AppColors.successGreen, size: 20),
+                        const SizedBox(width: 6),
                         Text(
-                          'Kaydı Tamamla ✨',
-                          style: TextStyle(fontWeight: FontWeight.w800, color: AppColors.successGreen, fontSize: 14),
+                          'audio_sheet_finish'.tr(),
+                          style: const TextStyle(fontWeight: FontWeight.w800, color: AppColors.successGreen, fontSize: 14),
                         ),
                       ],
                     ),

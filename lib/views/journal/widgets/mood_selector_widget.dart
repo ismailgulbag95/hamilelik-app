@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/clay_theme.dart';
 
@@ -14,11 +15,11 @@ class MoodSelectorWidget extends StatelessWidget {
   });
 
   static const List<Map<String, dynamic>> moods = [
-    {'rating': 1, 'icon': Icons.sentiment_very_dissatisfied_rounded, 'color': Color(0xFFE57373), 'label': 'Yorgun'},
-    {'rating': 2, 'icon': Icons.sentiment_neutral_rounded, 'color': Color(0xFFFFB74D), 'label': 'Durgun'},
-    {'rating': 3, 'icon': Icons.sentiment_satisfied_rounded, 'color': Color(0xFF81C784), 'label': 'İyi'},
-    {'rating': 4, 'icon': Icons.sentiment_very_satisfied_rounded, 'color': Color(0xFF4FC3F7), 'label': 'Mutlu'},
-    {'rating': 5, 'icon': Icons.favorite_rounded, 'color': Color(0xFFF06292), 'label': 'Huzurlu'},
+    {'rating': 1, 'icon': Icons.sentiment_very_dissatisfied_rounded, 'color': Color(0xFFE57373), 'key': 'mood_tired'},
+    {'rating': 2, 'icon': Icons.sentiment_neutral_rounded, 'color': Color(0xFFFFB74D), 'key': 'mood_neutral'},
+    {'rating': 3, 'icon': Icons.sentiment_satisfied_rounded, 'color': Color(0xFF81C784), 'key': 'mood_good'},
+    {'rating': 4, 'icon': Icons.sentiment_very_satisfied_rounded, 'color': Color(0xFF4FC3F7), 'key': 'mood_happy'},
+    {'rating': 5, 'icon': Icons.favorite_rounded, 'color': Color(0xFFF06292), 'key': 'mood_peaceful'},
   ];
 
   @override
@@ -29,7 +30,7 @@ class MoodSelectorWidget extends StatelessWidget {
         final rating = m['rating'] as int;
         final icon = m['icon'] as IconData;
         final color = m['color'] as Color;
-        final label = m['label'] as String;
+        final key = m['key'] as String;
         final isSelected = rating == selectedMood;
 
         return GestureDetector(
@@ -51,7 +52,7 @@ class MoodSelectorWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  label,
+                  key.tr(),
                   style: TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w700,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/clay_theme.dart';
 
@@ -43,9 +44,9 @@ class WaterTrackerCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  const Text(
-                    'Su Tüketimi',
-                    style: TextStyle(
+                  Text(
+                    'water_tracker_title'.tr(),
+                    style: const TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w800,
                       color: AppColors.waterBlue,
@@ -56,7 +57,7 @@ class WaterTrackerCard extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.refresh_rounded, size: 20, color: AppColors.textSecondary),
                 onPressed: onReset,
-                tooltip: 'Sıfırla',
+                tooltip: 'tracker_reset'.tr(),
               ),
             ],
           ),
@@ -75,7 +76,7 @@ class WaterTrackerCard extends StatelessWidget {
                 ),
               ),
               Text(
-                '%$percent',
+                'water_percent'.tr(args: [percent.toString()]),
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w800,
@@ -90,11 +91,11 @@ class WaterTrackerCard extends StatelessWidget {
           Container(
             height: 16,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.8),
+              color: Colors.white.withValues(alpha: 0.8),
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.06),
+                  color: Colors.black.withValues(alpha: 0.06),
                   offset: const Offset(0, 2),
                   blurRadius: 4,
                 ),
@@ -111,7 +112,7 @@ class WaterTrackerCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF1E88E5).withOpacity(0.4),
+                      color: const Color(0xFF1E88E5).withValues(alpha: 0.4),
                       blurRadius: 6,
                       offset: const Offset(0, 2),
                     ),

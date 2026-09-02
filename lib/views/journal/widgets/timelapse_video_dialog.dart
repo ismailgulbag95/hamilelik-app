@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/clay_theme.dart';
@@ -97,11 +98,11 @@ class _TimelapseVideoDialogState extends State<TimelapseVideoDialog> with Single
             children: [
               const Icon(Icons.movie_creation_rounded, size: 40, color: AppColors.primaryPink),
               const SizedBox(height: 12),
-              const Text('Henüz anı ve fotoğraf kaydı bulunamadı.', style: TextStyle(fontWeight: FontWeight.w800)),
+              Text('timelapse_no_records'.tr(), style: const TextStyle(fontWeight: FontWeight.w800)),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('Kapat'),
+                child: Text('common_close'.tr()),
               ),
             ],
           ),
@@ -122,7 +123,7 @@ class _TimelapseVideoDialogState extends State<TimelapseVideoDialog> with Single
           borderRadius: BorderRadius.circular(32),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.40),
+              color: Colors.black.withValues(alpha: 0.40),
               offset: const Offset(0, 20),
               blurRadius: 40,
             ),
@@ -155,10 +156,10 @@ class _TimelapseVideoDialogState extends State<TimelapseVideoDialog> with Single
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Colors.black.withOpacity(0.55),
+                      Colors.black.withValues(alpha: 0.55),
                       Colors.transparent,
-                      Colors.black.withOpacity(0.40),
-                      Colors.black.withOpacity(0.92),
+                      Colors.black.withValues(alpha: 0.40),
+                      Colors.black.withValues(alpha: 0.92),
                     ],
                     stops: const [0.0, 0.25, 0.55, 1.0],
                   ),
@@ -187,7 +188,7 @@ class _TimelapseVideoDialogState extends State<TimelapseVideoDialog> with Single
                                   ? AppColors.primaryPink
                                   : isCurrent
                                       ? Colors.white
-                                      : Colors.white.withOpacity(0.25),
+                                      : Colors.white.withValues(alpha: 0.25),
                               borderRadius: BorderRadius.circular(2),
                             ),
                           ),
@@ -205,7 +206,7 @@ class _TimelapseVideoDialogState extends State<TimelapseVideoDialog> with Single
                             const Icon(Icons.movie_creation_rounded, color: Colors.white, size: 20),
                             const SizedBox(width: 8),
                             Text(
-                              'Hamilelik Hikayesi',
+                              'timelapse_story_title'.tr(),
                               style: GoogleFonts.nunito(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w900,
@@ -237,11 +238,11 @@ class _TimelapseVideoDialogState extends State<TimelapseVideoDialog> with Single
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                       decoration: BoxDecoration(
-                        color: AppColors.primaryPink.withOpacity(0.90),
+                        color: AppColors.primaryPink.withValues(alpha: 0.90),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Text(
-                        '${currentFrame.week}. Hafta • ${currentFrame.date}',
+                        '${'weekly_week_range'.tr(args: [currentFrame.week.toString()])} • ${currentFrame.date}',
                         style: GoogleFonts.nunito(
                           color: Colors.white,
                           fontSize: 12,
@@ -269,7 +270,7 @@ class _TimelapseVideoDialogState extends State<TimelapseVideoDialog> with Single
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.quicksand(
-                        color: Colors.white.withOpacity(0.90),
+                        color: Colors.white.withValues(alpha: 0.90),
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
                         height: 1.35,
@@ -300,7 +301,7 @@ class _TimelapseVideoDialogState extends State<TimelapseVideoDialog> with Single
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppColors.primaryPink.withOpacity(0.4),
+                                  color: AppColors.primaryPink.withValues(alpha: 0.4),
                                   blurRadius: 16,
                                   offset: const Offset(0, 4),
                                 ),

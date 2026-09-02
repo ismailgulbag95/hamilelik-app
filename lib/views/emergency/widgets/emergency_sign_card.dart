@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/clay_theme.dart';
 
@@ -17,7 +18,7 @@ class EmergencySignCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isCritical = urgency == 'Kritik';
+    final isCritical = urgency == 'Kritik' || urgency == 'Critical' || urgency == 'emergency_urgency_critical'.tr();
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -25,14 +26,14 @@ class EmergencySignCard extends StatelessWidget {
         color: isCritical ? AppColors.medicalAlertBg : AppColors.clayCardSurface,
         borderRadius: BorderRadius.circular(22),
         border: Border.all(
-          color: isCritical ? AppColors.medicalAlertRed.withOpacity(0.6) : Colors.transparent,
+          color: isCritical ? AppColors.medicalAlertRed.withValues(alpha: 0.6) : Colors.transparent,
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
             color: isCritical
-                ? AppColors.medicalAlertRed.withOpacity(0.12)
-                : Colors.black.withOpacity(0.04),
+                ? AppColors.medicalAlertRed.withValues(alpha: 0.12)
+                : Colors.black.withValues(alpha: 0.04),
             offset: const Offset(0, 8),
             blurRadius: 16,
           ),

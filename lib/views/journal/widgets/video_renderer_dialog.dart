@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/clay_theme.dart';
 import '../../../models/diary_model.dart';
@@ -66,18 +67,18 @@ class _VideoRendererDialogState extends State<VideoRendererDialog> {
               ),
             ),
             const SizedBox(height: 12),
-            const Text(
-              'Aura Yolculuk Videosu',
-              style: TextStyle(
+            Text(
+              'video_dialog_title'.tr(),
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w800,
                 color: AppColors.primaryDark,
               ),
             ),
             const SizedBox(height: 4),
-            const Text(
-              'FFmpeg & Romantik Melodi Time-Lapse',
-              style: TextStyle(
+            Text(
+              'video_dialog_subtitle'.tr(),
+              style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textSecondary,
@@ -89,15 +90,15 @@ class _VideoRendererDialogState extends State<VideoRendererDialog> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.85),
+                color: Colors.white.withValues(alpha: 0.85),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
                 children: [
-                  _buildMatrixRow('Seçilen Özel Anlar', '${widget.highlightEntries.length} Adet'),
-                  _buildMatrixRow('Arka Plan Melodisi', 'Aura_Lullaby.mp3'),
-                  _buildMatrixRow('Video Çözünürlüğü', '1080x1920 (Full HD Dikey)'),
-                  _buildMatrixRow('Tahmini Süre', '${matrix['total_duration_sec']} Saniye'),
+                  _buildMatrixRow('video_stat_moments'.tr(), 'video_stat_count'.tr(args: [widget.highlightEntries.length.toString()])),
+                  _buildMatrixRow('video_stat_melody'.tr(), 'Aura_Lullaby.mp3'),
+                  _buildMatrixRow('video_stat_res'.tr(), 'video_stat_res_val'.tr()),
+                  _buildMatrixRow('video_stat_est_time'.tr(), 'video_stat_seconds'.tr(args: [matrix['total_duration_sec'].toString()])),
                 ],
               ),
             ),
@@ -113,7 +114,7 @@ class _VideoRendererDialogState extends State<VideoRendererDialog> {
               ),
               const SizedBox(height: 8),
               Text(
-                'Video İşleniyor... %${(_progress * 100).toInt()}',
+                'video_processing'.tr(args: [(_progress * 100).toInt().toString()]),
                 style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13, color: AppColors.primaryDark),
               ),
               const SizedBox(height: 16),
@@ -124,14 +125,14 @@ class _VideoRendererDialogState extends State<VideoRendererDialog> {
                   color: AppColors.clayMint,
                   borderRadius: BorderRadius.circular(14),
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.check_circle_rounded, color: AppColors.successGreen, size: 20),
-                    SizedBox(width: 6),
+                    const Icon(Icons.check_circle_rounded, color: AppColors.successGreen, size: 20),
+                    const SizedBox(width: 6),
                     Text(
-                      'Yolculuk Videosu Başarıyla Üretildi!',
-                      style: TextStyle(fontWeight: FontWeight.w800, color: AppColors.successGreen, fontSize: 13),
+                      'video_success'.tr(),
+                      style: const TextStyle(fontWeight: FontWeight.w800, color: AppColors.successGreen, fontSize: 13),
                     ),
                   ],
                 ),
@@ -145,7 +146,7 @@ class _VideoRendererDialogState extends State<VideoRendererDialog> {
                   child: ClayButton(
                     color: AppColors.clayCardSurface,
                     onPressed: () => Navigator.pop(context),
-                    child: const Text('Kapat', style: TextStyle(fontWeight: FontWeight.w700)),
+                    child: Text('common_close'.tr(), style: const TextStyle(fontWeight: FontWeight.w700)),
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -154,7 +155,7 @@ class _VideoRendererDialogState extends State<VideoRendererDialog> {
                     color: _isFinished ? AppColors.clayMint : AppColors.clayPeach,
                     onPressed: _isRendering ? null : (_isFinished ? null : _startRender),
                     child: Text(
-                      _isFinished ? 'Hazır' : 'Render Başlat',
+                      _isFinished ? 'video_ready'.tr() : 'video_start_render'.tr(),
                       style: const TextStyle(
                         fontWeight: FontWeight.w800,
                         color: AppColors.primaryDark,

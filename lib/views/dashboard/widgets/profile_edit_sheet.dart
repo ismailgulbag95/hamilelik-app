@@ -4,6 +4,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/clay_theme.dart';
 import '../../../models/profile_model.dart';
 import '../../../services/database_helper.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 /// Aura Pregnancy - Bebek & Anne Bilgilerini Düzenleme Modalı
 class ProfileEditSheet extends StatefulWidget {
@@ -56,7 +57,7 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Bilgiler güncellendi: ${updated.babyDisplayName}'),
+          content: Text('profile_edit_toast'.tr(args: [updated.babyDisplayName])),
           backgroundColor: AppColors.successGreen,
         ),
       );
@@ -110,7 +111,7 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
                 ),
                 const SizedBox(width: 10),
                 Text(
-                  'Bebek & Profil Ayarları',
+                  'profile_edit_title'.tr(),
                   style: GoogleFonts.nunito(
                     fontSize: 18,
                     fontWeight: FontWeight.w900,
@@ -120,9 +121,9 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
               ],
             ),
             const SizedBox(height: 4),
-            const Text(
-              'Bebeğinizin ismini ve cinsiyetini dilediğiniz an güncelleyebilirsiniz.',
-              style: TextStyle(fontSize: 12, color: Color(0xFF7A6E78), fontWeight: FontWeight.w600),
+            Text(
+              'profile_edit_desc'.tr(),
+              style: const TextStyle(fontSize: 12, color: Color(0xFF7A6E78), fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 16),
 
@@ -133,18 +134,18 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Row(
+                  Row(
                     children: [
-                      Icon(Icons.face_rounded, size: 15, color: AppColors.primaryPink),
-                      SizedBox(width: 6),
-                      Text('Anne Adayının İsmi:', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.primaryDark)),
+                      const Icon(Icons.face_rounded, size: 15, color: AppColors.primaryPink),
+                      const SizedBox(width: 6),
+                      Text('profile_edit_mom_label'.tr(), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.primaryDark)),
                     ],
                   ),
                   const SizedBox(height: 6),
                   TextField(
                     controller: _momNameController,
                     decoration: InputDecoration(
-                      hintText: 'Örn: Elif, Zeynep',
+                      hintText: 'onboarding_step3_mom_hint'.tr(),
                       hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 13),
                       filled: true,
                       fillColor: Colors.white,
@@ -164,20 +165,20 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Row(
+                  Row(
                     children: [
-                      Icon(Icons.child_friendly_rounded, size: 15, color: AppColors.primaryPink),
-                      SizedBox(width: 6),
-                      Text('Bebeğin İsmi:', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.primaryDark)),
+                      const Icon(Icons.child_friendly_rounded, size: 15, color: AppColors.primaryPink),
+                      const SizedBox(width: 6),
+                      Text('profile_edit_baby_label'.tr(), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.primaryDark)),
                     ],
                   ),
                   const SizedBox(height: 4),
-                  const Text('İsim girdiğinizde uygulama "Ayşe Bebek bugün 150 gr" şeklinde hitap edecektir.', style: TextStyle(fontSize: 11, color: AppColors.textSecondary)),
+                  Text('profile_edit_baby_desc'.tr(), style: const TextStyle(fontSize: 11, color: AppColors.textSecondary)),
                   const SizedBox(height: 6),
                   TextField(
                     controller: _babyNameController,
                     decoration: InputDecoration(
-                      hintText: 'Örn: Ayşe, Mehmet, Mavi',
+                      hintText: 'onboarding_step3_baby_hint'.tr(),
                       hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 13),
                       filled: true,
                       fillColor: Colors.white,
@@ -197,21 +198,21 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Row(
+                  Row(
                     children: [
-                      Icon(Icons.stars_rounded, size: 15, color: AppColors.secondaryPeach),
-                      SizedBox(width: 6),
-                      Text('Bebeğin Cinsiyeti:', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.primaryDark)),
+                      const Icon(Icons.stars_rounded, size: 15, color: AppColors.secondaryPeach),
+                      const SizedBox(width: 6),
+                      Text('profile_edit_gender_label'.tr(), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.primaryDark)),
                     ],
                   ),
                   const SizedBox(height: 10),
                   Row(
                     children: [
-                      _buildGenderPill('Kız', 'girl', Icons.female_rounded, AppColors.clayRose, AppColors.primaryPink),
+                      _buildGenderPill('onboarding_step3_gender_girl'.tr(), 'girl', Icons.female_rounded, AppColors.clayRose, AppColors.primaryPink),
                       const SizedBox(width: 8),
-                      _buildGenderPill('Erkek', 'boy', Icons.male_rounded, AppColors.claySky, AppColors.waterBlue),
+                      _buildGenderPill('onboarding_step3_gender_boy'.tr(), 'boy', Icons.male_rounded, AppColors.claySky, AppColors.waterBlue),
                       const SizedBox(width: 8),
-                      _buildGenderPill('Sürpriz', 'surprise', Icons.help_outline_rounded, AppColors.clayCream, AppColors.accentGold),
+                      _buildGenderPill('onboarding_step3_gender_surprise'.tr(), 'surprise', Icons.help_outline_rounded, AppColors.clayCream, AppColors.accentGold),
                     ],
                   ),
                 ],
@@ -225,9 +226,9 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
               onPressed: _isSaving ? null : _saveProfile,
               child: _isSaving
                   ? const CircularProgressIndicator(color: AppColors.successGreen)
-                  : const Text(
-                      'Değişiklikleri Kaydet',
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: AppColors.successGreen),
+                  : Text(
+                      'profile_edit_save'.tr(),
+                      style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: AppColors.successGreen),
                     ),
             ),
           ],
@@ -250,7 +251,7 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
             borderRadius: BorderRadius.circular(14),
             boxShadow: [
               BoxShadow(
-                color: isSelected ? activeColor.withOpacity(0.3) : Colors.black.withOpacity(0.04),
+                color: isSelected ? activeColor.withValues(alpha: 0.3) : Colors.black.withValues(alpha: 0.04),
                 blurRadius: isSelected ? 6 : 2,
                 offset: const Offset(0, 2),
               ),

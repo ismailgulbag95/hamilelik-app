@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/clay_theme.dart';
 import '../../../services/debug_seeder_service.dart';
@@ -46,7 +47,7 @@ class _DebugPanelBottomSheetState extends State<DebugPanelBottomSheet> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: AppColors.successGreen,
-          content: Text('40 Haftalık Test Verisi Yüklendi (${result['logs']} Günlük Log, ${result['diaries']} Anı & Fotoğraf)'),
+          content: Text('debug_seed_success'.tr(args: [result['logs'].toString(), result['diaries'].toString()])),
         ),
       );
     }
@@ -60,9 +61,9 @@ class _DebugPanelBottomSheetState extends State<DebugPanelBottomSheet> {
     if (mounted) {
       setState(() => _isLoading = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           backgroundColor: AppColors.medicalAlertRed,
-          content: Text('Tüm veritabanı temizlendi ve sıfırlandı.'),
+          content: Text('debug_reset_success'.tr()),
         ),
       );
     }
@@ -113,7 +114,7 @@ class _DebugPanelBottomSheetState extends State<DebugPanelBottomSheet> {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'Geliştirici & Test Paneli',
+                      'debug_title'.tr(),
                       style: GoogleFonts.nunito(
                         fontSize: 18,
                         fontWeight: FontWeight.w900,
@@ -125,7 +126,7 @@ class _DebugPanelBottomSheetState extends State<DebugPanelBottomSheet> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE07A5F).withOpacity(0.15),
+                    color: const Color(0xFFE07A5F).withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Text('DEBUG MODE', style: TextStyle(color: Color(0xFFE07A5F), fontWeight: FontWeight.w800, fontSize: 10)),
@@ -133,9 +134,9 @@ class _DebugPanelBottomSheetState extends State<DebugPanelBottomSheet> {
               ],
             ),
             const SizedBox(height: 4),
-            const Text(
-              'Tüm sistemleri ve zaman tünelini test etmek için hızlı aksiyonlar:',
-              style: TextStyle(fontSize: 11.5, color: Color(0xFF7A6E78), fontWeight: FontWeight.w600),
+            Text(
+              'debug_subtitle'.tr(),
+              style: const TextStyle(fontSize: 11.5, color: Color(0xFF7A6E78), fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 16),
 
@@ -147,16 +148,16 @@ class _DebugPanelBottomSheetState extends State<DebugPanelBottomSheet> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(18),
                   boxShadow: [
-                    BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 10, offset: const Offset(0, 2)),
+                    BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 10, offset: const Offset(0, 2)),
                   ],
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _buildStatItem('Hafta', '${_stats!['currentWeek']}', Icons.calendar_month_rounded),
-                    _buildStatItem('Günlük Log', '${_stats!['totalLogs']}', Icons.edit_calendar_rounded),
-                    _buildStatItem('Anı & Not', '${_stats!['totalDiaries']}', Icons.menu_book_rounded),
-                    _buildStatItem('Fotoğraf', '${_stats!['totalPhotos']}', Icons.photo_camera_rounded),
+                    _buildStatItem('debug_stat_week'.tr(), '${_stats!['currentWeek']}', Icons.calendar_month_rounded),
+                    _buildStatItem('debug_stat_logs'.tr(), '${_stats!['totalLogs']}', Icons.edit_calendar_rounded),
+                    _buildStatItem('debug_stat_diaries'.tr(), '${_stats!['totalDiaries']}', Icons.menu_book_rounded),
+                    _buildStatItem('debug_stat_photos'.tr(), '${_stats!['totalPhotos']}', Icons.photo_camera_rounded),
                   ],
                 ),
               ),
@@ -172,7 +173,7 @@ class _DebugPanelBottomSheetState extends State<DebugPanelBottomSheet> {
                   const Icon(Icons.auto_awesome_rounded, color: Color(0xFF2E6135), size: 18),
                   const SizedBox(width: 8),
                   Text(
-                    _isLoading ? 'Yükleniyor...' : '40 Haftalık Test Verisi Doldur',
+                    _isLoading ? 'debug_loading'.tr() : 'debug_seed_btn'.tr(),
                     style: GoogleFonts.nunito(
                       fontSize: 14,
                       fontWeight: FontWeight.w900,
@@ -200,7 +201,7 @@ class _DebugPanelBottomSheetState extends State<DebugPanelBottomSheet> {
                   const Icon(Icons.movie_creation_rounded, color: AppColors.primaryDark, size: 18),
                   const SizedBox(width: 8),
                   Text(
-                    'Time-lapse Video Oluştur & Oynat',
+                    'debug_timelapse_btn'.tr(),
                     style: GoogleFonts.nunito(
                       fontSize: 14,
                       fontWeight: FontWeight.w900,
@@ -226,11 +227,15 @@ class _DebugPanelBottomSheetState extends State<DebugPanelBottomSheet> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Aktif Haftayı Değiştir: ${_sliderWeek.toInt()}. Hafta',
+                        'debug_change_week'.tr(args: [_sliderWeek.toInt().toString()]),
                         style: GoogleFonts.nunito(fontWeight: FontWeight.w800, fontSize: 13, color: const Color(0xFF2D232E)),
                       ),
                       Text(
-                        _sliderWeek <= 12 ? '1. Trimester' : _sliderWeek <= 27 ? '2. Trimester' : '3. Trimester',
+                        _sliderWeek <= 12
+                            ? 'dashboard_trimester'.tr(args: ['1'])
+                            : _sliderWeek <= 27
+                                ? 'dashboard_trimester'.tr(args: ['2'])
+                                : 'dashboard_trimester'.tr(args: ['3']),
                         style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.primaryPink),
                       ),
                     ],
@@ -266,7 +271,7 @@ class _DebugPanelBottomSheetState extends State<DebugPanelBottomSheet> {
                   const Icon(Icons.delete_outline_rounded, color: AppColors.medicalAlertRed, size: 18),
                   const SizedBox(width: 8),
                   Text(
-                    'Tüm Veritabanını Sıfırla',
+                    'debug_reset_btn'.tr(),
                     style: GoogleFonts.nunito(
                       fontSize: 13,
                       fontWeight: FontWeight.w800,

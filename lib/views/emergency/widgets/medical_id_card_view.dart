@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/clay_theme.dart';
 import '../../../models/emergency_card_model.dart';
@@ -25,25 +26,25 @@ class MedicalIdCardView extends StatelessWidget {
               color: AppColors.clayRose,
               borderRadius: BorderRadius.circular(18),
             ),
-            child: const Row(
+            child: Row(
               children: [
-                Icon(Icons.local_hospital_rounded, color: AppColors.primaryPink, size: 24),
-                SizedBox(width: 10),
+                const Icon(Icons.local_hospital_rounded, color: AppColors.primaryPink, size: 24),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Acil Tıbbi Bilgi Kartı',
-                        style: TextStyle(
+                        'medical_card_title'.tr(),
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w800,
                           color: AppColors.primaryDark,
                         ),
                       ),
                       Text(
-                        'Hekim & Acil Sağlık Ekibi İncelemesi İçin',
-                        style: TextStyle(
+                        'medical_card_sub'.tr(),
+                        style: const TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w600,
                           color: AppColors.textSecondary,
@@ -58,28 +59,33 @@ class MedicalIdCardView extends StatelessWidget {
           const SizedBox(height: 16),
 
           // Tıbbi Temel Bilgiler Grid
-          _buildInfoRow('Hasta Adı / Soyadı', card.patientName),
-          _buildInfoRow('Kan Grubu', card.bloodType, isHighlight: true),
-          _buildInfoRow('Mevcut Gebelik Haftası', '${card.currentWeek}. Hafta'),
-          _buildInfoRow('Son Adet Tarihi (SAT)', AppDateUtils.formatDisplay(card.lmpDate)),
-          _buildInfoRow('Tahmini Doğum Tarihi', AppDateUtils.formatDisplay(card.dueDate)),
+          _buildInfoRow('medical_card_patient'.tr(), card.patientName.isNotEmpty ? card.patientName : '-'),
+          _buildInfoRow('medical_card_blood'.tr(), card.bloodType.isNotEmpty ? card.bloodType : '-', isHighlight: true),
+          _buildInfoRow('medical_card_week'.tr(), 'weekly_week_range'.tr(args: [card.currentWeek.toString()])),
+          _buildInfoRow('medical_card_lmp'.tr(), card.lmpDate.isNotEmpty ? AppDateUtils.formatDisplay(card.lmpDate) : '-'),
+          _buildInfoRow('medical_card_due'.tr(), card.dueDate.isNotEmpty ? AppDateUtils.formatDisplay(card.dueDate) : '-'),
           const Divider(height: 20),
 
-          _buildInfoRow('Alerjiler', card.allergies, isAlert: true),
-          _buildInfoRow('Kronik Hastalıklar', card.chronicDiseases),
-          _buildInfoRow('Düzenli Kullanılan İlaçlar', card.medications),
+          _buildInfoRow('medical_card_allergies'.tr(), card.allergies.isNotEmpty ? card.allergies : '-', isAlert: card.allergies.isNotEmpty && card.allergies.toLowerCase() != 'yok' && card.allergies.toLowerCase() != 'none'),
+          _buildInfoRow('medical_card_chronic'.tr(), card.chronicDiseases.isNotEmpty ? card.chronicDiseases : '-'),
+          _buildInfoRow('medical_card_meds'.tr(), card.medications.isNotEmpty ? card.medications : '-'),
           const Divider(height: 20),
 
-          _buildInfoRow('Takip Eden Doktor', card.doctorName),
-          _buildInfoRow('Doktor Telefonu', card.doctorPhone),
-          _buildInfoRow('Kayıtlı Hastane', card.hospitalName),
-          _buildInfoRow('Acil İletişim Kişisi (Eş/Yakın)', '${card.emergencyContactName} (${card.emergencyContactPhone})'),
+          _buildInfoRow('medical_card_doctor'.tr(), card.doctorName.isNotEmpty ? card.doctorName : '-'),
+          _buildInfoRow('medical_card_doc_phone'.tr(), card.doctorPhone.isNotEmpty ? card.doctorPhone : '-'),
+          _buildInfoRow('medical_card_hospital'.tr(), card.hospitalName.isNotEmpty ? card.hospitalName : '-'),
+          _buildInfoRow(
+            'medical_card_contact'.tr(),
+            card.emergencyContactName.isNotEmpty
+                ? '${card.emergencyContactName}${card.emergencyContactPhone.isNotEmpty ? ' (${card.emergencyContactPhone})' : ''}'
+                : '-',
+          ),
           const Divider(height: 20),
 
           // Semptom Özeti
-          const Text(
-            'Son Kayıtlı Semptom ve Vital Bulgular:',
-            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: AppColors.textSecondary),
+          Text(
+            'medical_card_symptoms'.tr(),
+            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: AppColors.textSecondary),
           ),
           const SizedBox(height: 4),
           Container(

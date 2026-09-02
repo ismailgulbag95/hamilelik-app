@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/widgets/fruit_3d_widget.dart';
 import '../../../core/constants/weekly_medical_data.dart';
@@ -55,9 +56,9 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
       final week = index + 1;
       final data = WeeklyMedicalData.getInfoForWeek(week);
       return JourneyStageData(
-        title: '$week. Hafta Serüveni',
+        title: 'weekly_journey_title'.tr(args: ['$week']),
         fruitComparison: data['fruit_name'] as String,
-        weekRange: '$week. Hafta',
+        weekRange: 'weekly_week_range'.tr(args: ['$week']),
         sizeInfo: '${data['length']} • ${data['weight']}',
         description: data['baby_dev'] as String,
         icon: data['icon'] as IconData,
@@ -119,9 +120,9 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
 
     AdRewardDialog.show(
       context: context,
-      title: 'Sonraki Meyve Boyutunu Keşfet',
-      subtitle: '${nextStage.weekRange} için bebeğinizin meyve boyut benzerliğini ve gelişim özelliklerini öğrenmek için kısa bir video izleyin.',
-      unlockTargetName: '${nextStage.weekRange} Boyut Keşfi',
+      title: 'ad_reward_title'.tr(),
+      subtitle: 'ad_reward_subtitle'.tr(args: [nextStage.weekRange]),
+      unlockTargetName: 'ad_reward_target'.tr(args: [nextStage.weekRange]),
       onRewardEarned: () {
         setState(() {
           _maxUnlockedIndex = nextIndex;
@@ -145,7 +146,7 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
         borderRadius: BorderRadius.circular(34),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF9E7B83).withOpacity(0.08),
+            color: const Color(0xFF9E7B83).withValues(alpha: 0.08),
             offset: const Offset(0, 16),
             blurRadius: 36,
           ),
@@ -164,7 +165,7 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Bebeğinin Büyüme Serüveni',
+                      'tracker_main_title'.tr(),
                       style: GoogleFonts.nunito(
                         fontSize: 20,
                         fontWeight: FontWeight.w900,
@@ -174,7 +175,7 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      'Meyve & Boyut Karşılaştırmaları (${activeIndex + 1}/${stages.length})',
+                      'tracker_subtitle'.tr(args: ['${activeIndex + 1}', '${stages.length}']),
                       style: GoogleFonts.quicksand(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
@@ -190,7 +191,7 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF4E8D55).withOpacity(0.18),
+                        color: const Color(0xFF4E8D55).withValues(alpha: 0.18),
                         offset: const Offset(0, 4),
                         blurRadius: 10,
                       ),
@@ -231,7 +232,7 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
                   child: Container(
                     height: 4,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFE8D7DC).withOpacity(0.7),
+                      color: const Color(0xFFE8D7DC).withValues(alpha: 0.7),
                       borderRadius: BorderRadius.circular(2),
                     ),
                   ),
@@ -261,7 +262,7 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: const Color(0xFFC48B4B).withOpacity(0.24),
+                                      color: const Color(0xFFC48B4B).withValues(alpha: 0.24),
                                       offset: const Offset(0, 8),
                                       blurRadius: 16,
                                     ),
@@ -274,7 +275,7 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
                                     colors: [
-                                      Colors.white.withOpacity(0.80),
+                                      Colors.white.withValues(alpha: 0.80),
                                       const Color(0xFFF9E7D0),
                                       const Color(0xFFE8CAA4),
                                     ],
@@ -290,7 +291,7 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                'Sonraki Boyut ?',
+                                'next_size_question'.tr(),
                                 style: GoogleFonts.nunito(
                                   fontSize: 10.5,
                                   fontWeight: FontWeight.w800,
@@ -355,13 +356,13 @@ class _PregnancyJourneyTrackerState extends State<PregnancyJourneyTracker> {
               borderRadius: BorderRadius.circular(26),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF9E7B83).withOpacity(0.08),
+                  color: const Color(0xFF9E7B83).withValues(alpha: 0.08),
                   offset: const Offset(0, 8),
                   blurRadius: 20,
                 ),
               ],
               border: Border.all(
-                color: const Color(0xFFD4EBD6).withOpacity(0.6),
+                color: const Color(0xFFD4EBD6).withValues(alpha: 0.6),
                 width: 1.5,
               ),
             ),

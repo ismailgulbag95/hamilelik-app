@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/theme/clay_theme.dart';
 import '../../controllers/journal_controller.dart';
@@ -38,9 +39,9 @@ class _JournalScreenState extends State<JournalScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
-          'Aura Journal (Anı Günlüğü)',
-          style: TextStyle(
+        title: Text(
+          'journal_app_bar_title'.tr(),
+          style: const TextStyle(
             color: AppColors.primaryDark,
             fontWeight: FontWeight.w800,
             fontSize: 18,
@@ -50,7 +51,7 @@ class _JournalScreenState extends State<JournalScreen> {
           // Time-Lapse Video Üretici Butonu
           IconButton(
             icon: const Icon(Icons.movie_creation_rounded, color: AppColors.primaryPink),
-            tooltip: 'Yolculuk Videosu Oluştur',
+            tooltip: 'journal_create_video_tooltip'.tr(),
             onPressed: () {
               showDialog(
                 context: context,
@@ -90,16 +91,16 @@ class _JournalScreenState extends State<JournalScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                'Time-Lapse Yolculuk Videosu',
-                                style: TextStyle(
+                              Text(
+                                'journal_timelapse_title'.tr(),
+                                style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w800,
                                   color: AppColors.primaryDark,
                                 ),
                               ),
                               Text(
-                                '${_controller.highlightEntries.length} özel an seçildi • FFmpeg Render',
+                                'journal_timelapse_subtitle'.tr(args: [_controller.highlightEntries.length.toString()]),
                                 style: const TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w600,
@@ -120,9 +121,9 @@ class _JournalScreenState extends State<JournalScreen> {
                               ),
                             );
                           },
-                          child: const Text(
-                            'Üret',
-                            style: TextStyle(fontWeight: FontWeight.w800, fontSize: 12, color: AppColors.primaryDark),
+                          child: Text(
+                            'journal_generate_btn'.tr(),
+                            style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 12, color: AppColors.primaryDark),
                           ),
                         ),
                       ],
@@ -130,9 +131,9 @@ class _JournalScreenState extends State<JournalScreen> {
                   ),
                   const SizedBox(height: 18),
 
-                  const Text(
-                    'Zaman Tüneli (Timeline)',
-                    style: TextStyle(
+                  Text(
+                    'journal_timeline_heading'.tr(),
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w800,
                       color: AppColors.textPrimary,
@@ -166,9 +167,9 @@ class _JournalScreenState extends State<JournalScreen> {
           );
         },
         icon: const Icon(Icons.favorite_rounded, color: Colors.white),
-        label: const Text(
-          'Anı Yaz',
-          style: TextStyle(fontWeight: FontWeight.w800, color: Colors.white, letterSpacing: 0.2),
+        label: Text(
+          'journal_write_memory'.tr(),
+          style: const TextStyle(fontWeight: FontWeight.w800, color: Colors.white, letterSpacing: 0.2),
         ),
       ),
     );

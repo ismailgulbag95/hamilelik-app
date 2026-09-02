@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/clay_theme.dart';
 
@@ -27,7 +28,7 @@ class _MedicalTestsChecklistCardState extends State<MedicalTestsChecklistCard> {
     }
 
     final test = widget.milestoneTest!;
-    final title = test['title'] as String? ?? 'Kritik Tıbbi Tarama';
+    final title = test['title'] as String? ?? 'test_critical_screening'.tr();
     final desc = test['desc'] as String? ?? '';
     final action = test['action'] as String? ?? '';
 
@@ -58,7 +59,7 @@ class _MedicalTestsChecklistCardState extends State<MedicalTestsChecklistCard> {
                     borderRadius: BorderRadius.circular(14),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.08),
+                        color: Colors.black.withValues(alpha: 0.08),
                         blurRadius: 4,
                         offset: const Offset(0, 2),
                       ),
@@ -74,7 +75,7 @@ class _MedicalTestsChecklistCardState extends State<MedicalTestsChecklistCard> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        _isCompleted ? 'Tamamlandı' : 'Yapılacak',
+                        _isCompleted ? 'test_completed'.tr() : 'test_to_do'.tr(),
                         style: TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w800,
@@ -103,7 +104,7 @@ class _MedicalTestsChecklistCardState extends State<MedicalTestsChecklistCard> {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.85),
+              color: Colors.white.withValues(alpha: 0.85),
               borderRadius: BorderRadius.circular(14),
             ),
             child: Row(

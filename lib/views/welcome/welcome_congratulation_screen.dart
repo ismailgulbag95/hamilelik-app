@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/theme/clay_theme.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'app_guide_screen.dart';
 
 /// Aura Pregnancy - Hoş Geldiniz ve Tebrikler Ekranı
@@ -48,8 +49,8 @@ class WelcomeCongratulationScreen extends StatelessWidget {
                   const SizedBox(height: 24),
 
                   // Tebrik Başlığı
-                  const Text(
-                    'Tebrikler Anne Adayı!',
+                  Text(
+                    'welcome_title'.tr(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 26,
@@ -60,8 +61,8 @@ class WelcomeCongratulationScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
 
-                  const Text(
-                    'Hayatınızın en mucizevi ve sevgi dolu yolculuğu başladı.',
+                  Text(
+                    'welcome_subtitle'.tr(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
@@ -75,10 +76,10 @@ class WelcomeCongratulationScreen extends StatelessWidget {
                   ClayCard(
                     color: AppColors.clayCardSurface,
                     padding: const EdgeInsets.all(22),
-                    child: const Column(
+                    child: Column(
                       children: [
                         Text(
-                          'Aura Pregnancy, hamileliğinizin her anında bebeğinizin gelişimini uzman tıbbi referanslarla izlemeniz ve bu eşsiz 40 haftayı romantik anılarla ölümsüzleştirmeniz için tasarlandı.',
+                          'welcome_desc'.tr(),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 14,
@@ -87,17 +88,17 @@ class WelcomeCongratulationScreen extends StatelessWidget {
                             height: 1.5,
                           ),
                         ),
-                        SizedBox(height: 14),
+                        const SizedBox(height: 14),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.favorite_border_rounded, size: 16, color: AppColors.primaryPink),
-                            SizedBox(width: 4),
-                            Text('Sevgiyle Tasarlandı', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: AppColors.primaryPink)),
-                            SizedBox(width: 16),
-                            Icon(Icons.medical_services_outlined, size: 16, color: AppColors.waterBlue),
-                            SizedBox(width: 4),
-                            Text('Tıbbi Doğruluk', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: AppColors.waterBlue)),
+                            const Icon(Icons.favorite_border_rounded, size: 16, color: AppColors.primaryPink),
+                            const SizedBox(width: 4),
+                            Text('welcome_feature1'.tr(), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: AppColors.primaryPink)),
+                            const SizedBox(width: 16),
+                            const Icon(Icons.medical_services_outlined, size: 16, color: AppColors.waterBlue),
+                            const SizedBox(width: 4),
+                            Text('welcome_feature2'.tr(), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: AppColors.waterBlue)),
                           ],
                         ),
                       ],
@@ -125,12 +126,12 @@ class WelcomeCongratulationScreen extends StatelessWidget {
                         );
                       }
                     },
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Uygulama Rehberini İncele',
-                          style: TextStyle(
+                          'welcome_button'.tr(),
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w800,
                             color: AppColors.primaryDark,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../core/constants/app_colors.dart';
 import '../core/widgets/fluid_clay_bottom_bar.dart';
 import 'dashboard/dashboard_screen.dart';
@@ -63,30 +64,30 @@ class _MainNavigationScaffoldState extends State<MainNavigationScaffold> {
       bottomNavigationBar: FluidClayBottomNavBar(
         selectedIndex: _currentIndex,
         onTabSelected: _onTabTapped,
-        items: const [
+        items: [
           FluidNavItem(
             icon: Icons.home_rounded,
-            label: 'Ana Sayfa',
+            label: 'nav_home'.tr(),
           ),
           FluidNavItem(
             icon: Icons.calendar_month_rounded,
-            label: 'Haftalık',
+            label: 'nav_weekly'.tr(),
           ),
           FluidNavItem(
             icon: Icons.search_rounded, // Büyüteç ikonu
-            label: 'Takip',
+            label: 'nav_tracker'.tr(),
           ),
           FluidNavItem(
             icon: Icons.auto_graph_rounded, // Yolculuk / Timeline grafiği
-            label: 'Yolculuk',
+            label: 'nav_journey'.tr(),
           ),
           FluidNavItem(
             icon: Icons.menu_book_rounded,
-            label: 'Günlük',
+            label: 'nav_journal'.tr(),
           ),
           FluidNavItem(
             icon: Icons.emergency_rounded,
-            label: 'Acil',
+            label: 'nav_emergency'.tr(),
             isEmergency: true,
           ),
         ],

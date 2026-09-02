@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+
 /// Aura Pregnancy - Değişmez Tıbbi Referans Veri Tabanı
 /// Bu sınıftaki değerler tıbbi doğruluğu korumak için immutable / sabit veri olarak kodlanmıştır.
 class PregnancyMedicalSpecs {
@@ -48,78 +50,78 @@ class PregnancyMedicalSpecs {
   };
 
   /// Hafta Hafta Kritik Tıbbi Tarama ve Test Takvimi
-  static const Map<int, Map<String, String>> medicalMilestones = {
+  static Map<int, Map<String, String>> get medicalMilestones => {
     10: {
-      'test': 'NIPT (Kromozomal Tarama)',
-      'desc': 'Non-invaziv Prenatal Test bu haftadan itibaren kromozomal anomalileri taramak için uygulanabilir.'
+      'test': 'milestone_10_title'.tr(),
+      'desc': 'milestone_10_desc'.tr()
     },
     11: {
-      'test': 'İkili Tarama Testi Başlangıcı',
-      'desc': 'Ense kalınlığı (NT) ölçümü ve kan testleri için hazırlık yapın.'
+      'test': 'milestone_11_title'.tr(),
+      'desc': 'milestone_11_desc'.tr()
     },
     12: {
-      'test': 'İkili Tarama Dönemi',
-      'desc': 'Ense kalınlığı ölçümü ile PAPP-A ve serbest β-hCG ölçümlerini içeren ikili tarama bu hafta uygulanmalıdır.'
+      'test': 'milestone_12_title'.tr(),
+      'desc': 'milestone_12_desc'.tr()
     },
     15: {
-      'test': 'Üçlü/Dörtlü Tarama Planı',
-      'desc': 'AFP, hCG, estriol ve inhibin-A değerlerinin inceleneceği tarama testlerini doktorunuzla planlayın.'
+      'test': 'milestone_16_title'.tr(),
+      'desc': 'milestone_16_desc'.tr()
     },
     20: {
-      'test': 'Ayrıntılı Ultrason (Morfoloji)',
-      'desc': 'Bebeğin organlarının, kalbinin ve beyninin detaylı olarak inceleneceği ikinci trimester morfoloji taraması bu hafta yapılır.'
+      'test': 'milestone_20_title'.tr(),
+      'desc': 'milestone_20_desc'.tr()
     },
     24: {
-      'test': 'Gestasyonel Diyabet Taraması',
-      'desc': '50 gr glukoz yükleme testi ile gebelik şekeri taraması bu haftalarda (24-28) planlanır.'
+      'test': 'milestone_24_title'.tr(),
+      'desc': 'milestone_24_desc'.tr()
     },
     28: {
-      'test': 'Anti-D Değerlendirmesi & NST',
-      'desc': 'Kan uyuşmazlığı (Rh negatif) olan gebelerde Anti-D iğnesi değerlendirmesi ve rutin NST kontrolleri başlar.'
+      'test': 'milestone_28_title'.tr(),
+      'desc': 'milestone_28_desc'.tr()
     }
   };
 
   /// Acil Uyarı İşaretleri (Kırmızı Alarm Listesi)
-  static const List<Map<String, String>> redFlagEmergencySigns = [
+  static List<Map<String, String>> get redFlagEmergencySigns => [
     {
-      'title': 'Şiddetli ve Ani Karın/Kasık Ağrısı',
-      'detail': 'Geçmeyen, kramp şeklinde veya batıcı ani şiddetli sancılar.',
-      'urgency': 'Yüksek'
+      'title': 'emergency_sign_1_title'.tr(),
+      'detail': 'emergency_sign_1_desc'.tr(),
+      'urgency': 'emergency_urgency_high'.tr(),
     },
     {
-      'title': 'Vajinal Kanama veya Lekelenme',
-      'detail': 'Miktarı ne olursa olsun her türlü açık kırmızı veya koyu kanama acil hekim kontrolü gerektirir.',
-      'urgency': 'Kritik'
+      'title': 'emergency_sign_2_title'.tr(),
+      'detail': 'emergency_sign_2_desc'.tr(),
+      'urgency': 'emergency_urgency_critical'.tr(),
     },
     {
-      'title': 'Şiddetli Baş Ağrısı ve Görme Bozukluğu',
-      'detail': 'Bulanık görme, ışık çakmaları veya ani baş dönmesi (Preeklampsi işareti).',
-      'urgency': 'Kritik'
+      'title': 'emergency_sign_3_title'.tr(),
+      'detail': 'emergency_sign_3_desc'.tr(),
+      'urgency': 'emergency_urgency_critical'.tr(),
     },
     {
-      'title': 'Yüzde ve Ellerde Ani Şişme (Ödem)',
-      'detail': 'Özellikle göz çevresinde ve parmaklarda hızla gelişen aşırı şişkinlik.',
-      'urgency': 'Yüksek'
+      'title': 'emergency_sign_4_title'.tr(),
+      'detail': 'emergency_sign_4_desc'.tr(),
+      'urgency': 'emergency_urgency_high'.tr(),
     },
     {
-      'title': 'Bebek Hareketlerinde Belirgin Azalma',
-      'detail': '20. haftadan sonra bebeğin hareket hissinin aniden kesilmesi veya 2 saatte 10 hareketin altına inmesi.',
-      'urgency': 'Kritik'
+      'title': 'emergency_sign_5_title'.tr(),
+      'detail': 'emergency_sign_5_desc'.tr(),
+      'urgency': 'emergency_urgency_critical'.tr(),
     },
     {
-      'title': '38°C ve Üzeri Yüksek Ateş',
-      'detail': 'Titreme, halsizlik veya kötü kokulu akıntının eşlik ettiği ateş.',
-      'urgency': 'Yüksek'
+      'title': 'emergency_sign_6_title'.tr(),
+      'detail': 'emergency_sign_6_desc'.tr(),
+      'urgency': 'emergency_urgency_high'.tr(),
     },
     {
-      'title': 'Erken Su Gelmesi (Amniyotik Sıvı)',
-      'detail': 'Vajinadan berrak sıvı sızıntısı veya aniden su boşalması.',
-      'urgency': 'Kritik'
+      'title': 'emergency_sign_7_title'.tr(),
+      'detail': 'emergency_sign_7_desc'.tr(),
+      'urgency': 'emergency_urgency_critical'.tr(),
     },
     {
-      'title': 'Sıvı Tutamayacak Kadar Şiddetli Kusma',
-      'detail': 'Aşırı dehidrasyon, idrar miktarında azalma ve genel düşkünlük.',
-      'urgency': 'Orta-Yüksek'
+      'title': 'emergency_sign_8_title'.tr(),
+      'detail': 'emergency_sign_8_desc'.tr(),
+      'urgency': 'emergency_urgency_medium_high'.tr(),
     }
   ];
 }

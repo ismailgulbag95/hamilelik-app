@@ -1,12 +1,14 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
+import 'package:easy_localization/easy_localization.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../core/constants/app_colors.dart';
-import '../../core/constants/medical_specs.dart';
 import '../../core/theme/clay_theme.dart';
 import '../../controllers/emergency_controller.dart';
-import 'widgets/emergency_sign_card.dart';
 import 'widgets/medical_id_card_view.dart';
+import 'widgets/edit_emergency_card_sheet.dart';
 
-/// Gebelikte Acil Uyarı İşaretleri ve Kırmızı Alarm Panik Modülü
+/// Gebelikte Acil Tıbbi Kart ve Hızlı Doktor Arama Ekranı
 class EmergencyScreen extends StatefulWidget {
   const EmergencyScreen({super.key});
 
@@ -16,7 +18,6 @@ class EmergencyScreen extends StatefulWidget {
 
 class _EmergencyScreenState extends State<EmergencyScreen> {
   final EmergencyController _controller = EmergencyController();
-  int _activeTabIndex = 0; // 0: Tehlike İşaretleri, 1: Acil Not Kartı
 
   @override
   void initState() {
@@ -31,6 +32,89 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
     super.dispose();
   }
 
+  /// Rehber ve telefon izinlerini isteyip arama ekranını (dialer) açar
+  Future<void> _callDoctor() async {
+    final card = _controller.card;
+    final doctorPhone = card?.doctorPhone.trim() ?? '';
+
+    if (doctorPhone.isEmpty) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('emergency_no_phone_error'.tr()),
+          backgroundColor: AppColors.medicalAlertRed,
+          action: SnackBarAction(
+            label: 'emergency_edit_btn'.tr(),
+            textColor: Colors.white,
+            onPressed: _openEditSheet,
+          ),
+        ),
+      );
+      return;
+    }
+
+    try {
+      // Android izin mekaniği: İlk basışta telefon ve rehber erişimi izinleri istenir
+      final phoneStatus = await Permission.phone.status;
+      if (!phoneStatus.isGranted) {
+        await Permission.phone.request();
+      }
+
+      final contactsStatus = await Permission.contacts.status;
+      if (!contactsStatus.isGranted) {
+        await Permission.contacts.request();
+      }
+    } catch (e) {
+      debugPrint('Permission request note: $e');
+    }
+
+    // Telefon numarasını temizle ve tel: URI oluştur
+    final cleanPhone = doctorPhone.replaceAll(RegExp(r'[^\d+]'), '');
+    final uri = Uri.parse('tel:$cleanPhone');
+
+    try {
+      if (await canLaunchUrl(uri)) {
+        // launchUrl tel: şeması ile doğrudan aramaz, Android çevirici ekranını açarak son dokunuşu kullanıcıya bırakır
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('emergency_call_failed'.tr()),
+            backgroundColor: AppColors.medicalAlertRed,
+          ),
+        );
+      }
+    } catch (e) {
+      debugPrint('Error launching dialer: $e');
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('emergency_call_failed'.tr()),
+          backgroundColor: AppColors.medicalAlertRed,
+        ),
+      );
+    }
+  }
+
+  void _openEditSheet() {
+    if (_controller.card == null) return;
+    EditEmergencyCardSheet.show(
+      context: context,
+      card: _controller.card!,
+      onSave: (updated) {
+        _controller.updateEmergencyCard(updated);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('emergency_saved_success'.tr()),
+            backgroundColor: AppColors.successGreen,
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,14 +123,14 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: const Row(
+        title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.emergency_rounded, color: AppColors.medicalAlertRed, size: 22),
-            SizedBox(width: 8),
+            const Icon(Icons.emergency_rounded, color: AppColors.medicalAlertRed, size: 22),
+            const SizedBox(width: 8),
             Text(
-              'Kırmızı Alarm & Acil Durum',
-              style: TextStyle(
+              'emergency_appbar_title'.tr(),
+              style: const TextStyle(
                 color: AppColors.medicalAlertRed,
                 fontWeight: FontWeight.w800,
                 fontSize: 18,
@@ -56,141 +140,87 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
         ),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            // Tab Switcher
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-              child: ClayCard(
-                color: AppColors.clayLavender,
-                padding: const EdgeInsets.all(6),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => setState(() => _activeTabIndex = 0),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          decoration: _activeTabIndex == 0
-                              ? ClayTheme.clayDecoration(
-                                  color: AppColors.clayRose,
-                                  borderRadius: 20,
-                                )
-                              : null,
-                          child: Center(
-                            child: Text(
-                              'Tehlike İşaretleri (8)',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                fontSize: 13,
-                                color: _activeTabIndex == 0
-                                    ? AppColors.primaryDark
-                                    : AppColors.textSecondary,
-                              ),
+        child: _controller.isLoading || _controller.card == null
+            ? const Center(child: CircularProgressIndicator(color: AppColors.primaryPink))
+            : Column(
+                children: [
+                  // Tıbbi Acil Kartı İçeriği
+                  Expanded(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      child: MedicalIdCardView(card: _controller.card!),
+                    ),
+                  ),
+
+                  // Alt Aksiyon Butonları: "Bilgileri Düzenle" ve "Doktoru Ara"
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
+                    child: Row(
+                      children: [
+                        // Bilgileri Düzenle Butonu
+                        Expanded(
+                          flex: 5,
+                          child: ClayButton(
+                            color: AppColors.clayLavender,
+                            height: 54,
+                            onPressed: _openEditSheet,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Icons.edit_note_rounded, color: AppColors.primaryDark, size: 22),
+                                const SizedBox(width: 6),
+                                Flexible(
+                                  child: Text(
+                                    'emergency_edit_btn'.tr(),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w800,
+                                      color: AppColors.primaryDark,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => setState(() => _activeTabIndex = 1),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          decoration: _activeTabIndex == 1
-                              ? ClayTheme.clayDecoration(
-                                  color: AppColors.clayRose,
-                                  borderRadius: 20,
-                                )
-                              : null,
-                          child: Center(
-                            child: Text(
-                              'Acil Tıbbi Kartı',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                fontSize: 13,
-                                color: _activeTabIndex == 1
-                                    ? AppColors.primaryDark
-                                    : AppColors.textSecondary,
-                              ),
+                        const SizedBox(width: 12),
+
+                        // Doktoru Ara Butonu
+                        Expanded(
+                          flex: 6,
+                          child: ClayButton(
+                            color: AppColors.medicalAlertRed,
+                            height: 54,
+                            onPressed: _callDoctor,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Icons.phone_in_talk_rounded, color: Colors.white, size: 22),
+                                const SizedBox(width: 6),
+                                Flexible(
+                                  child: Text(
+                                    'emergency_call_doctor_btn'.tr(),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w800,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ),
-
-            Expanded(
-              child: _activeTabIndex == 0
-                  ? _buildEmergencySignsTab()
-                  : _buildMedicalIdCardTab(),
-            ),
-
-            // Hızlı Acil Arama Butonu
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: ClayButton(
-                color: AppColors.medicalAlertRed,
-                height: 56,
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('112 Acil Yardım veya Doktorunuz Aranıyor...'),
-                      backgroundColor: AppColors.medicalAlertRed,
-                    ),
-                  );
-                },
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.phone_in_talk_rounded, color: Colors.white, size: 22),
-                    SizedBox(width: 10),
-                    Text(
-                      '112 Acil Çağrı / Doktoru Ara',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
-    );
-  }
-
-  Widget _buildEmergencySignsTab() {
-    final signs = PregnancyMedicalSpecs.redFlagEmergencySigns;
-
-    return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-      itemCount: signs.length,
-      itemBuilder: (context, index) {
-        final sign = signs[index];
-        return EmergencySignCard(
-          title: sign['title']!,
-          detail: sign['detail']!,
-          urgency: sign['urgency']!,
-        );
-      },
-    );
-  }
-
-  Widget _buildMedicalIdCardTab() {
-    if (_controller.card == null) {
-      return const Center(child: CircularProgressIndicator(color: AppColors.primaryPink));
-    }
-
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-      child: MedicalIdCardView(card: _controller.card!),
     );
   }
 }

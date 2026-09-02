@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../core/constants/app_colors.dart';
-import '../../../core/constants/medical_specs.dart';
 import '../../../core/theme/clay_theme.dart';
 
 /// Claymorphic Trimester Beslenme ve Kalori Tavsiye Kartı
@@ -23,32 +23,32 @@ class TrimesterNutritionCard extends StatelessWidget {
     Color accentColor = AppColors.successGreen;
 
     if (trimester == 1) {
-      title = '1. Trimester Beslenme Rehberi (1-13. Hafta)';
-      extraCal = '+0 kkal/gün (Normal İhtiyaç)';
+      title = 'nutrition_t1_title'.tr();
+      extraCal = 'nutrition_t1_cal'.tr();
       foodItems = [
-        'Folik Asit (400 - 800 mcg/gün) takviyesini ihmal etmeyin.',
-        'Sabah bulantılarına karşı zencefil çayı ve kuru kraker tercih edin.',
-        'Bol yeşil yapraklı sebzeler ve hafif sindirilen öğünler tüketin.',
+        'nutrition_t1_item1'.tr(),
+        'nutrition_t1_item2'.tr(),
+        'nutrition_t1_item3'.tr(),
       ];
       cardColor = AppColors.clayMint;
       accentColor = AppColors.successGreen;
     } else if (trimester == 2) {
-      title = '2. Trimester Beslenme Rehberi (14-27. Hafta)';
-      extraCal = '+340 kkal/gün Ek Kalori İhtiyacı';
+      title = 'nutrition_t2_title'.tr();
+      extraCal = 'nutrition_t2_cal'.tr();
       foodItems = [
-        'Kaliteli Protein: Et, tavuk, yumurta ve baklagiller.',
-        'Kalsiyum: Süt, yoğurt ve peynir ile kemik gelişimi desteği.',
-        'Omega-3 & Demir: Haftada 1-2 porsiyon düşük cıvalı balık ve demir zengini gıdalar.',
+        'nutrition_t2_item1'.tr(),
+        'nutrition_t2_item2'.tr(),
+        'nutrition_t2_item3'.tr(),
       ];
       cardColor = AppColors.clayLavender;
       accentColor = AppColors.primaryDark;
     } else {
-      title = '3. Trimester Beslenme Rehberi (28-40. Hafta)';
-      extraCal = '+452 kkal/gün Ek Kalori İhtiyacı';
+      title = 'nutrition_t3_title'.tr();
+      extraCal = 'nutrition_t3_cal'.tr();
       foodItems = [
-        'Hızlı Bebek Büyümesi: Yüksek protein ve lif desteği.',
-        'Ödem & Şişlik Uyarısı: Tuz tüketimini kısıtlayın, bol su için.',
-        'Mide yanmasına karşı az ve sık öğünler tercih edin.',
+        'nutrition_t3_item1'.tr(),
+        'nutrition_t3_item2'.tr(),
+        'nutrition_t3_item3'.tr(),
       ];
       cardColor = AppColors.clayRose;
       accentColor = AppColors.primaryDark;
@@ -91,7 +91,7 @@ class TrimesterNutritionCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.85),
+              color: Colors.white.withValues(alpha: 0.85),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Row(
@@ -133,6 +133,35 @@ class TrimesterNutritionCard extends StatelessWidget {
                   ],
                 ),
               )),
+          const SizedBox(height: 10),
+
+          // Doktor Danışma ve Tıbbi Feragat Uyarısı
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.8),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: AppColors.accentGold.withValues(alpha: 0.5)),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(Icons.info_outline_rounded, color: AppColors.accentGold, size: 16),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    'disclaimer_nutrition'.tr(),
+                    style: const TextStyle(
+                      fontSize: 10.5,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.primaryDark,
+                      height: 1.35,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

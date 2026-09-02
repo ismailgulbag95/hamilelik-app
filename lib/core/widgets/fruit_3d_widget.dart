@@ -42,12 +42,12 @@ class Fruit3DWidget extends StatelessWidget {
         boxShadow: showShadow
             ? [
                 BoxShadow(
-                  color: _getFruitShadowColor(key).withOpacity(0.24),
+                  color: _getFruitShadowColor(key).withValues(alpha: 0.24),
                   offset: const Offset(0, 8),
                   blurRadius: 16,
                 ),
                 BoxShadow(
-                  color: Colors.white.withOpacity(0.85),
+                  color: Colors.white.withValues(alpha: 0.85),
                   offset: const Offset(0, -2),
                   blurRadius: 6,
                 ),
@@ -68,7 +68,7 @@ class Fruit3DWidget extends StatelessWidget {
                 child: Icon(
                   _getFruitIcon(key),
                   size: size * 0.45,
-                  color: _getFruitShadowColor(key).withOpacity(0.65),
+                  color: _getFruitShadowColor(key).withValues(alpha: 0.65),
                 ),
               ),
             );

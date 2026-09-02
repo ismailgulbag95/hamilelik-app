@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/clay_theme.dart';
 import '../../../services/audio_service.dart';
@@ -12,7 +13,7 @@ class ClayAudioPlayer extends StatefulWidget {
   const ClayAudioPlayer({
     super.key,
     required this.audioPath,
-    this.title = 'Sesli Mektup / Kalp Atışı',
+    this.title = '',
     this.durationSeconds = 30,
   });
 
@@ -55,11 +56,11 @@ class _ClayAudioPlayerState extends State<ClayAudioPlayer> {
         color: isThisPlaying ? AppColors.clayMint : const Color(0xFFFBF4F8),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: isThisPlaying ? AppColors.successGreen.withOpacity(0.3) : AppColors.primaryPink.withOpacity(0.2),
+          color: isThisPlaying ? AppColors.successGreen.withValues(alpha: 0.3) : AppColors.primaryPink.withValues(alpha: 0.2),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -153,7 +154,7 @@ class _ClayAudioPlayerState extends State<ClayAudioPlayer> {
                 IconButton(
                   icon: const Icon(Icons.stop_rounded, size: 20, color: AppColors.medicalAlertRed),
                   onPressed: () => _player.stop(),
-                  tooltip: 'Durdur',
+                  tooltip: 'audio_stop'.tr(),
                 ),
               ],
             ],

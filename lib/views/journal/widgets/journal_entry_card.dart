@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/clay_theme.dart';
 import '../../../models/diary_model.dart';
@@ -75,7 +76,7 @@ class JournalEntryCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${entry.pregnancyWeek}. Hafta Anısı',
+                          'journal_week_entry_title'.tr(args: [entry.pregnancyWeek.toString()]),
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w800,
@@ -104,14 +105,14 @@ class JournalEntryCard extends StatelessWidget {
                           color: AppColors.primaryPink,
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.star_rounded, color: Colors.white, size: 14),
-                            SizedBox(width: 4),
+                            const Icon(Icons.star_rounded, color: Colors.white, size: 14),
+                            const SizedBox(width: 4),
                             Text(
-                              'Özel An',
-                              style: TextStyle(
+                              'journal_highlight_badge'.tr(),
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 11,
                                 fontWeight: FontWeight.w800,
@@ -124,7 +125,7 @@ class JournalEntryCard extends StatelessWidget {
                       IconButton(
                         icon: const Icon(Icons.delete_outline_rounded, size: 18, color: AppColors.textMuted),
                         onPressed: onDelete,
-                        tooltip: 'Anıyı Sil',
+                        tooltip: 'journal_delete_tooltip'.tr(),
                       ),
                   ],
                 ),
@@ -151,7 +152,7 @@ class JournalEntryCard extends StatelessWidget {
                 onTap: () => PhotoViewDialog.show(
                   context,
                   entry.photoPath!,
-                  title: '${entry.pregnancyWeek}. Hafta Fotoğrafı',
+                  title: 'journal_photo_week_title'.tr(args: [entry.pregnancyWeek.toString()]),
                 ),
                 child: Container(
                   height: 170,
@@ -160,7 +161,7 @@ class JournalEntryCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.06),
+                        color: Colors.black.withValues(alpha: 0.06),
                         blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),
@@ -179,15 +180,15 @@ class JournalEntryCard extends StatelessWidget {
                         margin: const EdgeInsets.all(8),
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.6),
+                          color: Colors.black.withValues(alpha: 0.6),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.zoom_in_rounded, color: Colors.white, size: 14),
-                            SizedBox(width: 4),
-                            Text('Büyüt', style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w700)),
+                            const Icon(Icons.zoom_in_rounded, color: Colors.white, size: 14),
+                            const SizedBox(width: 4),
+                            Text('journal_zoom'.tr(), style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w700)),
                           ],
                         ),
                       ),
@@ -202,7 +203,7 @@ class JournalEntryCard extends StatelessWidget {
               const SizedBox(height: 12),
               ClayAudioPlayer(
                 audioPath: entry.audioPath!,
-                title: '${entry.pregnancyWeek}. Hafta Sesli Mektubu',
+                title: 'journal_audio_letter_title'.tr(args: [entry.pregnancyWeek.toString()]),
                 durationSeconds: 30,
               ),
             ],

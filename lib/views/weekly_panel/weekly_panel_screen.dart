@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../core/constants/app_colors.dart';
 import '../../controllers/weekly_panel_controller.dart';
 import '../../services/database_helper.dart';
@@ -43,9 +44,9 @@ class _WeeklyPanelScreenState extends State<WeeklyPanelScreen> {
   void _handleLockedWeekTapped(int week) {
     AdRewardDialog.show(
       context: context,
-      title: '$week. Hafta İçeriğini Aç',
-      subtitle: '$week. haftadaki bebeğinizin boyutunu, organ gelişimini ve yapılması gereken testleri görüntülemek için kısa bir video izleyin.',
-      unlockTargetName: '$week. Hafta Rehberi',
+      title: 'weekly_ad_title'.tr(args: [week.toString()]),
+      subtitle: 'weekly_ad_subtitle'.tr(args: [week.toString()]),
+      unlockTargetName: 'weekly_guide_title'.tr(args: [week.toString()]),
       onRewardEarned: () {
         _controller.unlockWeek(week);
       },
@@ -65,6 +66,9 @@ class _WeeklyPanelScreenState extends State<WeeklyPanelScreen> {
     final milestoneTest = data['milestone_test'] as Map<String, dynamic>?;
     final stageIndex = (_controller.selectedWeek - 1).clamp(0, 39);
     final babyDisplayName = _controller.profile?.babyDisplayName;
+    final statusText = _controller.selectedWeek <= _controller.actualPregnancyWeek
+        ? 'weekly_status_current'.tr()
+        : 'weekly_status_future'.tr();
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -75,7 +79,7 @@ class _WeeklyPanelScreenState extends State<WeeklyPanelScreen> {
         title: Column(
           children: [
             Text(
-              '${_controller.selectedWeek}. Hafta Rehberi',
+              'weekly_guide_title'.tr(args: [_controller.selectedWeek.toString()]),
               style: const TextStyle(
                 color: AppColors.primaryDark,
                 fontWeight: FontWeight.w800,
@@ -83,7 +87,7 @@ class _WeeklyPanelScreenState extends State<WeeklyPanelScreen> {
               ),
             ),
             Text(
-              '${_controller.selectedTrimester}. Trimester (${_controller.selectedWeek <= _controller.actualPregnancyWeek ? "Mevcut/Geçmiş" : "Gelecek"})',
+              'weekly_trimester_status'.tr(args: [_controller.selectedTrimester.toString(), statusText]),
               style: const TextStyle(
                 color: AppColors.textSecondary,
                 fontWeight: FontWeight.w600,

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 // Web uyumluluğu için koşullu importlar
 import 'dart:io' if (dart.library.html) 'services/io_stubs.dart';
@@ -9,16 +10,16 @@ import 'core/theme/clay_theme.dart';
 import 'core/constants/app_colors.dart';
 import 'services/database_helper.dart';
 import 'models/profile_model.dart';
-import 'views/welcome/welcome_congratulation_screen.dart';
-import 'views/welcome/app_guide_screen.dart';
-
+import 'views/welcome/language_selection_screen.dart';
 import 'views/main_navigation_scaffold.dart';
 
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   try {
+    await initializeDateFormatting('en_US', null);
     await initializeDateFormatting('tr_TR', null);
   } catch (e) {
     debugPrint('Date formatting init error: $e');
@@ -28,7 +29,14 @@ void main() async {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
   }
-  runApp(const AuraPregnancyApp());
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [Locale('en'), Locale('tr')],
+      path: 'assets/translations',
+      fallbackLocale: const Locale('en'),
+      child: const AuraPregnancyApp(),
+    ),
+  );
 }
 
 class AuraPregnancyApp extends StatelessWidget {
@@ -39,6 +47,9 @@ class AuraPregnancyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Aura Pregnancy',
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       theme: ClayTheme.themeData,
       home: const RootGateScreen(),
     );
@@ -118,16 +129,7 @@ class _RootGateScreenState extends State<RootGateScreen> {
       return const MainNavigationScaffold();
     }
 
-    // Yeni kullanıcı için: Hoş Geldiniz -> Uygulama Rehberi -> Onboarding -> Ana Uygulama (Dashboard)
-    return WelcomeCongratulationScreen(
-      onNext: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => const AppGuideScreen(),
-          ),
-        );
-      },
-    );
+    // Yeni kullanıcı için: Dil Seçimi -> Hoş Geldiniz -> Uygulama Rehberi -> Ana Uygulama
+    return const LanguageSelectionScreen();
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/clay_theme.dart';
 import '../../../models/profile_model.dart';
@@ -72,9 +73,9 @@ class _WeightTrackerCardState extends State<WeightTrackerCard> {
                 ),
               ),
               const SizedBox(width: 10),
-              const Text(
-                'Günlük Kilo Takibi',
-                style: TextStyle(
+              Text(
+                'weight_tracker_title'.tr(),
+                style: const TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w800,
                   color: AppColors.primaryDark,
@@ -94,7 +95,7 @@ class _WeightTrackerCardState extends State<WeightTrackerCard> {
                     borderRadius: BorderRadius.circular(ClayTheme.defaultRadius),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withValues(alpha: 0.05),
                         offset: const Offset(0, 3),
                         blurRadius: 6,
                       ),
@@ -112,9 +113,9 @@ class _WeightTrackerCardState extends State<WeightTrackerCard> {
                             fontWeight: FontWeight.w800,
                             color: AppColors.textPrimary,
                           ),
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: 'Kilo (kg)',
+                            hintText: 'weight_hint'.tr(),
                           ),
                           onSubmitted: (val) {
                             final parsed = double.tryParse(val);
@@ -139,13 +140,13 @@ class _WeightTrackerCardState extends State<WeightTrackerCard> {
                   if (parsed != null) {
                     widget.onSaveWeight(parsed);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Kilo girişi güncellendi!')),
+                      SnackBar(content: Text('weight_updated_toast'.tr())),
                     );
                   }
                 },
-                child: const Text(
-                  'Kaydet',
-                  style: TextStyle(fontWeight: FontWeight.w800, color: AppColors.primaryDark),
+                child: Text(
+                  'common_save'.tr(),
+                  style: const TextStyle(fontWeight: FontWeight.w800, color: AppColors.primaryDark),
                 ),
               ),
             ],
@@ -156,7 +157,7 @@ class _WeightTrackerCardState extends State<WeightTrackerCard> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.85),
+              color: Colors.white.withValues(alpha: 0.85),
               borderRadius: BorderRadius.circular(18),
             ),
             child: Column(
@@ -164,7 +165,7 @@ class _WeightTrackerCardState extends State<WeightTrackerCard> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Başlangıç Kilosu:', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+                    Text('weight_start_label'.tr(), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
                     Text('${preWeight.toStringAsFixed(1)} kg', style: const TextStyle(fontWeight: FontWeight.w800)),
                   ],
                 ),
@@ -172,7 +173,7 @@ class _WeightTrackerCardState extends State<WeightTrackerCard> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('$week. Hafta İdeal Hedef:', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+                    Text('weight_target_label'.tr(args: [week.toString()]), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
                     Text('${targetWeight.toStringAsFixed(1)} kg', style: const TextStyle(fontWeight: FontWeight.w800, color: AppColors.successGreen)),
                   ],
                 ),
@@ -180,7 +181,7 @@ class _WeightTrackerCardState extends State<WeightTrackerCard> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Toplam Alınan Kilo:', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700)),
+                    Text('weight_total_gain_label'.tr(), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700)),
                     Text(
                       '${diff >= 0 ? "+" : ""}${diff.toStringAsFixed(1)} kg',
                       style: TextStyle(

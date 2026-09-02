@@ -114,12 +114,12 @@ class _MedicalUltrasoundWombWidgetState extends State<MedicalUltrasoundWombWidge
         border: Border.all(color: const Color(0xFF2A3649), width: 2),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF0F2B48).withOpacity(0.4),
+            color: const Color(0xFF0F2B48).withValues(alpha: 0.4),
             blurRadius: 24,
             offset: const Offset(0, 12),
           ),
           BoxShadow(
-            color: Colors.black.withOpacity(0.6),
+            color: Colors.black.withValues(alpha: 0.6),
             blurRadius: 16,
             offset: const Offset(0, 6),
           ),
@@ -213,7 +213,7 @@ class _MedicalUltrasoundWombWidgetState extends State<MedicalUltrasoundWombWidge
                         return Text(
                           '${index * 3}',
                           style: TextStyle(
-                            color: Colors.white.withOpacity(0.35),
+                            color: Colors.white.withValues(alpha: 0.35),
                             fontSize: 8,
                             fontFamily: 'monospace',
                           ),
@@ -235,9 +235,9 @@ class _MedicalUltrasoundWombWidgetState extends State<MedicalUltrasoundWombWidge
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFE91E63).withOpacity(0.25),
+                              color: const Color(0xFFE91E63).withValues(alpha: 0.25),
                               borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: const Color(0xFFFF4081).withOpacity(0.7)),
+                              border: Border.all(color: const Color(0xFFFF4081).withValues(alpha: 0.7)),
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -269,7 +269,7 @@ class _MedicalUltrasoundWombWidgetState extends State<MedicalUltrasoundWombWidge
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF00E5FF).withOpacity(0.9),
+                          color: const Color(0xFF00E5FF).withValues(alpha: 0.9),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
@@ -407,7 +407,7 @@ class _UltrasoundScreenPainter extends CustomPainter {
 
     // 2. Akustik Derinlik Arkları
     final gridPaint = Paint()
-      ..color = Colors.white.withOpacity(0.05)
+      ..color = Colors.white.withValues(alpha: 0.05)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.2;
 
@@ -449,8 +449,8 @@ class _UltrasoundScreenPainter extends CustomPainter {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          const Color(0xFF00E5FF).withOpacity(0.4),
-          const Color(0xFF00E5FF).withOpacity(0.0),
+          const Color(0xFF00E5FF).withValues(alpha: 0.4),
+          const Color(0xFF00E5FF).withValues(alpha: 0.0),
         ],
       ).createShader(Rect.fromLTWH(0, 0, width, height))
       ..strokeWidth = 3.5
@@ -486,18 +486,18 @@ class _UltrasoundScreenPainter extends CustomPainter {
   /// 1. Evre (1-8. Hafta): Erken Gebelik Kesesi & Yolk Sac & Embriyo Kutbu
   void _drawStage1EarlyEmbryo(Canvas canvas, double pulse) {
     // Gestasyonel Kese
-    final sacPaint = Paint()..color = const Color(0xFF33221C).withOpacity(0.6);
+    final sacPaint = Paint()..color = const Color(0xFF33221C).withValues(alpha: 0.6);
     canvas.drawOval(Rect.fromCenter(center: Offset.zero, width: 140, height: 105), sacPaint);
 
     final sacBorder = Paint()
-      ..color = const Color(0xFFE0A978).withOpacity(0.7)
+      ..color = const Color(0xFFE0A978).withValues(alpha: 0.7)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 4.5;
     canvas.drawOval(Rect.fromCenter(center: Offset.zero, width: 140, height: 105), sacBorder);
 
     // Yolk Sac
     final yolkBorder = Paint()
-      ..color = const Color(0xFFFFE0B2).withOpacity(0.85)
+      ..color = const Color(0xFFFFE0B2).withValues(alpha: 0.85)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.5;
     canvas.drawCircle(const Offset(-25, -8), 16, yolkBorder);
@@ -514,14 +514,14 @@ class _UltrasoundScreenPainter extends CustomPainter {
 
     // Atan Fetal Kalp Işıltısı
     final heartPaint = Paint()
-      ..color = const Color(0xFFFF5252).withOpacity(0.8 + (pulse * 0.2))
+      ..color = const Color(0xFFFF5252).withValues(alpha: 0.8 + (pulse * 0.2))
       ..style = PaintingStyle.fill;
     canvas.drawCircle(const Offset(10, 0), 5 + (pulse * 2.5), heartPaint);
   }
 
   /// 2. Evre (9-13. Hafta): 1. Trimester İkili Tarama (Kranium, NT, Omurga)
   void _drawStage2FirstTrimester(Canvas canvas, double pulse) {
-    final tissue = Paint()..color = const Color(0xFFC68B59).withOpacity(0.75);
+    final tissue = Paint()..color = const Color(0xFFC68B59).withValues(alpha: 0.75);
     final bone = Paint()
       ..color = const Color(0xFFFFE8D6)
       ..style = PaintingStyle.stroke
@@ -533,7 +533,7 @@ class _UltrasoundScreenPainter extends CustomPainter {
 
     // NT Ense Kalınlığı Eko Lüsens Alanı
     final ntPaint = Paint()
-      ..color = const Color(0xFF40C4FF).withOpacity(0.75)
+      ..color = const Color(0xFF40C4FF).withValues(alpha: 0.75)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3;
     canvas.drawArc(
@@ -557,14 +557,14 @@ class _UltrasoundScreenPainter extends CustomPainter {
 
     // Atan Kalp
     final heartPaint = Paint()
-      ..color = const Color(0xFFFF1744).withOpacity(0.9)
+      ..color = const Color(0xFFFF1744).withValues(alpha: 0.9)
       ..style = PaintingStyle.fill;
     canvas.drawCircle(const Offset(-6, 10), 6 + (pulse * 2.8), heartPaint);
   }
 
   /// 3. Evre (14-20. Hafta): 2. Trimester Erken Dönem (Yüz Profili & Omurlar)
   void _drawStage3EarlySecondTrimester(Canvas canvas, double pulse) {
-    final tissue = Paint()..color = const Color(0xFFD49A6A).withOpacity(0.8);
+    final tissue = Paint()..color = const Color(0xFFD49A6A).withValues(alpha: 0.8);
     final bone = Paint()
       ..color = const Color(0xFFFFF0E0)
       ..style = PaintingStyle.stroke
@@ -601,7 +601,7 @@ class _UltrasoundScreenPainter extends CustomPainter {
 
   /// 4. Evre (21-27. Hafta): 2. Trimester 4D Ayrıntılı Morfoloji
   void _drawStage4DetailedMorphology(Canvas canvas, double pulse) {
-    final tissue = Paint()..color = const Color(0xFFE0A878).withOpacity(0.85);
+    final tissue = Paint()..color = const Color(0xFFE0A878).withValues(alpha: 0.85);
     final bone = Paint()
       ..color = const Color(0xFFFFF5EC)
       ..style = PaintingStyle.stroke
@@ -639,7 +639,7 @@ class _UltrasoundScreenPainter extends CustomPainter {
     final cord = Path();
     cord.moveTo(18, 30);
     cord.quadraticBezierTo(44, 58, 72, 44);
-    canvas.drawPath(cord, Paint()..color = const Color(0xFF40C4FF).withOpacity(0.85)..strokeWidth = 4..style = PaintingStyle.stroke);
+    canvas.drawPath(cord, Paint()..color = const Color(0xFF40C4FF).withValues(alpha: 0.85)..strokeWidth = 4..style = PaintingStyle.stroke);
 
     // Kalp Dört Odacık
     canvas.drawCircle(const Offset(-10, 14), 8 + (pulse * 3.2), Paint()..color = const Color(0xFFFF1744));
@@ -647,7 +647,7 @@ class _UltrasoundScreenPainter extends CustomPainter {
 
   /// 5. Evre (28-34. Hafta): 3. Trimester Dolgun Yanaklı Fetüs
   void _drawStage5ThirdTrimesterGrowth(Canvas canvas, double pulse) {
-    final tissue = Paint()..color = const Color(0xFFE8B588).withOpacity(0.9);
+    final tissue = Paint()..color = const Color(0xFFE8B588).withValues(alpha: 0.9);
     final bone = Paint()
       ..color = const Color(0xFFFFF8F0)
       ..style = PaintingStyle.stroke
@@ -682,7 +682,7 @@ class _UltrasoundScreenPainter extends CustomPainter {
 
   /// 6. Evre (35-40. Hafta): Doğuma Hazır Tam Bebek
   void _drawStage6FullTermBaby(Canvas canvas, double pulse) {
-    final tissue = Paint()..color = const Color(0xFFEEBF94).withOpacity(0.95);
+    final tissue = Paint()..color = const Color(0xFFEEBF94).withValues(alpha: 0.95);
     final bone = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.stroke
@@ -743,8 +743,8 @@ class _DopplerWaveformPainter extends CustomPainter {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          const Color(0xFF00E5FF).withOpacity(0.3),
-          const Color(0xFF00E5FF).withOpacity(0.0),
+          const Color(0xFF00E5FF).withValues(alpha: 0.3),
+          const Color(0xFF00E5FF).withValues(alpha: 0.0),
         ],
       ).createShader(Rect.fromLTWH(0, 0, width, height))
       ..style = PaintingStyle.fill;

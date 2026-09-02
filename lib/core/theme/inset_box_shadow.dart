@@ -1,6 +1,4 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart' as material;
-import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 
 /// Saf Flutter Inset & Claymorphism Box Shadow Motoru
 class BoxShadow extends material.BoxShadow {

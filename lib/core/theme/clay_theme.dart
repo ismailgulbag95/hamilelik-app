@@ -24,21 +24,21 @@ class ClayTheme {
         boxShadow: [
           // 1. Dış Gölge (Buton ezildiği için yere yaklaşır)
           BoxShadow(
-            color: Colors.black.withOpacity(0.18),
+            color: Colors.black.withValues(alpha: 0.18),
             offset: const Offset(0, 8),
             blurRadius: 16,
             inset: false,
           ),
           // 2. Üst İç Işık (Ezilme ile derinleşir)
           BoxShadow(
-            color: Colors.white.withOpacity(0.80),
+            color: Colors.white.withValues(alpha: 0.80),
             offset: const Offset(0, 12),
             blurRadius: 20,
             inset: true,
           ),
           // 3. Alt İç Gölge (Ezilme ile derinleşir)
           BoxShadow(
-            color: Colors.black.withOpacity(0.25),
+            color: Colors.black.withValues(alpha: 0.25),
             offset: const Offset(0, -12),
             blurRadius: 20,
             inset: true,
@@ -54,21 +54,21 @@ class ClayTheme {
       boxShadow: [
         // 1. Yumuşak Dış Gölge (Nesneyi havaya kaldırır)
         BoxShadow(
-          color: Colors.black.withOpacity(0.18),
+          color: Colors.black.withValues(alpha: 0.18),
           offset: const Offset(0, 24),
           blurRadius: 40,
           inset: false,
         ),
         // 2. Üst İç Işık (Kil plastisitesi - açık beyaz ışık)
         BoxShadow(
-          color: Colors.white.withOpacity(0.65),
+          color: Colors.white.withValues(alpha: 0.65),
           offset: const Offset(0, 8),
           blurRadius: 16,
           inset: true,
         ),
         // 3. Alt İç Gölge (Kil alt kıvrımı - koyu gölge)
         BoxShadow(
-          color: Colors.black.withOpacity(0.15),
+          color: Colors.black.withValues(alpha: 0.15),
           offset: const Offset(0, -8),
           blurRadius: 16,
           inset: true,

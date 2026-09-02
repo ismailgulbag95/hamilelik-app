@@ -120,7 +120,7 @@ class MediaService {
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: iconColor.withOpacity(0.2)),
+        border: Border.all(color: iconColor.withValues(alpha: 0.2)),
       ),
       child: Material(
         color: Colors.transparent,
@@ -164,7 +164,7 @@ class MediaService {
                     ],
                   ),
                 ),
-                Icon(Icons.arrow_forward_ios_rounded, size: 14, color: iconColor.withOpacity(0.7)),
+                Icon(Icons.arrow_forward_ios_rounded, size: 14, color: iconColor.withValues(alpha: 0.7)),
               ],
             ),
           ),

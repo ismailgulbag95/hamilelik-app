@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/theme/clay_theme.dart';
 import '../../services/database_helper.dart';
@@ -19,69 +20,70 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
   final PageController _pageController = PageController();
   int _currentStep = 0;
 
-  final List<Map<String, dynamic>> _guideSteps = [
+  List<Map<String, dynamic>> get _guideSteps => [
     {
       'icon': Icons.calendar_month_rounded,
       'color': AppColors.clayRose,
-      'title': '1. Kişiselleştirilmiş Gebelik Takibi',
-      'subtitle': 'SAT ve Boy/Kilo Analiziniz',
-      'description': 'Son Adet Tarihinizi (SAT) veya tahmini doğum gününüzü girerek güncel haftanızı ve kalan gün sayısını anında öğrenin. Hamilelik öncesi kilonuza göre IOM standartlarında ideal kilo artış hedefinizi takip edin.',
+      'title': 'guide_step1_title'.tr(),
+      'subtitle': 'guide_step1_subtitle'.tr(),
+      'description': 'guide_step1_desc'.tr(),
       'highlights': [
-        'Naegele Kuralı ile kesin doğum tarihi hesabı',
-        'Vücut Kitle İndeksi (VKİ) ve ideal kilo artış tablosu',
-        'Bebeğin haftalık meyve ve milimetrik boyut benzetimi',
+        'guide_step1_hl1'.tr(),
+        'guide_step1_hl2'.tr(),
+        'guide_step1_hl3'.tr(),
       ],
     },
     {
       'icon': Icons.medical_services_rounded,
       'color': AppColors.claySky,
-      'title': '2. Kritik Tıbbi Tarama & Test Takvimi',
-      'subtitle': 'Hangi Hafta Hangi Test Yapılmalı?',
-      'description': 'Bebeğinizin sağlığı için hiçbir taramayı kaçırmayın. Kritik haftalarda uygulama otomatik hatırlatıcılar ve kontrol listeleri üretir.',
+      'title': 'guide_step2_title'.tr(),
+      'subtitle': 'guide_step2_subtitle'.tr(),
+      'description': 'guide_step2_desc'.tr(),
       'highlights': [
-        '10. Hafta: NIPT (Serbest Fetal DNA Kromozom Taraması)',
-        '11 - 13. Hafta: Ense Kalınlığı (NT) & İkili Tarama',
-        '20 - 22. Hafta: Ayrıntılı Ultrason (Detaylı Organ Taraması)',
-        '24 - 28. Hafta: Gestasyonel Diyabet (Şeker Yükleme)',
+        'guide_step2_hl1'.tr(),
+        'guide_step2_hl2'.tr(),
+        'guide_step2_hl3'.tr(),
+        'guide_step2_hl4'.tr(),
       ],
     },
     {
       'icon': Icons.water_drop_rounded,
       'color': AppColors.clayPeach,
-      'title': '3. Günlük Sağlık & 200 mg Kafein Alarmı',
-      'subtitle': 'Su, Beslenme ve Tıbbi Güvenlik',
-      'description': 'Anne ve bebeğin sıvı dengesi için 2.5 Litre hedefli su takip modülü ve aşırı kafein alımını önleyen tıbbi güvenlik alarmı her an yanınızda.',
+      'title': 'guide_step3_title'.tr(),
+      'subtitle': 'guide_step3_subtitle'.tr(),
+      'description': 'guide_step3_desc'.tr(),
       'highlights': [
-        'Tek dokunuşla bardak (+250 ml) ve şişe (+500 ml) su kaydı',
-        'Günlük 200 mg kafein sınırı aşıldığında kırmızı alarm uyarısı',
-        '1., 2. ve 3. Trimester ek kalori ve besin tavsiyeleri',
+        'guide_step3_hl1'.tr(),
+        'guide_step3_hl2'.tr(),
+        'guide_step3_hl3'.tr(),
       ],
     },
     {
       'icon': Icons.menu_book_rounded,
       'color': AppColors.clayLavender,
-      'title': '4. Aura Journal & Yolculuk Videosu',
-      'subtitle': 'Romantik Anılar ve Sesli Mektuplar',
-      'description': 'Bebeğinize hissettiğiniz duyguları, kalp atışlarını ve ultrason fotoğraflarını kaydedin. Doğum anında tek tıkla FFmpeg destekli Time-Lapse Yolculuk Videosuna dönüştürün.',
+      'title': 'guide_step4_title'.tr(),
+      'subtitle': 'guide_step4_subtitle'.tr(),
+      'description': 'guide_step4_desc'.tr(),
       'highlights': [
-        '5 Seviyeli Günlük Ruh Hali (Mood) Takibi',
-        'Ultrason fotoğrafları ve sesli mektup kayıtları',
-        'Romantik melodi ile otomatik video derleme',
+        'guide_step4_hl1'.tr(),
+        'guide_step4_hl2'.tr(),
+        'guide_step4_hl3'.tr(),
       ],
     },
     {
       'icon': Icons.emergency_rounded,
       'color': AppColors.medicalAlertBg,
-      'title': '5. Kırmızı Alarm & Acil Durum Kartı',
-      'subtitle': 'Beklenmedik Anlarda Hayati Destek',
-      'description': 'Gebelikte acil hekim başvurusu gerektiren 8 tehlike işareti ve acil serviste sağlık ekiplerine gösterebileceğiniz Acil Tıbbi Bilgi Kartı (Emergency ID).',
+      'title': 'guide_step5_title'.tr(),
+      'subtitle': 'guide_step5_subtitle'.tr(),
+      'description': 'guide_step5_desc'.tr(),
       'highlights': [
-        '8 Kritik tehlike işareti ve açıklamaları',
-        'Kan grubu, alerji, ilaç ve doktor bilgisini içeren acil kart',
-        'Tek dokunuşla 112 Acil Yardım veya Doktoru arama',
+        'guide_step5_hl1'.tr(),
+        'guide_step5_hl2'.tr(),
+        'guide_step5_hl3'.tr(),
       ],
     },
   ];
+
 
   void _nextStep() {
     if (_currentStep < _guideSteps.length - 1) {
@@ -129,9 +131,9 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
-          'Uygulama Rehberi',
-          style: TextStyle(
+        title: Text(
+          'guide_app_title'.tr(),
+          style: const TextStyle(
             color: AppColors.primaryDark,
             fontWeight: FontWeight.w800,
             fontSize: 18,
@@ -142,19 +144,19 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
             padding: const EdgeInsets.only(right: 8),
             child: TextButton(
               onPressed: _finishGuide,
-              child: const Row(
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Atla',
-                    style: TextStyle(
+                    'guide_skip'.tr(),
+                    style: const TextStyle(
                       color: AppColors.primaryPink,
                       fontWeight: FontWeight.w800,
                       fontSize: 14,
                     ),
                   ),
-                  SizedBox(width: 4),
-                  Icon(Icons.arrow_forward_rounded, color: AppColors.primaryPink, size: 16),
+                  const SizedBox(width: 4),
+                  const Icon(Icons.arrow_forward_rounded, color: AppColors.primaryPink, size: 16),
                 ],
               ),
             ),
@@ -268,13 +270,13 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Row(
+                              Row(
                                 children: [
-                                  Icon(Icons.stars_rounded, color: AppColors.accentGold, size: 20),
-                                  SizedBox(width: 8),
+                                  const Icon(Icons.stars_rounded, color: AppColors.accentGold, size: 20),
+                                  const SizedBox(width: 8),
                                   Text(
-                                    'Önemli Özellikler ve İpuçları:',
-                                    style: TextStyle(
+                                    'guide_highlights_title'.tr(),
+                                    style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w800,
                                       color: AppColors.primaryDark,
@@ -325,7 +327,7 @@ class _AppGuideScreenState extends State<AppGuideScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      _currentStep == _guideSteps.length - 1 ? 'Profilini Oluştur ve Başla' : 'Sonraki Özellik',
+                      _currentStep == _guideSteps.length - 1 ? 'guide_button_start'.tr() : 'guide_button_next'.tr(),
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w800,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/theme/clay_theme.dart';
 import '../../core/constants/weekly_medical_data.dart';
@@ -24,7 +25,7 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   ProfileModel? _profile;
-  DailyLogModel? _todayLog;
+
   bool _isLoading = true;
 
   @override
@@ -51,7 +52,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     try {
       _profile = await DatabaseHelper.instance.getProfile();
       final today = AppDateUtils.todayIso();
-      _todayLog = await DatabaseHelper.instance.getOrCreateDailyLog(today);
+      await DatabaseHelper.instance.getOrCreateDailyLog(today);
     } catch (e) {
       debugPrint('Dashboard load error: $e');
     } finally {
@@ -87,7 +88,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final weekData = WeeklyMedicalData.getInfoForWeek(currentWeek);
     final babyName = _profile?.babyDisplayName ?? 'Bebeğiniz';
     final momName = _profile?.momName ?? 'Anne Adayı';
-    final fruitIcon = (weekData['icon'] as IconData?) ?? Icons.eco_rounded;
+
     final fruitName = weekData['fruit_name'] as String? ?? 'Gelişim';
 
     // Detaylı Yaş Hesaplama (Kaçıncı haftanın kaçıncı gününde)
@@ -120,7 +121,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 const Icon(Icons.favorite_rounded, color: AppColors.primaryPink, size: 16),
                 const SizedBox(width: 6),
                 Text(
-                  'Hoş Geldin, $momName',
+                  'dashboard_welcome'.tr(args: [momName]),
                   style: const TextStyle(
                     color: AppColors.primaryDark,
                     fontWeight: FontWeight.w800,
@@ -141,7 +142,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         actions: [
           IconButton(
-            tooltip: 'Profil Ayarları',
+            tooltip: 'dashboard_profile_settings'.tr(),
             icon: const Icon(Icons.settings_suggest_rounded, color: AppColors.primaryDark),
             onPressed: _openProfileEditor,
           ),
@@ -156,14 +157,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.medicalAlertRed, width: 1.2),
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.emergency_rounded, color: AppColors.medicalAlertRed, size: 14),
-                    SizedBox(width: 4),
+                    const Icon(Icons.emergency_rounded, color: AppColors.medicalAlertRed, size: 14),
+                    const SizedBox(width: 4),
                     Text(
-                      'Acil',
-                      style: TextStyle(
+                      'dashboard_emergency'.tr(),
+                      style: const TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w800,
                         color: AppColors.medicalAlertRed,
@@ -202,10 +203,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             decoration: BoxDecoration(
                               color: AppColors.clayLavender,
                               borderRadius: BorderRadius.circular(14),
-                              border: Border.all(color: AppColors.lavenderPurple.withOpacity(0.25)),
+                              border: Border.all(color: AppColors.lavenderPurple.withValues(alpha: 0.25)),
                             ),
                             child: Text(
-                              '$trimester. Trimester',
+                              'dashboard_trimester'.tr(args: [trimester.toString()]),
                               style: const TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w800,
@@ -218,14 +219,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             decoration: BoxDecoration(
                               color: AppColors.clayRose,
                               borderRadius: BorderRadius.circular(14),
-                              border: Border.all(color: AppColors.primaryPink.withOpacity(0.25)),
+                              border: Border.all(color: AppColors.primaryPink.withValues(alpha: 0.25)),
                             ),
                             child: Row(
                               children: [
                                 const Icon(Icons.hourglass_top_rounded, size: 13, color: AppColors.primaryDark),
                                 const SizedBox(width: 4),
                                 Text(
-                                  'Doğuma $daysRemaining Gün',
+                                  'dashboard_days_remaining'.tr(args: [daysRemaining.toString()]),
                                   style: const TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.w800,
@@ -250,7 +251,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                       // Kaçıncı Haftanın Kaçıncı Gününde Başlığı
                       Text(
-                        '$weekNumber. Hafta + $dayNumber. Gün',
+                        'dashboard_week_day'.tr(args: [weekNumber.toString(), dayNumber.toString()]),
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontSize: 24,
@@ -280,7 +281,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             const SizedBox(width: 8),
                             Flexible(
                               child: Text(
-                                'Bebeğiniz bu hafta $fruitName boyutunda',
+                                'dashboard_fruit_size'.tr(args: [fruitName]),
                                 style: const TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w800,
@@ -295,7 +296,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                       // Boy & Kilo Detayı
                       Text(
-                        'Ortalama Boy: ${weekData['length'] ?? '~30.0 cm'}  •  Ağırlık: ${weekData['weight'] ?? '~600 gr'}',
+                        'dashboard_measurements'.tr(args: [weekData['length']?.toString() ?? '~30.0 cm', weekData['weight']?.toString() ?? '~600 gr']),
                         style: const TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w700,
@@ -340,9 +341,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       color: const Color(0xFFE65100),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
-                                    child: const Text(
-                                      'Bu Haftanın Tıbbi Testi',
-                                      style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w800),
+                                    child: Text(
+                                      'dashboard_medical_test_title'.tr(),
+                                      style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w800),
                                     ),
                                   ),
                                 ],
@@ -383,13 +384,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Row(
+                      Row(
                         children: [
-                          Icon(Icons.auto_awesome_rounded, color: AppColors.primaryPink, size: 18),
-                          SizedBox(width: 8),
+                          const Icon(Icons.auto_awesome_rounded, color: AppColors.primaryPink, size: 18),
+                          const SizedBox(width: 8),
                           Text(
-                            'Hamileliğin Bu Günü',
-                            style: TextStyle(
+                            'dashboard_today_title'.tr(),
+                            style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w800,
                               color: AppColors.primaryDark,
@@ -400,7 +401,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       const SizedBox(height: 8),
                       Text(
                         weekData['summary'] as String? ??
-                            'Bugün bebeğinle sakin ve huzurlu bir bağ kur. Derin nefes al ve minik kalbin atışlarını hisset.',
+                            'dashboard_today_desc_default'.tr(),
                         style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
@@ -416,11 +417,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             color: Colors.white,
                             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                             onPressed: () => widget.onNavigateTab(2), // Günlük Takip Sekmesine
-                            child: const Row(
+                            child: Row(
                               children: [
-                                Text('Günlük Rutinleri İncele', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w800, color: AppColors.primaryPink)),
-                                SizedBox(width: 4),
-                                Icon(Icons.arrow_forward_rounded, size: 14, color: AppColors.primaryPink),
+                                Text('dashboard_view_daily_routines'.tr(), style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w800, color: AppColors.primaryPink)),
+                                const SizedBox(width: 4),
+                                const Icon(Icons.arrow_forward_rounded, size: 14, color: AppColors.primaryPink),
                               ],
                             ),
                           ),

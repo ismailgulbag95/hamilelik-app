@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../services/media_service.dart';
 
@@ -34,7 +35,7 @@ class PhotoViewDialog extends StatelessWidget {
               borderRadius: BorderRadius.circular(28),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
+                  color: Colors.black.withValues(alpha: 0.2),
                   blurRadius: 20,
                   offset: const Offset(0, 10),
                 ),
@@ -65,14 +66,14 @@ class PhotoViewDialog extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('🌸', style: TextStyle(fontSize: 16)),
-                    SizedBox(width: 6),
+                    const Text('🌸', style: TextStyle(fontSize: 16)),
+                    const SizedBox(width: 6),
                     Text(
-                      'Aura Pregnancy Hatırası',
-                      style: TextStyle(
+                      'photo_memory_caption'.tr(),
+                      style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
                         color: AppColors.textSecondary,

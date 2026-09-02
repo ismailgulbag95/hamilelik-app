@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/theme/clay_theme.dart';
 import '../../models/diary_model.dart';
@@ -81,10 +82,10 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
         _photoPath = selected;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Fotoğraf başarıyla eklendi.'),
+        SnackBar(
+          content: Text('journal_photo_added'.tr()),
           backgroundColor: AppColors.successGreen,
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ),
       );
     }
@@ -98,10 +99,10 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
         _audioDurationSeconds = (result['duration_sec'] as int?) ?? 30;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Sesli mektup kaydı başarıyla alındı.'),
+        SnackBar(
+          content: Text('journal_audio_added'.tr()),
           backgroundColor: AppColors.successGreen,
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ),
       );
     }
@@ -118,9 +119,9 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
-          'Yeni Anı Yaz',
-          style: TextStyle(
+        title: Text(
+          'journal_new_entry_title'.tr(),
+          style: const TextStyle(
             color: AppColors.primaryDark,
             fontWeight: FontWeight.w800,
             fontSize: 18,
@@ -157,7 +158,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                                 return DropdownMenuItem<int>(
                                   value: w,
                                   child: Text(
-                                    '$w. Hafta',
+                                    'weekly_week_range'.tr(args: [w.toString()]),
                                     style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
                                   ),
                                 );
@@ -204,7 +205,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Bugünkü Ruh Haliniz:', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700)),
+                    Text('journal_mood_label'.tr(), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700)),
                     const SizedBox(height: 12),
                     MoodSelectorWidget(
                       selectedMood: _selectedMood,
@@ -221,7 +222,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Bebeğinize Mektup / Günlük Notu:', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700)),
+                    Text('journal_note_label'.tr(), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700)),
                     const SizedBox(height: 10),
                     Container(
                       decoration: BoxDecoration(
@@ -229,7 +230,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.04),
+                            color: Colors.black.withValues(alpha: 0.04),
                             offset: const Offset(0, 3),
                             blurRadius: 6,
                           ),
@@ -240,8 +241,8 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                         controller: _noteController,
                         maxLines: 5,
                         style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                        decoration: const InputDecoration(
-                          hintText: 'Bugün hissettiğiniz duyguları, kalp atışlarını veya bebeğinize söylemek istediklerinizi yazın...',
+                        decoration: InputDecoration(
+                          hintText: 'journal_note_hint'.tr(),
                           border: InputBorder.none,
                         ),
                       ),
@@ -261,13 +262,13 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Row(
+                          Row(
                             children: [
-                              Icon(Icons.photo_camera_rounded, size: 18, color: AppColors.primaryPink),
-                              SizedBox(width: 6),
+                              const Icon(Icons.photo_camera_rounded, size: 18, color: AppColors.primaryPink),
+                              const SizedBox(width: 6),
                               Text(
-                                'Eklenen Fotoğraf',
-                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
+                                'journal_photo_attached'.tr(),
+                                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
                               ),
                             ],
                           ),
@@ -276,12 +277,12 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                               IconButton(
                                 icon: const Icon(Icons.edit_rounded, size: 20, color: AppColors.primaryPink),
                                 onPressed: _pickPhoto,
-                                tooltip: 'Fotoğrafı Değiştir',
+                                tooltip: 'journal_change_photo'.tr(),
                               ),
                               IconButton(
                                 icon: const Icon(Icons.delete_outline_rounded, size: 20, color: AppColors.medicalAlertRed),
                                 onPressed: () => setState(() => _photoPath = null),
-                                tooltip: 'Kaldır',
+                                tooltip: 'common_remove'.tr(),
                               ),
                             ],
                           ),
@@ -289,7 +290,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                       ),
                       const SizedBox(height: 8),
                       GestureDetector(
-                        onTap: () => PhotoViewDialog.show(context, _photoPath!, title: '$_selectedWeek. Hafta Fotoğrafı'),
+                        onTap: () => PhotoViewDialog.show(context, _photoPath!, title: 'journal_photo_week_title'.tr(args: [_selectedWeek.toString()])),
                         child: Container(
                           height: 170,
                           width: double.infinity,
@@ -297,7 +298,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                             borderRadius: BorderRadius.circular(18),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.06),
+                                color: Colors.black.withValues(alpha: 0.06),
                                 blurRadius: 10,
                                 offset: const Offset(0, 4),
                               ),
@@ -316,15 +317,15 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                                 margin: const EdgeInsets.all(8),
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                 decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.6),
+                                  color: Colors.black.withValues(alpha: 0.6),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
-                                child: const Row(
+                                child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Icon(Icons.zoom_in_rounded, color: Colors.white, size: 14),
-                                    SizedBox(width: 4),
-                                    Text('Büyüt', style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w700)),
+                                    const Icon(Icons.zoom_in_rounded, color: Colors.white, size: 14),
+                                    const SizedBox(width: 4),
+                                    Text('journal_zoom'.tr(), style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w700)),
                                   ],
                                 ),
                               ),
@@ -348,13 +349,13 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Row(
+                          Row(
                             children: [
-                              Icon(Icons.mic_rounded, size: 18, color: AppColors.primaryPink),
-                              SizedBox(width: 6),
+                              const Icon(Icons.mic_rounded, size: 18, color: AppColors.primaryPink),
+                              const SizedBox(width: 6),
                               Text(
-                                'Eklenen Ses Kaydı (Dinle)',
-                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
+                                'journal_audio_attached'.tr(),
+                                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
                               ),
                             ],
                           ),
@@ -363,12 +364,12 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                               IconButton(
                                 icon: const Icon(Icons.mic_rounded, size: 20, color: AppColors.primaryPink),
                                 onPressed: _recordAudio,
-                                tooltip: 'Yeniden Kaydet',
+                                tooltip: 'journal_re_record'.tr(),
                               ),
                               IconButton(
                                 icon: const Icon(Icons.delete_outline_rounded, size: 20, color: AppColors.medicalAlertRed),
                                 onPressed: () => setState(() => _audioPath = null),
-                                tooltip: 'Kaldır',
+                                tooltip: 'common_remove'.tr(),
                               ),
                             ],
                           ),
@@ -377,7 +378,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                       const SizedBox(height: 8),
                       ClayAudioPlayer(
                         audioPath: _audioPath!,
-                        title: 'Bebeğime Sesli Mektup ($_selectedWeek. Hafta)',
+                        title: 'journal_audio_letter_title'.tr(args: [_selectedWeek.toString()]),
                         durationSeconds: _audioDurationSeconds,
                       ),
                     ],
@@ -403,7 +404,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                           ),
                           const SizedBox(width: 6),
                           Text(
-                            _photoPath != null ? 'Fotoğraf Seçildi' : 'Fotoğraf Ekle',
+                            _photoPath != null ? 'journal_photo_selected'.tr() : 'journal_add_photo'.tr(),
                             style: TextStyle(
                               fontWeight: FontWeight.w800,
                               fontSize: 12,
@@ -429,7 +430,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                           ),
                           const SizedBox(width: 6),
                           Text(
-                            _audioPath != null ? 'Ses Kaydedildi' : 'Ses Kaydet',
+                            _audioPath != null ? 'journal_audio_recorded'.tr() : 'journal_record_audio'.tr(),
                             style: TextStyle(
                               fontWeight: FontWeight.w800,
                               fontSize: 12,
@@ -451,18 +452,18 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.star_rounded, size: 16, color: AppColors.primaryPink),
-                              SizedBox(width: 4),
-                              Text('Özel An Olarak İşaretle', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: AppColors.primaryDark)),
+                              const Icon(Icons.star_rounded, size: 16, color: AppColors.primaryPink),
+                              const SizedBox(width: 4),
+                              Text('journal_mark_highlight'.tr(), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: AppColors.primaryDark)),
                             ],
                           ),
-                          Text('Time-lapse Yolculuk Videosuna dahil edilir.', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.textSecondary)),
+                          Text('journal_highlight_desc'.tr(), style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.textSecondary)),
                         ],
                       ),
                     ),
@@ -482,7 +483,7 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                 height: 54,
                 onPressed: () {
                   final text = _noteController.text.trim();
-                  final noteText = text.isNotEmpty ? text : 'Bebeğimle huzur ve sevgi dolu bir gün geçirdik.';
+                  final noteText = text.isNotEmpty ? text : 'journal_default_note'.tr();
                   final entry = DiaryModel(
                     pregnancyWeek: _selectedWeek,
                     date: dateStr,
@@ -496,14 +497,14 @@ class _NewEntryScreenState extends State<NewEntryScreen> {
                   widget.onSave(entry);
                   Navigator.pop(context);
                 },
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.check_rounded, color: AppColors.successGreen, size: 20),
-                    SizedBox(width: 6),
+                    const Icon(Icons.check_rounded, color: AppColors.successGreen, size: 20),
+                    const SizedBox(width: 6),
                     Text(
-                      'Anıyı Kaydet',
-                      style: TextStyle(
+                      'journal_save_entry'.tr(),
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w800,
                         color: AppColors.successGreen,

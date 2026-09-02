@@ -7,11 +7,12 @@ import '../models/diary_model.dart';
 import '../models/daily_log_model.dart';
 import '../models/notification_model.dart';
 import '../models/medication_model.dart';
+import '../models/emergency_card_model.dart';
 
 /// Aura Pregnancy - SQLite & Web Uyumlu Yerel Veritabanı Yöneticisi (DatabaseHelper)
 class DatabaseHelper {
   static const String _databaseName = 'aura_pregnancy.db';
-  static const int _databaseVersion = 4;
+  static const int _databaseVersion = 5;
 
   // Singleton Örneği
   DatabaseHelper._internal();
@@ -32,6 +33,8 @@ class DatabaseHelper {
   final Map<String, DailyLogModel> _webDailyLogs = {};
   final List<NotificationModel> _webNotifications = [];
   final List<MedicationModel> _webMedications = [];
+  EmergencyCardModel? _webEmergencyCard;
+  bool _webMedicationsSeeded = false;
 
   /// Veritabanı örneğini döndürür (Lazy initialization)
   Future<Database?> get database async {
@@ -134,6 +137,35 @@ class DatabaseHelper {
       )
     ''');
 
+    // 6. emergency_card (Kişiselleştirilebilir Acil Tıbbi Kart) tablosu
+    await db.execute('''
+      CREATE TABLE emergency_card (
+        id INTEGER PRIMARY KEY CHECK (id = 1),
+        patient_name TEXT,
+        blood_type TEXT,
+        lmp_date TEXT,
+        due_date TEXT,
+        current_week INTEGER,
+        allergies TEXT,
+        chronic_diseases TEXT,
+        medications TEXT,
+        emergency_contact_name TEXT,
+        emergency_contact_phone TEXT,
+        doctor_name TEXT,
+        doctor_phone TEXT,
+        hospital_name TEXT,
+        recent_symptoms TEXT
+      )
+    ''');
+
+    // 7. app_settings (Sistem Ayarları ve Seeding Durumu) tablosu
+    await db.execute('''
+      CREATE TABLE app_settings (
+        key TEXT PRIMARY KEY,
+        value TEXT
+      )
+    ''');
+
     // İndeksler (Hızlı sorgulama için)
     await db.execute('CREATE INDEX idx_diary_week ON diary(pregnancy_week)');
     await db.execute('CREATE INDEX idx_diary_date ON diary(date)');
@@ -175,6 +207,35 @@ class DatabaseHelper {
             time TEXT,
             last_taken_date TEXT,
             category TEXT
+          )
+        ''');
+      } catch (_) {}
+    }
+    if (oldVersion < 5) {
+      try {
+        await db.execute('''
+          CREATE TABLE IF NOT EXISTS emergency_card (
+            id INTEGER PRIMARY KEY CHECK (id = 1),
+            patient_name TEXT,
+            blood_type TEXT,
+            lmp_date TEXT,
+            due_date TEXT,
+            current_week INTEGER,
+            allergies TEXT,
+            chronic_diseases TEXT,
+            medications TEXT,
+            emergency_contact_name TEXT,
+            emergency_contact_phone TEXT,
+            doctor_name TEXT,
+            doctor_phone TEXT,
+            hospital_name TEXT,
+            recent_symptoms TEXT
+          )
+        ''');
+        await db.execute('''
+          CREATE TABLE IF NOT EXISTS app_settings (
+            key TEXT PRIMARY KEY,
+            value TEXT
           )
         ''');
       } catch (_) {}
@@ -570,24 +631,34 @@ class DatabaseHelper {
   Future<List<MedicationModel>> getMedications() async {
     final db = await database;
     if (db == null) {
-      if (_webMedications.isEmpty) {
+      if (!_webMedicationsSeeded) {
+        _webMedicationsSeeded = true;
         await ensureDefaultMedications();
       }
       return List.from(_webMedications);
     }
     try {
-      final result = await db.query('medications', orderBy: 'id ASC');
-      if (result.isEmpty) {
-        await ensureDefaultMedications();
-        final refreshed = await db.query('medications', orderBy: 'id ASC');
-        return refreshed.map((m) => MedicationModel.fromMap(m)).toList();
+      // Sadece uygulama ilk kurulduğunda 1 kez default ilaçları tohumla
+      final seededRows = await db.query(
+        'app_settings',
+        where: 'key = ?',
+        whereArgs: ['medications_seeded'],
+      );
+      if (seededRows.isEmpty) {
+        final count = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM medications')) ?? 0;
+        if (count == 0) {
+          await ensureDefaultMedications();
+        }
+        await db.insert(
+          'app_settings',
+          {'key': 'medications_seeded', 'value': 'true'},
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
       }
+      final result = await db.query('medications', orderBy: 'id ASC');
       return result.map((m) => MedicationModel.fromMap(m)).toList();
     } catch (e) {
       debugPrint('getMedications error: $e');
-      if (_webMedications.isEmpty) {
-        await ensureDefaultMedications();
-      }
       return List.from(_webMedications);
     }
   }
@@ -699,12 +770,58 @@ class DatabaseHelper {
     }
   }
 
+  // ==========================================
+  // 6. EMERGENCY CARD (ACİL TIBBİ KART) CRUD İŞLEMLERİ
+  // ==========================================
+
+  Future<EmergencyCardModel?> getEmergencyCard() async {
+    final db = await database;
+    if (db == null) {
+      return _webEmergencyCard;
+    }
+    try {
+      final result = await db.query('emergency_card', where: 'id = 1', limit: 1);
+      if (result.isNotEmpty) {
+        return EmergencyCardModel.fromMap(result.first);
+      }
+      return _webEmergencyCard;
+    } catch (e) {
+      debugPrint('getEmergencyCard error: $e');
+      return _webEmergencyCard;
+    }
+  }
+
+  Future<int> saveEmergencyCard(EmergencyCardModel card) async {
+    _webEmergencyCard = card;
+    notifyDataChanged();
+
+    final db = await database;
+    if (db == null) return 1;
+
+    try {
+      final map = card.toMap();
+      map['id'] = 1;
+      final res = await db.insert(
+        'emergency_card',
+        map,
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+      notifyDataChanged();
+      return res;
+    } catch (e) {
+      debugPrint('saveEmergencyCard error: $e');
+      return 1;
+    }
+  }
+
   Future<void> clearAllData() async {
     _webProfile = null;
     _webDiaries.clear();
     _webDailyLogs.clear();
     _webNotifications.clear();
     _webMedications.clear();
+    _webEmergencyCard = null;
+    _webMedicationsSeeded = false;
     final db = await database;
     if (db != null) {
       try {
@@ -713,6 +830,8 @@ class DatabaseHelper {
         await db.delete('profile');
         await db.delete('notifications');
         await db.delete('medications');
+        await db.delete('emergency_card');
+        await db.delete('app_settings');
       } catch (e) {
         debugPrint('clearAllData error: $e');
       }

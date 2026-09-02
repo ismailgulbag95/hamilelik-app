@@ -30,12 +30,12 @@ class DebugFloatingButton extends StatelessWidget {
             borderRadius: const BorderRadius.horizontal(left: Radius.circular(20)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.30),
+                color: Colors.black.withValues(alpha: 0.30),
                 offset: const Offset(-2, 4),
                 blurRadius: 10,
               ),
             ],
-            border: Border.all(color: AppColors.primaryPink.withOpacity(0.5), width: 1.5),
+            border: Border.all(color: AppColors.primaryPink.withValues(alpha: 0.5), width: 1.5),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
