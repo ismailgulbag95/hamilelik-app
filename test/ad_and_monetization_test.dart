@@ -10,6 +10,9 @@ void main() {
   group('Aura Monetizasyon ve Reklam Testleri', () {
     test('1. AdService test kimlikleri ve başlatma kontrolü', () async {
       final service = AdService.instance;
+      expect(AdService.androidAppId, 'ca-app-pub-2626843024156194~8901972198');
+      expect(AdService.androidNativeProdId, 'ca-app-pub-2626843024156194/5241928781');
+      expect(AdService.androidRewardedProdId, 'ca-app-pub-2626843024156194/6798553034');
       expect(AdService.androidRewardedTestId, isNotEmpty);
       expect(AdService.iosRewardedTestId, isNotEmpty);
       expect(AdService.androidNativeTestId, isNotEmpty);

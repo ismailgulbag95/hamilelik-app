@@ -11,6 +11,7 @@ class AdService {
   /// Canlı (Production) AdMob Kimlikleri
   static const String androidAppId = 'ca-app-pub-2626843024156194~8901972198';
   static const String androidNativeProdId = 'ca-app-pub-2626843024156194/5241928781';
+  static const String androidRewardedProdId = 'ca-app-pub-2626843024156194/6798553034';
 
   /// Google Mobile Ads Resmi Test Reklam Birimi Kimlikleri (Ad Unit IDs)
   static const String androidRewardedTestId = 'ca-app-pub-3940256099942544/5224354917';
@@ -28,6 +29,14 @@ class AdService {
       return androidNativeProdId;
     }
     return androidNativeTestId;
+  }
+
+  /// Ortama göre aktif Rewarded Ad Unit ID'yi döner (Canlı / Test ayrımı)
+  static String get rewardedAdUnitId {
+    if (kReleaseMode) {
+      return androidRewardedProdId;
+    }
+    return androidRewardedTestId;
   }
 
   bool _isInitialized = false;
