@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:permission_handler/permission_handler.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/theme/clay_theme.dart';
 import '../../controllers/emergency_controller.dart';
@@ -54,22 +53,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
       return;
     }
 
-    try {
-      // Android izin mekaniği: İlk basışta telefon ve rehber erişimi izinleri istenir
-      final phoneStatus = await Permission.phone.status;
-      if (!phoneStatus.isGranted) {
-        await Permission.phone.request();
-      }
-
-      final contactsStatus = await Permission.contacts.status;
-      if (!contactsStatus.isGranted) {
-        await Permission.contacts.request();
-      }
-    } catch (e) {
-      debugPrint('Permission request note: $e');
-    }
-
-    // Telefon numarasını temizle ve tel: URI oluştur
+    // Telefon numarasını temizle ve tel: URI oluştur (Sistem arama ekranını açar, izin gerektirmez)
     final cleanPhone = doctorPhone.replaceAll(RegExp(r'[^\d+]'), '');
     final uri = Uri.parse('tel:$cleanPhone');
 

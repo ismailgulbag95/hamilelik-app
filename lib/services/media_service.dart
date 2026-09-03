@@ -249,19 +249,13 @@ class MediaService {
     }
   }
 
-  /// Galeri İzni Kontrolü (Android 13+ READ_MEDIA_IMAGES ve alt sürümler)
+  /// Galeri İzni Kontrolü
+  /// Android'de modern Photo Picker kullanılır ve herhangi bir izin gerektirmez.
+  /// iOS'ta sistem fotoğraf erişimi kontrol edilir.
   Future<bool> _requestGalleryPermission(BuildContext context) async {
-    if (kIsWeb) return true;
+    if (kIsWeb || Platform.isAndroid) return true;
 
-    PermissionStatus status;
-    if (Platform.isAndroid) {
-      status = await Permission.photos.request();
-      if (!status.isGranted && !status.isLimited) {
-        status = await Permission.storage.request();
-      }
-    } else {
-      status = await Permission.photos.request();
-    }
+    final status = await Permission.photos.request();
 
     if (status.isGranted || status.isLimited) {
       return true;
@@ -269,13 +263,13 @@ class MediaService {
 
     if (status.isPermanentlyDenied) {
       if (context.mounted) {
-        _showPermissionDialog(context, 'Galeri / Depolama İzni Gerekli', 'Galerinizden ultrason ve hatıra fotoğrafı seçebilmek için lütfen ayarlardan galeri iznini açın.');
+        _showPermissionDialog(context, 'Galeri İzni Gerekli', 'Galerinizden ultrason ve hatıra fotoğrafı seçebilmek için lütfen ayarlardan fotoğraf erişimine izin verin.');
       }
       return false;
     }
 
     if (context.mounted) {
-      _showErrorSnackBar(context, 'Fotoğraf seçebilmek için galeri iznine onay vermelisiniz.');
+      _showErrorSnackBar(context, 'Fotoğraf seçebilmek için galeri erişimine onay vermelisiniz.');
     }
     return false;
   }

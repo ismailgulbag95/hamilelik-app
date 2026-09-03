@@ -79,8 +79,6 @@
 	<string>Aura Pregnancy accesses your photo library to let you select and attach ultrasound and bump pictures to your pregnancy journal.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Aura Pregnancy requires photo library access to save generated time-lapse pregnancy journey stories and milestone cards to your device.</string>
-	<key>NSContactsUsageDescription</key>
-	<string>Aura Pregnancy accesses your contacts so you can quickly select and set emergency contacts and your doctor's phone number.</string>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>Aura Pregnancy uses this identifier to deliver personalized and relevant maternal health content, baby care recommendations, and sponsor experiences to you.</string>
 	<key>GADApplicationIdentifier</key>

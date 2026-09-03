@@ -50,3 +50,9 @@ app.*.map.json
 
 # Goldie store generated outputs
 goldie/out/
+
+# Keystore and Keys
+*.keystore
+*.jks
+**/android/key.properties
+

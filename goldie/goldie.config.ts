@@ -9,10 +9,10 @@ const config = {
     background: "linear-gradient(160deg, #FDF7F4 0%, #FEE6E0 55%, #FFF0EB 100%)",
     headlineColor: "#2D232E",
     subheadColor: "#7D6B7D",
-    fontFamily: '-apple-system, "Nunito", "Quicksand", system-ui, sans-serif',
+    fontFamily: '"Nunito", "Segoe UI", sans-serif',
     copyHeightRatio: 0.22,
     deviceWidthRatio: 0.85,
-    template: "editorial",
+    template: "none",
     layout: "classic",
   },
   store: {
@@ -35,64 +35,81 @@ const config = {
   scenes: [
     {
       kind: "screenshot",
-      id: "dashboard",
+      id: "scene_01_dashboard",
       flow: "store-01-dashboard",
       headline: {
-        "tr-TR": "Hafta Hafta Bebeğinizin Büyümesi",
-        "en-US": "Watch Your Baby Grow Week by Week",
+        "tr-TR": "Bebeğinizin Büyümesini 3D İzleyin",
+        "en-US": "Watch Your Baby Grow in 3D",
       },
       subhead: {
-        "tr-TR": "3D meyve boyutları ve günlük gelişim rehberi.",
-        "en-US": "3D fruit sizes and daily developmental insights.",
+        "tr-TR": "Hafta hafta 3D fetus modeli ve sevimli meyve boyutları.",
+        "en-US": "Interactive 3D fetus model and cute fruit comparisons.",
       },
     },
     {
       kind: "screenshot",
-      id: "daily_tracker",
-      flow: "store-02-tracker",
+      id: "scene_02_ultrasound",
+      flow: "store-02-ultrasound",
       headline: {
-        "tr-TR": "Su, Kafein & Sağlık Takibi",
-        "en-US": "Hydration, Caffeine & Health Logs",
+        "tr-TR": "Canlı Rahim & Ultrason Görünümü",
+        "en-US": "Live Fetus & Ultrasound View",
       },
       subhead: {
-        "tr-TR": "Günlük sıvı ve kafein limitlerinizi güvenle izleyin.",
-        "en-US": "Stay hydrated and track safe caffeine thresholds.",
+        "tr-TR": "Bebeğinizin anne karnındaki duruşunu keşfedin.",
+        "en-US": "Visualize fetal movements and womb position.",
       },
     },
     {
       kind: "screenshot",
-      id: "weekly_panel",
-      flow: "store-03-weekly",
+      id: "scene_03_tracker",
+      flow: "store-03-tracker",
+      headline: {
+        "tr-TR": "Su, Kafein & Tekme Takibi",
+        "en-US": "Hydration, Caffeine & Kick Counter",
+      },
+      subhead: {
+        "tr-TR": "Günlük sağlık verilerinizi ve tansiyonunuzu izleyin.",
+        "en-US": "Monitor daily wellness limits and blood pressure.",
+      },
+    },
+    {
+      kind: "screenshot",
+      id: "scene_04_journal",
+      flow: "store-04-journal",
+      headline: {
+        "tr-TR": "Romantik Anı Günlüğü & Ses",
+        "en-US": "Romantic Memory Journal & Audio",
+      },
+      subhead: {
+        "tr-TR": "Ultrason fotoğrafları, sesli mektuplar ve anılar.",
+        "en-US": "Save ultrasound pics, bump photos and voice notes.",
+      },
+    },
+    {
+      kind: "screenshot",
+      id: "scene_05_milestones",
+      flow: "store-05-milestones",
       headline: {
         "tr-TR": "Tıbbi Test & Tarama Takvimi",
-        "en-US": "Medical Tests & Milestone Checklist",
+        "en-US": "Medical Screening Calendar",
       },
       subhead: {
-        "tr-TR": "Trimester bazlı kritik testleri ve aşıları kaçırmayın.",
-        "en-US": "Never miss trimester screening tests and ultrasound visits.",
+        "tr-TR": "Trimester testlerini ve randevularınızı kaçırmayın.",
+        "en-US": "Never miss trimester prenatal tests and appointments.",
       },
     },
     {
       kind: "screenshot",
-      id: "timeline",
-      flow: "store-04-timeline",
+      id: "scene_06_emergency",
+      flow: "store-06-emergency",
       headline: {
-        "tr-TR": "Romantik Anı Günlüğü",
-        "en-US": "Romantic Memory Journal",
+        "tr-TR": "Hızlı Doktor Kartı & Gizlilik",
+        "en-US": "Quick Doctor Card & Privacy",
       },
       subhead: {
-        "tr-TR": "Fotoğraf ve ses kayıtlarıyla hatıralarınızı saklayın.",
-        "en-US": "Preserve ultrasound photos and audio notes forever.",
+        "tr-TR": "Tek tıkla acil arama ve %100 yerel veri güvenliği.",
+        "en-US": "One-tap emergency call and 100% on-device privacy.",
       },
-    },
-    {
-      kind: "preview",
-      id: "preview",
-      segments: [
-        { id: "open", flow: "store-preview-01-open", holdSeconds: 3 },
-        { id: "water", flow: "store-preview-02-water", holdSeconds: 2 },
-        { id: "journal", flow: "store-preview-03-journal", holdSeconds: 3 },
-      ],
     },
   ],
 };

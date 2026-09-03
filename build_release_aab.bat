@@ -14,13 +14,12 @@ if exist "android\.gradle" (
 
 echo.
 echo ===================================================
-echo [2/4] Flutter Release APK derleniyor...
+echo [2/4] Flutter Release AAB derleniyor...
 echo ===================================================
-call flutter build apk --release --android-skip-build-dependency-validation
+call flutter build appbundle --release --android-skip-build-dependency-validation
 
 echo.
 echo ===================================================
 echo [3/4] Islem tamamlandi!
-echo APK Konumu: build\app\outputs\flutter-apk\app-release.apk
+echo AAB Konumu: build\app\outputs\bundle\release\app-release.aab
 echo ===================================================
-pause
