@@ -330,6 +330,23 @@ class ClayTheme {
           fontWeight: FontWeight.w700,
         ),
       ),
+      snackBarTheme: SnackBarThemeData(
+        backgroundColor: Colors.white,
+        contentTextStyle: GoogleFonts.nunito(
+          color: AppColors.textPrimary,
+          fontSize: 13,
+          fontWeight: FontWeight.w700,
+        ),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(
+            color: AppColors.primaryPink.withValues(alpha: 0.15),
+            width: 1.2,
+          ),
+        ),
+        elevation: 6,
+      ),
     );
   }
 }

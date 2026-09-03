@@ -145,10 +145,40 @@ class ClayNativeAdCard extends StatelessWidget {
                   () {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('ad_thank_support'.tr()),
-                        backgroundColor: AppColors.clayCardSurface,
+                        content: Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(6),
+                              decoration: const BoxDecoration(
+                                color: AppColors.primaryPink,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(Icons.favorite_rounded, color: Colors.white, size: 16),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                'ad_thank_support'.tr(),
+                                style: GoogleFonts.nunito(
+                                  color: AppColors.textPrimary,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        backgroundColor: Colors.white,
+                        elevation: 8,
                         behavior: SnackBarBehavior.floating,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18),
+                          side: BorderSide(
+                            color: AppColors.primaryPink.withValues(alpha: 0.2),
+                            width: 1.5,
+                          ),
+                        ),
+                        duration: const Duration(seconds: 3),
                       ),
                     );
                   },
