@@ -596,5 +596,7 @@
   "profile_edit_reset_confirm_desc": "Bu işlem cihazınızda kayıtlı olan tüm ultrason fotoğraflarını, günlük anılarını, tansiyon/kilo takiplerini ve bebek profilini kalıcı olarak siler. Bu işlem geri alınamaz.",
   "profile_edit_reset_confirm_btn": "Evet, Tümünü Sil",
   "profile_edit_reset_cancel_btn": "Vazgeç",
-  "profile_edit_reset_success": "Tüm kayıtlı veriler başarıyla temizlendi."
+  "profile_edit_reset_success": "Tüm kayıtlı veriler başarıyla temizlendi.",
+  "timeline_days_left": "gün kaldı",
+  "dashboard_weeks_left": "Doğuma {} hafta kaldı"
 }

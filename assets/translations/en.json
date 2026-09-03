@@ -596,5 +596,7 @@
   "profile_edit_reset_confirm_desc": "This action permanently deletes all ultrasound photos, journals, blood pressure/kick logs, and baby profile settings from your device. This cannot be undone.",
   "profile_edit_reset_confirm_btn": "Yes, Delete Everything",
   "profile_edit_reset_cancel_btn": "Cancel",
-  "profile_edit_reset_success": "All stored data has been completely erased."
+  "profile_edit_reset_success": "All stored data has been completely erased.",
+  "timeline_days_left": "days left",
+  "dashboard_weeks_left": "{} weeks until birth"
 }

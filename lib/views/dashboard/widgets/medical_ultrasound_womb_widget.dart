@@ -79,23 +79,33 @@ class _MedicalUltrasoundWombWidgetState extends State<MedicalUltrasoundWombWidge
   }
 
   int _getStageForWeek(int week) {
-    if (week <= 8) return 1;
-    if (week <= 13) return 2;
-    if (week <= 20) return 3;
-    if (week <= 27) return 4;
-    if (week <= 34) return 5;
-    return 6;
+    if (week <= 6) return 1;
+    if (week <= 9) return 2;
+    if (week <= 13) return 3;
+    if (week <= 17) return 4;
+    if (week <= 21) return 5;
+    if (week <= 25) return 6;
+    if (week <= 29) return 7;
+    if (week <= 33) return 8;
+    if (week <= 36) return 9;
+    return 10;
   }
 
   String _getHeartRateRange(int week) {
-    if (week <= 8) {
-      return '110 - 130 bpm'; // Erken dönem
+    if (week <= 6) {
+      return '100 - 125 bpm';
+    } else if (week <= 9) {
+      return '140 - 170 bpm';
     } else if (week <= 13) {
-      return '145 - 165 bpm'; // 1. Trimester pik dönemi
-    } else if (week <= 27) {
-      return '130 - 155 bpm'; // 2. Trimester dengeli aralık
+      return '150 - 170 bpm';
+    } else if (week <= 21) {
+      return '135 - 160 bpm';
+    } else if (week <= 29) {
+      return '130 - 155 bpm';
+    } else if (week <= 33) {
+      return '125 - 150 bpm';
     } else {
-      return '120 - 150 bpm'; // 3. Trimester olgun fetal ritim
+      return '120 - 145 bpm';
     }
   }
 

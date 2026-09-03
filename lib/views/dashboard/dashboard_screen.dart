@@ -95,6 +95,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final currentWeek = _profile?.currentWeek ?? 12;
     final dueDateStr = _profile?.dueDate ?? '2026-10-15';
     final daysRemaining = AppDateUtils.daysUntil(dueDateStr);
+    final weeksRemaining = daysRemaining > 0
+        ? ((daysRemaining + 6) ~/ 7).clamp(0, 40)
+        : (40 - currentWeek).clamp(0, 40);
     final weekData = WeeklyMedicalData.getInfoForWeek(currentWeek);
     final babyName = _profile?.babyDisplayName ?? 'Bebeğiniz';
     final momName = _profile?.momName ?? 'Anne Adayı';
@@ -201,16 +204,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 // 1. 360° İNTERAKTİF 3D FETUS & CANLI ANİMASYON KARTI
                 StaggeredSlideFade(
                   index: 0,
-                  child: PulseAura(
-                    auraColor: const Color(0x30FFB6C1),
-                    child: ClayCard(
-                      color: AppColors.clayCardSurface,
-                      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-                      onTap: () {
-                        _triggerHeartbeatHaptic();
-                        widget.onNavigateTab(1); // Haftalık Detay sekmesine
-                      },
-                      child: Column(
+                  child: ClayCard(
+                    color: AppColors.clayCardSurface,
+                    padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                    onTap: () {
+                      _triggerHeartbeatHaptic();
+                      widget.onNavigateTab(1); // Haftalık Detay sekmesine
+                    },
+                    child: Column(
                         children: [
                           // Üst Trimester ve Doğuma Kalan Rozetleri
                           Row(
@@ -238,12 +239,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   borderRadius: 14,
                                 ),
                                 child: Row(
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
                                     const Icon(Icons.hourglass_top_rounded, size: 13, color: AppColors.primaryDark),
-                                    const SizedBox(width: 4),
-                                    CountingNumberText(
-                                      value: daysRemaining,
-                                      suffix: ' ${'timeline_days_left'.tr().isNotEmpty ? 'timeline_days_left'.tr() : 'gün kaldı'}',
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      'dashboard_weeks_left'.tr(args: [weeksRemaining.toString()]),
                                       style: const TextStyle(
                                         fontSize: 11,
                                         fontWeight: FontWeight.w800,
@@ -323,7 +324,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ],
                       ),
                     ),
-                  ),
                 ),
                 const SizedBox(height: 16),
 
