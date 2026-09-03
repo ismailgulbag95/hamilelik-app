@@ -5,6 +5,7 @@ import '../../../core/theme/clay_theme.dart';
 import '../../../models/diary_model.dart';
 import '../../../services/ffmpeg_video_service.dart';
 import '../../weekly_panel/widgets/ad_reward_dialog.dart';
+import 'timelapse_video_dialog.dart';
 
 /// FFmpeg Yolculuk Videosu Render Diyalogu
 class VideoRendererDialog extends StatefulWidget {
@@ -20,6 +21,14 @@ class _VideoRendererDialogState extends State<VideoRendererDialog> {
   bool _isRendering = false;
   double _progress = 0.0;
   bool _isFinished = false;
+
+  void _watchVideoNow() {
+    Navigator.pop(context);
+    showDialog(
+      context: context,
+      builder: (ctx) => const TimelapseVideoDialog(),
+    );
+  }
 
   void _requestRenderWithReward() {
     AdRewardDialog.show(
@@ -166,13 +175,22 @@ class _VideoRendererDialogState extends State<VideoRendererDialog> {
                 Expanded(
                   child: ClayButton(
                     color: _isFinished ? AppColors.clayMint : AppColors.clayPeach,
-                    onPressed: _isRendering ? null : (_isFinished ? null : _requestRenderWithReward),
-                    child: Text(
-                      _isFinished ? 'video_ready'.tr() : 'video_start_render'.tr(),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.primaryDark,
-                      ),
+                    onPressed: _isRendering ? null : (_isFinished ? _watchVideoNow : _requestRenderWithReward),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (_isFinished) ...[
+                          const Icon(Icons.play_circle_filled_rounded, color: Color(0xFF2E6135), size: 18),
+                          const SizedBox(width: 6),
+                        ],
+                        Text(
+                          _isFinished ? 'video_ready'.tr() : 'video_start_render'.tr(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            color: _isFinished ? const Color(0xFF2E6135) : AppColors.primaryDark,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
