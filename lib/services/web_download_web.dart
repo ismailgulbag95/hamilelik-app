@@ -68,7 +68,7 @@ Future<String?> recordAndDownloadVideoWeb({
   final totalSlides = slidesData.isNotEmpty ? slidesData.length : 1;
   const fps = 30;
   const durationPerSlideSec = 2.5; // Her anı için 2.5 saniye
-  const framesPerSlide = (fps * durationPerSlideSec).toInt();
+  final framesPerSlide = (fps * durationPerSlideSec).toInt();
   final totalFrames = totalSlides * framesPerSlide;
 
   var currentTotalFrame = 0;
