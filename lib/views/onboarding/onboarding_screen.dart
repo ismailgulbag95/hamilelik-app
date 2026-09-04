@@ -77,7 +77,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ),
         leading: _currentPage > 0
             ? IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.primaryDark),
+                icon: const Icon(Icons.arrow_back_ios_new_rounded,
+                    color: AppColors.primaryDark),
                 onPressed: _prevPage,
               )
             : null,
@@ -88,7 +89,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             children: [
               // Claymorphic İlerleme Adımları (4 Adım)
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                 child: Row(
                   children: List.generate(_totalPages, (index) {
                     final isActive = index <= _currentPage;
@@ -97,12 +99,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         height: 8,
                         margin: const EdgeInsets.symmetric(horizontal: 3),
                         decoration: BoxDecoration(
-                          color: isActive ? AppColors.primaryPink : AppColors.backgroundSubtle,
+                          color: isActive
+                              ? AppColors.primaryPink
+                              : AppColors.backgroundSubtle,
                           borderRadius: BorderRadius.circular(4),
                           boxShadow: isActive
                               ? [
                                   BoxShadow(
-                                    color: AppColors.primaryPink.withValues(alpha: 0.35),
+                                    color: AppColors.primaryPink
+                                        .withValues(alpha: 0.35),
                                     blurRadius: 6,
                                     offset: const Offset(0, 2),
                                   ),
@@ -150,8 +155,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.calendar_month_rounded, color: AppColors.primaryPink, size: 24),
-                    SizedBox(width: 10),
+                    const Icon(Icons.calendar_month_rounded,
+                        color: AppColors.primaryPink, size: 24),
+                    const SizedBox(width: 10),
                     Text(
                       'onboarding_step1_title'.tr(),
                       style: const TextStyle(
@@ -162,7 +168,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
                   'onboarding_step1_desc'.tr(),
                   style: const TextStyle(
@@ -188,7 +194,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               children: [
                 Expanded(
                   child: GestureDetector(
-                    onTap: () => _controller.setDateInputMode(DateInputMode.lmp),
+                    onTap: () =>
+                        _controller.setDateInputMode(DateInputMode.lmp),
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 11),
                       decoration: _controller.inputMode == DateInputMode.lmp
@@ -201,7 +208,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         child: Text(
                           'onboarding_step1_lmp'.tr(),
                           style: TextStyle(
-                            fontWeight: _controller.inputMode == DateInputMode.lmp ? FontWeight.w800 : FontWeight.w600,
+                            fontWeight:
+                                _controller.inputMode == DateInputMode.lmp
+                                    ? FontWeight.w800
+                                    : FontWeight.w600,
                             fontSize: 13,
                             color: _controller.inputMode == DateInputMode.lmp
                                 ? AppColors.primaryDark
@@ -214,7 +224,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: () => _controller.setDateInputMode(DateInputMode.dueDate),
+                    onTap: () =>
+                        _controller.setDateInputMode(DateInputMode.dueDate),
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 11),
                       decoration: _controller.inputMode == DateInputMode.dueDate
@@ -227,11 +238,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         child: Text(
                           'onboarding_step1_due_date'.tr(),
                           style: TextStyle(
-                            fontWeight: _controller.inputMode == DateInputMode.dueDate ? FontWeight.w800 : FontWeight.w600,
+                            fontWeight:
+                                _controller.inputMode == DateInputMode.dueDate
+                                    ? FontWeight.w800
+                                    : FontWeight.w600,
                             fontSize: 13,
-                            color: _controller.inputMode == DateInputMode.dueDate
-                                ? AppColors.primaryDark
-                                : AppColors.textSecondary,
+                            color:
+                                _controller.inputMode == DateInputMode.dueDate
+                                    ? AppColors.primaryDark
+                                    : AppColors.textSecondary,
                           ),
                         ),
                       ),
@@ -249,7 +264,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Column(
               children: [
                 Text(
-                  _controller.inputMode == DateInputMode.lmp ? 'onboarding_step1_selected_lmp'.tr() : 'onboarding_step1_selected_due_date'.tr(),
+                  _controller.inputMode == DateInputMode.lmp
+                      ? 'onboarding_step1_selected_lmp'.tr()
+                      : 'onboarding_step1_selected_due_date'.tr(),
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -258,7 +275,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  AppDateUtils.formatDisplay(AppDateUtils.toIso(_controller.selectedDate)),
+                  AppDateUtils.formatDisplay(
+                      AppDateUtils.toIso(_controller.selectedDate)),
                   style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w800,
@@ -269,12 +287,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ClayButton(
                   color: AppColors.clayPeach,
                   height: 44,
-                  padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
                   onPressed: () async {
                     final picked = await showDatePicker(
                       context: context,
                       initialDate: _controller.selectedDate,
-                      firstDate: DateTime.now().subtract(const Duration(days: 300)),
+                      firstDate:
+                          DateTime.now().subtract(const Duration(days: 300)),
                       lastDate: DateTime.now().add(const Duration(days: 300)),
                     );
                     if (picked != null) {
@@ -284,7 +304,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.calendar_month_rounded, color: AppColors.primaryDark, size: 18),
+                      const Icon(Icons.calendar_month_rounded,
+                          color: AppColors.primaryDark, size: 18),
                       const SizedBox(width: 8),
                       Text(
                         'onboarding_step1_change_date'.tr(),
@@ -313,11 +334,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   children: [
                     Text(
                       'onboarding_step1_calc_preg'.tr(),
-                      style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textSecondary),
+                      style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.textSecondary),
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'onboarding_step1_week'.tr(args: [_controller.currentWeek.toString(), _controller.trimester.toString()]),
+                      'onboarding_step1_week'.tr(args: [
+                        _controller.currentWeek.toString(),
+                        _controller.trimester.toString()
+                      ]),
                       style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w800,
@@ -327,13 +354,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ],
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
                   decoration: ClayTheme.clayButtonDecoration(
                     color: Colors.white,
                     borderRadius: 14,
                   ),
                   child: Text(
-                    'onboarding_step1_days_left'.tr(args: [AppDateUtils.daysUntil(AppDateUtils.toIso(_controller.calculatedDueDate)).toString()]),
+                    'onboarding_step1_days_left'.tr(args: [
+                      AppDateUtils.daysUntil(
+                              AppDateUtils.toIso(_controller.calculatedDueDate))
+                          .toString()
+                    ]),
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w800,
@@ -362,7 +394,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                 ),
                 const SizedBox(width: 6),
-                const Icon(Icons.arrow_forward_rounded, color: AppColors.primaryDark, size: 18),
+                const Icon(Icons.arrow_forward_rounded,
+                    color: AppColors.primaryDark, size: 18),
               ],
             ),
           ),
@@ -387,8 +420,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.monitor_weight_rounded, color: AppColors.secondaryPeach, size: 24),
-                    SizedBox(width: 10),
+                    const Icon(Icons.monitor_weight_rounded,
+                        color: AppColors.secondaryPeach, size: 24),
+                    const SizedBox(width: 10),
                     Text(
                       'onboarding_step2_title'.tr(),
                       style: const TextStyle(
@@ -399,10 +433,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Text(
                   'onboarding_step2_desc'.tr(),
-                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textSecondary),
+                  style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textSecondary),
                 ),
               ],
             ),
@@ -417,10 +454,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('onboarding_step2_height'.tr(), style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
+                    Text('onboarding_step2_height'.tr(),
+                        style: const TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w700)),
                     Text(
                       '${_controller.heightCm.toInt()} cm',
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
+                      style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.primaryDark),
                     ),
                   ],
                 ),
@@ -446,10 +488,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('onboarding_step2_weight'.tr(), style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
+                    Text('onboarding_step2_weight'.tr(),
+                        style: const TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w700)),
                     Text(
                       '${_controller.prePregnancyWeightKg.toStringAsFixed(1)} kg',
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: AppColors.secondaryPeach),
+                      style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.secondaryPeach),
                     ),
                   ],
                 ),
@@ -477,7 +524,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'onboarding_step2_bmi'.tr(args: [_controller.vki.toStringAsFixed(1), guideline['category_tr']]),
+                      'onboarding_step2_bmi'.tr(args: [
+                        _controller.vki.toStringAsFixed(1),
+                        guideline['category_tr']
+                      ]),
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w800,
@@ -488,13 +538,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'onboarding_step2_ideal_weight'.tr(args: [guideline['range']]),
-                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textPrimary),
+                  'onboarding_step2_ideal_weight'
+                      .tr(args: [guideline['range']]),
+                  style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textPrimary),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'onboarding_step2_weekly_desc'.tr(args: [guideline['weekly_desc']]),
-                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textSecondary),
+                  'onboarding_step2_weekly_desc'
+                      .tr(args: [guideline['weekly_desc']]),
+                  style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textSecondary),
                 ),
               ],
             ),
@@ -509,10 +567,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               children: [
                 Text(
                   'onboarding_step2_next'.tr(),
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
+                  style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.primaryDark),
                 ),
                 const SizedBox(width: 6),
-                const Icon(Icons.arrow_forward_rounded, color: AppColors.primaryDark, size: 18),
+                const Icon(Icons.arrow_forward_rounded,
+                    color: AppColors.primaryDark, size: 18),
               ],
             ),
           ),
@@ -535,8 +597,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.child_care_rounded, color: AppColors.primaryDark, size: 24),
-                    SizedBox(width: 10),
+                    const Icon(Icons.child_care_rounded,
+                        color: AppColors.primaryDark, size: 24),
+                    const SizedBox(width: 10),
                     Text(
                       'onboarding_step3_title'.tr(),
                       style: const TextStyle(
@@ -547,10 +610,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Text(
                   'onboarding_step3_desc'.tr(),
-                  style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: AppColors.textSecondary),
+                  style: const TextStyle(
+                      fontSize: 13.5,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textSecondary),
                 ),
               ],
             ),
@@ -565,9 +631,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.face_rounded, size: 16, color: AppColors.primaryPink),
+                    const Icon(Icons.face_rounded,
+                        size: 16, color: AppColors.primaryPink),
                     const SizedBox(width: 6),
-                    Text('onboarding_step3_mom_label'.tr(), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.primaryDark)),
+                    Text('onboarding_step3_mom_label'.tr(),
+                        style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.primaryDark)),
                   ],
                 ),
                 const SizedBox(height: 8),
@@ -576,11 +647,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   onChanged: (val) => _controller.setMomName(val),
                   decoration: InputDecoration(
                     hintText: 'onboarding_step3_mom_hint'.tr(),
-                    hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 13),
+                    hintStyle:
+                        TextStyle(color: Colors.grey.shade400, fontSize: 13),
                     filled: true,
                     fillColor: Colors.white,
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide.none),
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
                   ),
                 ),
               ],
@@ -596,24 +671,35 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.child_friendly_rounded, size: 16, color: AppColors.primaryPink),
+                    const Icon(Icons.child_friendly_rounded,
+                        size: 16, color: AppColors.primaryPink),
                     const SizedBox(width: 6),
-                    Text('onboarding_step3_baby_label'.tr(), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.primaryDark)),
+                    Text('onboarding_step3_baby_label'.tr(),
+                        style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.primaryDark)),
                   ],
                 ),
                 const SizedBox(height: 4),
-                Text('onboarding_step3_baby_desc'.tr(), style: const TextStyle(fontSize: 11.5, color: AppColors.textSecondary)),
+                Text('onboarding_step3_baby_desc'.tr(),
+                    style: const TextStyle(
+                        fontSize: 11.5, color: AppColors.textSecondary)),
                 const SizedBox(height: 8),
                 TextField(
                   controller: _babyNameController,
                   onChanged: (val) => _controller.setBabyName(val),
                   decoration: InputDecoration(
                     hintText: 'onboarding_step3_baby_hint'.tr(),
-                    hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 13),
+                    hintStyle:
+                        TextStyle(color: Colors.grey.shade400, fontSize: 13),
                     filled: true,
                     fillColor: Colors.white,
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide.none),
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
                   ),
                 ),
               ],
@@ -629,19 +715,39 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.stars_rounded, size: 16, color: AppColors.secondaryPeach),
+                    const Icon(Icons.stars_rounded,
+                        size: 16, color: AppColors.secondaryPeach),
                     const SizedBox(width: 6),
-                    Text('onboarding_step3_gender_label'.tr(), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.primaryDark)),
+                    Text('onboarding_step3_gender_label'.tr(),
+                        style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.primaryDark)),
                   ],
                 ),
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    _buildGenderOption('onboarding_step3_gender_girl'.tr(), 'girl', Icons.female_rounded, AppColors.clayRose, AppColors.primaryPink),
+                    _buildGenderOption(
+                        'onboarding_step3_gender_girl'.tr(),
+                        'girl',
+                        Icons.female_rounded,
+                        AppColors.clayRose,
+                        AppColors.primaryPink),
                     const SizedBox(width: 8),
-                    _buildGenderOption('onboarding_step3_gender_boy'.tr(), 'boy', Icons.male_rounded, AppColors.claySky, AppColors.waterBlue),
+                    _buildGenderOption(
+                        'onboarding_step3_gender_boy'.tr(),
+                        'boy',
+                        Icons.male_rounded,
+                        AppColors.claySky,
+                        AppColors.waterBlue),
                     const SizedBox(width: 8),
-                    _buildGenderOption('onboarding_step3_gender_surprise'.tr(), 'surprise', Icons.help_outline_rounded, AppColors.clayCream, AppColors.accentGold),
+                    _buildGenderOption(
+                        'onboarding_step3_gender_surprise'.tr(),
+                        'surprise',
+                        Icons.help_outline_rounded,
+                        AppColors.clayCream,
+                        AppColors.accentGold),
                   ],
                 ),
               ],
@@ -657,10 +763,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               children: [
                 Text(
                   'onboarding_step3_next'.tr(),
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
+                  style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.primaryDark),
                 ),
-                SizedBox(width: 6),
-                Icon(Icons.arrow_forward_rounded, color: AppColors.primaryDark, size: 18),
+                const SizedBox(width: 6),
+                const Icon(Icons.arrow_forward_rounded,
+                    color: AppColors.primaryDark, size: 18),
               ],
             ),
           ),
@@ -669,7 +779,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildGenderOption(String label, String value, IconData icon, Color bgColor, Color activeColor) {
+  Widget _buildGenderOption(String label, String value, IconData icon,
+      Color bgColor, Color activeColor) {
     final isSelected = _controller.babyGender == value;
 
     return Expanded(
@@ -690,7 +801,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 16, color: isSelected ? Colors.white : AppColors.textPrimary),
+              Icon(icon,
+                  size: 16,
+                  color: isSelected ? Colors.white : AppColors.textPrimary),
               const SizedBox(width: 5),
               Text(
                 label,
@@ -711,7 +824,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget _buildSummaryStep() {
     final guideline = _controller.weightGuideline;
     final babyNameText = _controller.babyName.trim().isNotEmpty
-        ? 'onboarding_step4_summary_baby_name_format'.tr(args: [_controller.babyName.trim()])
+        ? 'onboarding_step4_summary_baby_name_format'
+            .tr(args: [_controller.babyName.trim()])
         : 'onboarding_step4_summary_baby_name_default'.tr();
 
     return SingleChildScrollView(
@@ -723,7 +837,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             color: AppColors.clayLavender,
             child: Column(
               children: [
-                const Icon(Icons.celebration_rounded, size: 36, color: AppColors.primaryPink),
+                const Icon(Icons.celebration_rounded,
+                    size: 36, color: AppColors.primaryPink),
                 const SizedBox(height: 8),
                 Text(
                   'onboarding_step4_title'.tr(),
@@ -733,11 +848,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     color: AppColors.primaryDark,
                   ),
                 ),
-                SizedBox(height: 6),
+                const SizedBox(height: 6),
                 Text(
                   'onboarding_step4_desc'.tr(),
                   textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textSecondary),
+                  style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textSecondary),
                 ),
               ],
             ),
@@ -748,7 +866,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             color: AppColors.clayCardSurface,
             child: Column(
               children: [
-                _buildSummaryRow('onboarding_step4_summary_baby_name_label'.tr(), babyNameText),
+                _buildSummaryRow(
+                    'onboarding_step4_summary_baby_name_label'.tr(),
+                    babyNameText),
                 const Divider(height: 18),
                 _buildSummaryRow(
                   'onboarding_step4_summary_gender_label'.tr(),
@@ -759,13 +879,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           : 'onboarding_step3_gender_surprise'.tr(),
                 ),
                 const Divider(height: 18),
-                _buildSummaryRow('onboarding_step4_summary_week_label'.tr(), 'onboarding_step4_summary_week_val'.tr(args: [_controller.currentWeek.toString()])),
+                _buildSummaryRow(
+                    'onboarding_step4_summary_week_label'.tr(),
+                    'onboarding_step4_summary_week_val'
+                        .tr(args: [_controller.currentWeek.toString()])),
                 const Divider(height: 18),
-                _buildSummaryRow('onboarding_step4_summary_due_date_label'.tr(), AppDateUtils.formatDisplay(AppDateUtils.toIso(_controller.calculatedDueDate))),
+                _buildSummaryRow(
+                    'onboarding_step4_summary_due_date_label'.tr(),
+                    AppDateUtils.formatDisplay(
+                        AppDateUtils.toIso(_controller.calculatedDueDate))),
                 const Divider(height: 18),
-                _buildSummaryRow('onboarding_step4_summary_bmi_label'.tr(), 'onboarding_step4_summary_bmi_val'.tr(args: [_controller.vki.toString(), _controller.vkiCategoryKey])),
+                _buildSummaryRow(
+                    'onboarding_step4_summary_bmi_label'.tr(),
+                    'onboarding_step4_summary_bmi_val'.tr(args: [
+                      _controller.vki.toString(),
+                      _controller.vkiCategoryKey
+                    ])),
                 const Divider(height: 18),
-                _buildSummaryRow('onboarding_step4_summary_weight_label'.tr(), '${guideline['range']}'),
+                _buildSummaryRow('onboarding_step4_summary_weight_label'.tr(),
+                    '${guideline['range']}'),
               ],
             ),
           ),
@@ -780,11 +912,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               decoration: BoxDecoration(
                 color: AppColors.clayLavender.withValues(alpha: 0.4),
                 borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: AppColors.primaryPink.withValues(alpha: 0.3), width: 1),
+                border: Border.all(
+                    color: AppColors.primaryPink.withValues(alpha: 0.3),
+                    width: 1),
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.verified_user_outlined, size: 18, color: AppColors.primaryPink),
+                  const Icon(Icons.verified_user_outlined,
+                      size: 18, color: AppColors.primaryPink),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(
@@ -799,7 +934,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ),
                   const SizedBox(width: 6),
-                  const Icon(Icons.info_outline_rounded, size: 16, color: AppColors.primaryPink),
+                  const Icon(Icons.info_outline_rounded,
+                      size: 16, color: AppColors.primaryPink),
                 ],
               ),
             ),
@@ -809,7 +945,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           if (_controller.errorMessage != null) ...[
             Text(
               _controller.errorMessage!,
-              style: const TextStyle(color: AppColors.medicalAlertRed, fontWeight: FontWeight.w700),
+              style: const TextStyle(
+                  color: AppColors.medicalAlertRed,
+                  fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 12),
           ],
@@ -822,12 +960,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ? const SizedBox(
                     width: 24,
                     height: 24,
-                    child: CircularProgressIndicator(strokeWidth: 2.5, color: AppColors.successGreen),
+                    child: CircularProgressIndicator(
+                        strokeWidth: 2.5, color: AppColors.successGreen),
                   )
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.check_circle_rounded, color: AppColors.successGreen, size: 20),
+                      const Icon(Icons.check_circle_rounded,
+                          color: AppColors.successGreen, size: 20),
                       const SizedBox(width: 8),
                       Text(
                         'onboarding_step4_save'.tr(),
@@ -875,14 +1015,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(_controller.errorMessage ?? 'onboarding_error_toast'.tr()),
+          content:
+              Text(_controller.errorMessage ?? 'onboarding_error_toast'.tr()),
           backgroundColor: AppColors.medicalAlertRed,
           action: SnackBarAction(
             label: 'onboarding_force_start'.tr(),
             textColor: Colors.white,
             onPressed: () {
               Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (_) => const MainNavigationScaffold()),
+                MaterialPageRoute(
+                    builder: (_) => const MainNavigationScaffold()),
                 (route) => false,
               );
             },
@@ -896,8 +1038,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title, style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: AppColors.textSecondary)),
-        Text(value, style: const TextStyle(fontSize: 14.5, fontWeight: FontWeight.w800, color: AppColors.textPrimary)),
+        Text(title,
+            style: const TextStyle(
+                fontSize: 13.5,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textSecondary)),
+        Text(value,
+            style: const TextStyle(
+                fontSize: 14.5,
+                fontWeight: FontWeight.w800,
+                color: AppColors.textPrimary)),
       ],
     );
   }

@@ -15,6 +15,7 @@ import 'widgets/profile_edit_sheet.dart';
 import 'widgets/interactive_3d_fetus_widget.dart';
 import '../../core/widgets/fruit_3d_widget.dart';
 import '../../core/widgets/micro_animations.dart';
+import '../baby_names/baby_names_screen.dart';
 
 /// Aura Pregnancy - Sade, Ferah & Romantik Ana Sayfa (Dashboard)
 class DashboardScreen extends StatefulWidget {
@@ -468,9 +469,80 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 16),
+
+                // 4. BEBEK İSİM ÖNERİLERİ & ANLAMLARI KEŞİF KARTI
+                StaggeredSlideFade(
+                  index: 3,
+                  child: ClayCard(
+                    isGlazed: true,
+                    color: AppColors.clayMint,
+                    padding: const EdgeInsets.all(18),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const BabyNamesScreen()),
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 48,
+                          height: 48,
+                          decoration: ClayTheme.clayDecoration(
+                            color: Colors.white,
+                            borderRadius: 16,
+                          ),
+                          child: const Center(
+                            child: Icon(Icons.stars_rounded, color: Color(0xFF2E6135), size: 28),
+                          ),
+                        ),
+                        const SizedBox(width: 14),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'dashboard_baby_names_title'.tr(),
+                                style: GoogleFonts.outfit(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w900,
+                                  color: const Color(0xFF1E4624),
+                                ),
+                              ),
+                              const SizedBox(height: 3),
+                              Text(
+                                'dashboard_baby_names_sub'.tr(),
+                                style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 11.5,
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color(0xFF3B6B43),
+                                  height: 1.35,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Container(
+                          width: 36,
+                          height: 36,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.7),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Center(
+                            child: Icon(Icons.arrow_forward_ios_rounded, color: Color(0xFF2E6135), size: 14),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
                 const SizedBox(height: 12),
                 const StaggeredSlideFade(
-                  index: 3,
+                  index: 4,
                   child: MedicalDisclaimerBanner(),
                 ),
                 const SizedBox(height: 24),

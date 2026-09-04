@@ -94,7 +94,8 @@ class _FluidClayBottomNavBarState extends State<FluidClayBottomNavBar>
     final isEmergencyActive = widget.items[widget.selectedIndex].isEmergency;
     final activeBubbleColor = isEmergencyActive
         ? AppColors.medicalAlertRed
-        : AppColors.primaryPink; // Belirgin, yüksek kontrastlı ve sıcak Clay Pembe
+        : AppColors
+            .primaryPink; // Belirgin, yüksek kontrastlı ve sıcak Clay Pembe
 
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
@@ -105,7 +106,8 @@ class _FluidClayBottomNavBarState extends State<FluidClayBottomNavBar>
           final animValue = _positionAnimation.value;
           // Hareket hızına bağlı sıvı esneme (stretch/squash) katsayısı
           final delta = (animValue - _previousNormalizedIndex).abs();
-          final stretchFactor = (math.sin(delta * math.pi) * 0.18).clamp(0.0, 0.25);
+          final stretchFactor =
+              (math.sin(delta * math.pi) * 0.18).clamp(0.0, 0.25);
 
           return LayoutBuilder(
             builder: (context, constraints) {
@@ -299,11 +301,12 @@ class _FluidMeltBarPainter extends CustomPainter {
 
     // Baloncuk sadece ikonun arkasına kompakt oturur (yükseklik ~32px)
     final bubbleRadiusX = 22.0 * (1.0 + stretchFactor);
-    final bubbleRadiusY = 16.0;
-    final bubbleCenterY = 22.0;
+    const bubbleRadiusY = 16.0;
+    const bubbleCenterY = 22.0;
 
     // Sınır güvenliği (clamp)
-    final clampedCenterX = activeCenterX.clamp(bubbleRadiusX + 8, barWidth - bubbleRadiusX - 8);
+    final clampedCenterX =
+        activeCenterX.clamp(bubbleRadiusX + 8, barWidth - bubbleRadiusX - 8);
 
     final bubbleRect = Rect.fromCenter(
       center: Offset(clampedCenterX, bubbleCenterY),
@@ -312,7 +315,7 @@ class _FluidMeltBarPainter extends CustomPainter {
     );
     final bubbleRRect = RRect.fromRectAndRadius(
       bubbleRect,
-      Radius.circular(bubbleRadiusY),
+      const Radius.circular(bubbleRadiusY),
     );
 
     // Sıvı Yastık (Liquid Socket) Yumuşak Teğet Erime Katmanı
@@ -324,14 +327,20 @@ class _FluidMeltBarPainter extends CustomPainter {
     // Teğetsel Bézier eğrisi ile sıvı akışı
     fluidPath.moveTo(leftSocket, barHeight);
     fluidPath.cubicTo(
-      leftSocket + socketSpan * 0.35, barHeight,
-      clampedCenterX - bubbleRadiusX * 0.8, bubbleCenterY - 2,
-      clampedCenterX, bubbleCenterY - 2,
+      leftSocket + socketSpan * 0.35,
+      barHeight,
+      clampedCenterX - bubbleRadiusX * 0.8,
+      bubbleCenterY - 2,
+      clampedCenterX,
+      bubbleCenterY - 2,
     );
     fluidPath.cubicTo(
-      clampedCenterX + bubbleRadiusX * 0.8, bubbleCenterY - 2,
-      rightSocket - socketSpan * 0.35, barHeight,
-      rightSocket, barHeight,
+      clampedCenterX + bubbleRadiusX * 0.8,
+      bubbleCenterY - 2,
+      rightSocket - socketSpan * 0.35,
+      barHeight,
+      rightSocket,
+      barHeight,
     );
     fluidPath.close();
 

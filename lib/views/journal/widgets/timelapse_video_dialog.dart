@@ -91,16 +91,18 @@ class _TimelapseVideoDialogState extends State<TimelapseVideoDialog> with Single
     });
   }
 
-  void _downloadVideoWithAd() {
-    AdRewardDialog.show(
+  Future<void> _downloadVideoWithAd() async {
+    final rewardEarned = await AdRewardDialog.show(
       context: context,
       title: 'video_download_reward_title'.tr(),
       subtitle: 'video_download_reward_sub'.tr(),
       unlockTargetName: 'video_download_reward_target'.tr(),
-      onRewardEarned: () {
-        _startVideoDownload();
-      },
+      onRewardEarned: () {},
     );
+
+    if (rewardEarned == true && mounted) {
+      await _startVideoDownload();
+    }
   }
 
   Future<void> _startVideoDownload() async {
@@ -126,58 +128,78 @@ class _TimelapseVideoDialogState extends State<TimelapseVideoDialog> with Single
       _isDownloading = false;
     });
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: Colors.white,
-        behavior: SnackBarBehavior.floating,
-        margin: const EdgeInsets.all(16),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-          side: const BorderSide(color: Color(0xFFD4EBD6), width: 1.5),
-        ),
-        content: Row(
+    _showDownloadSuccessDialog(savedLocation ?? 'İndirilenler / Aura_Gebelik_Yolculugu.mp4');
+  }
+
+  void _showDownloadSuccessDialog(String location) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        backgroundColor: AppColors.background,
+        title: Row(
           children: [
             Container(
-              width: 36,
-              height: 36,
+              padding: const EdgeInsets.all(6),
               decoration: const BoxDecoration(
                 color: Color(0xFFD4EBD6),
                 shape: BoxShape.circle,
               ),
-              child: const Center(
-                child: Icon(Icons.check_circle_rounded, color: AppColors.successGreen, size: 22),
+              child: const Icon(Icons.check_circle_rounded, color: AppColors.successGreen, size: 24),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                'video_download_success_title'.tr(),
+                style: GoogleFonts.outfit(fontWeight: FontWeight.w900, fontSize: 17, color: AppColors.primaryDark),
               ),
             ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'video_download_success'.tr(),
+              style: GoogleFonts.plusJakartaSans(fontSize: 13, height: 1.45, color: AppColors.textPrimary),
+            ),
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.black.withValues(alpha: 0.08)),
+              ),
+              child: Row(
                 children: [
-                  Text(
-                    'video_download_success'.tr(),
-                    style: GoogleFonts.nunito(
-                      color: AppColors.primaryDark,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 13,
+                  const Icon(Icons.folder_special_rounded, color: AppColors.waterBlue, size: 18),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      location,
+                      style: GoogleFonts.quicksand(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.textSecondary),
                     ),
                   ),
-                  if (savedLocation != null) ...[
-                    const SizedBox(height: 2),
-                    Text(
-                      savedLocation,
-                      style: GoogleFonts.quicksand(
-                        color: AppColors.textSecondary,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 11,
-                      ),
-                    ),
-                  ],
                 ],
               ),
             ),
           ],
         ),
+        actions: [
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primaryPink,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(
+              'common_close'.tr(),
+              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -325,9 +347,18 @@ class _TimelapseVideoDialogState extends State<TimelapseVideoDialog> with Single
                             ),
                           ],
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.close_rounded, color: Colors.white, size: 24),
-                          onPressed: () => Navigator.pop(context),
+                        Row(
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.file_download_rounded, color: Colors.white, size: 22),
+                              tooltip: 'video_download_btn'.tr(),
+                              onPressed: _isDownloading ? null : _downloadVideoWithAd,
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.close_rounded, color: Colors.white, size: 24),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          ],
                         ),
                       ],
                     ),

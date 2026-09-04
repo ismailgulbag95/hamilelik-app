@@ -19,8 +19,10 @@ class ClayTheme {
     bool isPressed = false,
   }) {
     final HSLColor hsl = HSLColor.fromColor(color);
-    final Color topLight = hsl.withLightness((hsl.lightness + 0.035).clamp(0.0, 1.0)).toColor();
-    final Color bottomShade = hsl.withLightness((hsl.lightness - 0.03).clamp(0.0, 1.0)).toColor();
+    final Color topLight =
+        hsl.withLightness((hsl.lightness + 0.035).clamp(0.0, 1.0)).toColor();
+    final Color bottomShade =
+        hsl.withLightness((hsl.lightness - 0.03).clamp(0.0, 1.0)).toColor();
 
     if (isPressed) {
       return BoxDecoration(
@@ -36,9 +38,9 @@ class ClayTheme {
         ),
         boxShadow: [
           // 1. Dış Gölge
-          BoxShadow(
-            color: const Color(0x1EC49A9E),
-            offset: const Offset(0, 3),
+          const BoxShadow(
+            color: Color(0x1EC49A9E),
+            offset: Offset(0, 3),
             blurRadius: 8,
             inset: false,
           ),
@@ -74,9 +76,9 @@ class ClayTheme {
       ),
       boxShadow: [
         // 1. Yumuşak Sıcak Dış Gölge
-        BoxShadow(
-          color: const Color(0x22C49A9E),
-          offset: const Offset(0, 12),
+        const BoxShadow(
+          color: Color(0x22C49A9E),
+          offset: Offset(0, 12),
           blurRadius: 24,
           inset: false,
         ),
@@ -122,9 +124,9 @@ class ClayTheme {
         width: 1.2,
       ),
       boxShadow: [
-        BoxShadow(
-          color: const Color(0x18C49A9E),
-          offset: const Offset(0, 12),
+        const BoxShadow(
+          color: Color(0x18C49A9E),
+          offset: Offset(0, 12),
           blurRadius: 24,
           inset: false,
         ),
@@ -151,8 +153,10 @@ class ClayTheme {
     bool isPressed = false,
   }) {
     final HSLColor hsl = HSLColor.fromColor(color);
-    final Color topLight = hsl.withLightness((hsl.lightness + 0.06).clamp(0.0, 1.0)).toColor();
-    final Color bottomShade = hsl.withLightness((hsl.lightness - 0.045).clamp(0.0, 1.0)).toColor();
+    final Color topLight =
+        hsl.withLightness((hsl.lightness + 0.06).clamp(0.0, 1.0)).toColor();
+    final Color bottomShade =
+        hsl.withLightness((hsl.lightness - 0.045).clamp(0.0, 1.0)).toColor();
 
     if (isPressed) {
       return BoxDecoration(

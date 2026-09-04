@@ -49,7 +49,8 @@ class WaterTrackerCard extends StatelessWidget {
                       borderRadius: 12,
                     ),
                     child: const Center(
-                      child: Icon(Icons.water_drop_rounded, color: AppColors.waterBlue, size: 20),
+                      child: Icon(Icons.water_drop_rounded,
+                          color: AppColors.waterBlue, size: 20),
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -64,7 +65,8 @@ class WaterTrackerCard extends StatelessWidget {
                 ],
               ),
               IconButton(
-                icon: const Icon(Icons.refresh_rounded, size: 20, color: AppColors.textSecondary),
+                icon: const Icon(Icons.refresh_rounded,
+                    size: 20, color: AppColors.textSecondary),
                 onPressed: () {
                   HapticFeedback.lightImpact();
                   onReset();
@@ -148,11 +150,11 @@ class WaterTrackerCard extends StatelessWidget {
                         colors: [Color(0xFF64B5F6), Color(0xFF1E88E5)],
                       ),
                       borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
-                          color: const Color(0x331E88E5),
+                          color: Color(0x331E88E5),
                           blurRadius: 6,
-                          offset: const Offset(0, 2),
+                          offset: Offset(0, 2),
                         ),
                       ],
                     ),
@@ -176,7 +178,8 @@ class WaterTrackerCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.local_drink_rounded, color: AppColors.waterBlue, size: 18),
+                      const Icon(Icons.local_drink_rounded,
+                          color: AppColors.waterBlue, size: 18),
                       const SizedBox(width: 6),
                       Text(
                         '+250 ml',
@@ -201,7 +204,8 @@ class WaterTrackerCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.water_drop_outlined, color: AppColors.waterBlue, size: 18),
+                      const Icon(Icons.water_drop_outlined,
+                          color: AppColors.waterBlue, size: 18),
                       const SizedBox(width: 6),
                       Text(
                         '+500 ml',

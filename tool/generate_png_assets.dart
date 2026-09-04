@@ -24,8 +24,8 @@ Uint8List generateWombStagePng(int stage) {
   final rawData = Uint8List(height * (1 + width * 4));
   var offset = 0;
 
-  final centerX = width / 2.0;
-  final centerY = height / 2.0;
+  const centerX = width / 2.0;
+  const centerY = height / 2.0;
 
   for (int y = 0; y < height; y++) {
     rawData[offset++] = 0; // Filter type: None
@@ -34,7 +34,6 @@ Uint8List generateWombStagePng(int stage) {
       final dx = x - centerX;
       final dy = y - centerY;
       final distFromCenter = sqrt(dx * dx + dy * dy);
-      final angle = atan2(dy, dx);
 
       // 1. Rahim Duvarı & Amniyotik Boşluk Arka Planı (Sıcak Kırmızı-Mürdüm Tonları)
       double r = 40 + (30 * (1.0 - (distFromCenter / 260).clamp(0.0, 1.0)));
@@ -64,13 +63,15 @@ Uint8List generateWombStagePng(int stage) {
         // Kalp
         final heartDist = sqrt((dx - 5) * (dx - 5) + dy * dy);
         if (heartDist < 8) {
-          r = 255; g = 50; b = 80;
+          r = 255;
+          g = 50;
+          b = 80;
         }
       } else if (stage == 2) {
         // 9-13. Hafta: 12. Hafta Erken Fetus
         final headDist = sqrt((dx + 40) * (dx + 40) + (dy + 25) * (dy + 25));
         final bodyDist = sqrt((dx - 15) * (dx - 15) + (dy - 10) * (dy - 10));
-        
+
         if (headDist < 42) {
           final intensity = 1.0 - (headDist / 42);
           r = 245 * intensity + r * (1 - intensity);
@@ -87,11 +88,13 @@ Uint8List generateWombStagePng(int stage) {
         final headDist = sqrt((dx + 55) * (dx + 55) + (dy + 35) * (dy + 35));
         final bodyDist = sqrt((dx - 10) * (dx - 10) + (dy - 15) * (dy - 15));
         final limbDist = sqrt((dx + 15) * (dx + 15) + (dy - 55) * (dy - 55));
-        
+
         // Kordon (Spiral kordon eğrisi)
         final cordY = sin(x * 0.05) * 25 + 10;
         if ((y - (centerY + cordY)).abs() < 9 && x > 140 && x < 380) {
-          r = 255; g = 210; b = 215; // Parlak beyazımsı-pembe kordon
+          r = 255;
+          g = 210;
+          b = 215; // Parlak beyazımsı-pembe kordon
         } else if (headDist < 58) {
           // Baş ve Yüz Profili
           final intensity = 1.0 - (headDist / 58);
@@ -115,7 +118,7 @@ Uint8List generateWombStagePng(int stage) {
         // 28-40. Hafta: 3. Trimester Dolgun Yanaklı Melek Bebek
         final headDist = sqrt((dx + 50) * (dx + 50) + (dy + 30) * (dy + 30));
         final bodyDist = sqrt((dx - 20) * (dx - 20) + (dy - 20) * (dy - 20));
-        
+
         if (headDist < 70) {
           final intensity = 1.0 - (headDist / 70);
           r = 255 * intensity + r * (1 - intensity);
@@ -147,8 +150,8 @@ Uint8List generateWombStagePng(int stage) {
   final ihdrData = ByteData(13);
   ihdrData.setUint32(0, width);
   ihdrData.setUint32(4, height);
-  ihdrData.setUint8(8, 8);  // Bit depth
-  ihdrData.setUint8(9, 6);  // ColorType: RGBA
+  ihdrData.setUint8(8, 8); // Bit depth
+  ihdrData.setUint8(9, 6); // ColorType: RGBA
   ihdrData.setUint8(10, 0); // Compression
   ihdrData.setUint8(11, 0); // Filter
   ihdrData.setUint8(12, 0); // Interlace

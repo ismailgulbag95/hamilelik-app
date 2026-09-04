@@ -8,6 +8,7 @@ import '../models/daily_log_model.dart';
 import '../models/notification_model.dart';
 import '../models/medication_model.dart';
 import '../models/emergency_card_model.dart';
+import '../models/baby_name_model.dart';
 
 /// Aura Pregnancy - SQLite & Web Uyumlu Yerel Veritabanı Yöneticisi (DatabaseHelper)
 class DatabaseHelper {
@@ -35,6 +36,8 @@ class DatabaseHelper {
   final List<MedicationModel> _webMedications = [];
   EmergencyCardModel? _webEmergencyCard;
   bool _webMedicationsSeeded = false;
+  int _webResetCount = 0;
+  final List<BabyNameModel> _webFavoriteNames = [];
 
   /// Veritabanı örneğini döndürür (Lazy initialization)
   Future<Database?> get database async {
@@ -163,6 +166,20 @@ class DatabaseHelper {
       CREATE TABLE app_settings (
         key TEXT PRIMARY KEY,
         value TEXT
+      )
+    ''');
+
+    // 8. favorite_names (Favori Bebek İsimleri) tablosu
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS favorite_names (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL UNIQUE,
+        gender TEXT NOT NULL,
+        origin TEXT NOT NULL,
+        meaning TEXT NOT NULL,
+        characteristics TEXT NOT NULL,
+        cultural_note TEXT,
+        is_favorite INTEGER NOT NULL DEFAULT 1
       )
     ''');
 
@@ -814,28 +831,192 @@ class DatabaseHelper {
     }
   }
 
-  Future<void> clearAllData() async {
+  Future<int> getResetCount() async {
+    final db = await database;
+    if (db == null) {
+      return _webResetCount;
+    }
+    try {
+      final res = await db.query(
+        'app_settings',
+        where: 'key = ?',
+        whereArgs: ['data_reset_count'],
+        limit: 1,
+      );
+      if (res.isNotEmpty) {
+        return int.tryParse(res.first['value']?.toString() ?? '0') ?? 0;
+      }
+      return 0;
+    } catch (e) {
+      debugPrint('getResetCount error: $e');
+      return _webResetCount;
+    }
+  }
+
+  Future<void> incrementResetCount() async {
+    final count = await getResetCount();
+    final newCount = count + 1;
+    _webResetCount = newCount;
+
+    final db = await database;
+    if (db != null) {
+      try {
+        await db.insert(
+          'app_settings',
+          {'key': 'data_reset_count', 'value': newCount.toString()},
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
+      } catch (e) {
+        debugPrint('incrementResetCount error: $e');
+      }
+    }
+  }
+
+  // ==========================================
+  // 7. FAVORİ BEBEK İSİMLERİ (FAVORITE BABY NAMES)
+  // ==========================================
+
+  Future<void> _ensureFavoriteNamesTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS favorite_names (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL UNIQUE,
+        gender TEXT NOT NULL,
+        origin TEXT NOT NULL,
+        meaning TEXT NOT NULL,
+        characteristics TEXT NOT NULL,
+        cultural_note TEXT,
+        is_favorite INTEGER NOT NULL DEFAULT 1
+      )
+    ''');
+  }
+
+  Future<List<BabyNameModel>> getFavoriteNames() async {
+    final db = await database;
+    if (db == null) {
+      return List.unmodifiable(_webFavoriteNames);
+    }
+    try {
+      await _ensureFavoriteNamesTable(db);
+      final maps = await db.query('favorite_names', orderBy: 'id DESC');
+      final list = maps.map((m) => BabyNameModel.fromMap(m)).toList();
+      _webFavoriteNames.clear();
+      _webFavoriteNames.addAll(list);
+      return list;
+    } catch (e) {
+      debugPrint('getFavoriteNames error: $e');
+      return _webFavoriteNames;
+    }
+  }
+
+  Future<bool> isNameFavorite(String name) async {
+    final db = await database;
+    if (db == null) {
+      return _webFavoriteNames.any((n) => n.name == name);
+    }
+    try {
+      await _ensureFavoriteNamesTable(db);
+      final res = await db.query(
+        'favorite_names',
+        where: 'name = ?',
+        whereArgs: [name],
+        limit: 1,
+      );
+      return res.isNotEmpty;
+    } catch (e) {
+      debugPrint('isNameFavorite error: $e');
+      return _webFavoriteNames.any((n) => n.name == name);
+    }
+  }
+
+  Future<bool> toggleFavoriteName(BabyNameModel babyName) async {
+    final currentlyFav = await isNameFavorite(babyName.name);
+    final db = await database;
+    if (currentlyFav) {
+      // Favoriden çıkar
+      _webFavoriteNames.removeWhere((n) => n.name == babyName.name);
+      if (db != null) {
+        try {
+          await _ensureFavoriteNamesTable(db);
+          await db.delete('favorite_names', where: 'name = ?', whereArgs: [babyName.name]);
+        } catch (e) {
+          debugPrint('removeFavoriteName error: $e');
+        }
+      }
+      notifyDataChanged();
+      return false;
+    } else {
+      // Favoriye ekle
+      final favItem = babyName.copyWith(isFavorite: true);
+      _webFavoriteNames.removeWhere((n) => n.name == babyName.name);
+      _webFavoriteNames.insert(0, favItem);
+      if (db != null) {
+        try {
+          await _ensureFavoriteNamesTable(db);
+          final map = favItem.toMap();
+          map.remove('id');
+          await db.insert('favorite_names', map, conflictAlgorithm: ConflictAlgorithm.replace);
+        } catch (e) {
+          debugPrint('addFavoriteName error: $e');
+        }
+      }
+      notifyDataChanged();
+      return true;
+    }
+  }
+
+  Future<void> removeFavoriteName(String name) async {
+    _webFavoriteNames.removeWhere((n) => n.name == name);
+    final db = await database;
+    if (db != null) {
+      try {
+        await _ensureFavoriteNamesTable(db);
+        await db.delete('favorite_names', where: 'name = ?', whereArgs: [name]);
+      } catch (e) {
+        debugPrint('removeFavoriteName error: $e');
+      }
+    }
+    notifyDataChanged();
+  }
+
+  Future<void> clearAllData({bool preserveResetCount = true}) async {
+    int currentResetCount = 0;
+    if (preserveResetCount) {
+      currentResetCount = await getResetCount();
+    }
     _webProfile = null;
     _webDiaries.clear();
     _webDailyLogs.clear();
     _webNotifications.clear();
     _webMedications.clear();
     _webEmergencyCard = null;
+    _webFavoriteNames.clear();
     _webMedicationsSeeded = false;
     final db = await database;
     if (db != null) {
       try {
-        await db.delete('daily_logs');
-        await db.delete('diaries');
+        await db.delete('daily_log');
+        await db.delete('diary');
         await db.delete('profile');
         await db.delete('notifications');
         await db.delete('medications');
         await db.delete('emergency_card');
+        try {
+          await db.delete('favorite_names');
+        } catch (_) {}
         await db.delete('app_settings');
+        if (preserveResetCount && currentResetCount > 0) {
+          await db.insert(
+            'app_settings',
+            {'key': 'data_reset_count', 'value': currentResetCount.toString()},
+            conflictAlgorithm: ConflictAlgorithm.replace,
+          );
+        }
       } catch (e) {
         debugPrint('clearAllData error: $e');
       }
     }
+    notifyDataChanged();
   }
 
   Future<void> close() async {

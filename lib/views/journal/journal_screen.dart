@@ -7,6 +7,8 @@ import 'widgets/journal_entry_card.dart';
 import 'widgets/video_renderer_dialog.dart';
 import 'new_entry_screen.dart';
 
+import '../../services/database_helper.dart';
+
 /// Aura Journal (Romantik Anı Günlüğü) Ana Ekranı
 class JournalScreen extends StatefulWidget {
   const JournalScreen({super.key});
@@ -22,11 +24,24 @@ class _JournalScreenState extends State<JournalScreen> {
   void initState() {
     super.initState();
     _controller.loadDiaries();
-    _controller.addListener(() => setState(() {}));
+    _controller.addListener(_onControllerUpdate);
+    DatabaseHelper.appDataRevision.addListener(_onAppDataChanged);
+  }
+
+  void _onControllerUpdate() {
+    if (mounted) setState(() {});
+  }
+
+  void _onAppDataChanged() {
+    if (mounted) {
+      _controller.loadDiaries();
+    }
   }
 
   @override
   void dispose() {
+    DatabaseHelper.appDataRevision.removeListener(_onAppDataChanged);
+    _controller.removeListener(_onControllerUpdate);
     _controller.dispose();
     super.dispose();
   }

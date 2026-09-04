@@ -8,6 +8,8 @@ import 'widgets/medical_id_card_view.dart';
 import 'widgets/edit_emergency_card_sheet.dart';
 import '../widgets/medical_disclaimer_sheet.dart';
 
+import '../../services/database_helper.dart';
+
 /// Gebelikte Acil Tıbbi Kart ve Hızlı Doktor Arama Ekranı
 class EmergencyScreen extends StatefulWidget {
   const EmergencyScreen({super.key});
@@ -23,11 +25,24 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
   void initState() {
     super.initState();
     _controller.loadEmergencyData();
-    _controller.addListener(() => setState(() {}));
+    _controller.addListener(_onControllerUpdate);
+    DatabaseHelper.appDataRevision.addListener(_onAppDataChanged);
+  }
+
+  void _onControllerUpdate() {
+    if (mounted) setState(() {});
+  }
+
+  void _onAppDataChanged() {
+    if (mounted) {
+      _controller.loadEmergencyData();
+    }
   }
 
   @override
   void dispose() {
+    DatabaseHelper.appDataRevision.removeListener(_onAppDataChanged);
+    _controller.removeListener(_onControllerUpdate);
     _controller.dispose();
     super.dispose();
   }

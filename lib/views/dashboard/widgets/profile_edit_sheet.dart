@@ -7,6 +7,8 @@ import '../../../core/theme/clay_theme.dart';
 import '../../../models/profile_model.dart';
 import '../../../services/database_helper.dart';
 import '../../widgets/medical_disclaimer_sheet.dart';
+import '../../welcome/language_selection_screen.dart';
+import '../../weekly_panel/widgets/ad_reward_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 /// Aura Pregnancy - Bebek & Anne Bilgilerini Düzenleme Modalı (Liquid Glass & Glazed Ceramic)
@@ -29,6 +31,7 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
   late TextEditingController _babyNameController;
   late String _selectedGender;
   bool _isSaving = false;
+  int _resetCount = 0;
 
   @override
   void initState() {
@@ -36,6 +39,14 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
     _momNameController = TextEditingController(text: widget.profile.momName ?? '');
     _babyNameController = TextEditingController(text: widget.profile.babyName ?? '');
     _selectedGender = widget.profile.babyGender ?? 'surprise';
+    _loadResetCount();
+  }
+
+  Future<void> _loadResetCount() async {
+    final count = await DatabaseHelper.instance.getResetCount();
+    if (mounted) {
+      setState(() => _resetCount = count);
+    }
   }
 
   @override
@@ -68,18 +79,79 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
   }
 
   Future<void> _confirmResetData() async {
+    final resetCount = await DatabaseHelper.instance.getResetCount();
+    final isFree = resetCount == 0;
+
+    if (!mounted) return;
+
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         backgroundColor: AppColors.background,
-        title: Text(
-          'profile_edit_reset_confirm_title'.tr(),
-          style: GoogleFonts.outfit(fontWeight: FontWeight.w900, color: AppColors.primaryDark),
+        title: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: AppColors.medicalAlertRed.withValues(alpha: 0.12),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.delete_forever_rounded, color: AppColors.medicalAlertRed, size: 20),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                'profile_edit_reset_confirm_title'.tr(),
+                style: GoogleFonts.outfit(fontWeight: FontWeight.w900, fontSize: 17, color: AppColors.primaryDark),
+              ),
+            ),
+          ],
         ),
-        content: Text(
-          'profile_edit_reset_confirm_desc'.tr(),
-          style: GoogleFonts.plusJakartaSans(fontSize: 13, height: 1.45, color: AppColors.textPrimary),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              isFree
+                  ? 'profile_edit_reset_confirm_desc_free'.tr()
+                  : 'profile_edit_reset_confirm_desc_ad'.tr(),
+              style: GoogleFonts.plusJakartaSans(fontSize: 13, height: 1.45, color: AppColors.textPrimary),
+            ),
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              decoration: BoxDecoration(
+                color: isFree ? const Color(0xFFE8F5E9) : const Color(0xFFFFF3E0),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: isFree ? const Color(0xFF81C784) : const Color(0xFFFFB74D),
+                  width: 1,
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    isFree ? Icons.check_circle_rounded : Icons.smart_display_rounded,
+                    size: 14,
+                    color: isFree ? const Color(0xFF2E7D32) : const Color(0xFFE65100),
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    isFree
+                        ? 'profile_edit_reset_badge_free'.tr()
+                        : 'profile_edit_reset_badge_ad'.tr(),
+                    style: GoogleFonts.nunito(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w800,
+                      color: isFree ? const Color(0xFF2E7D32) : const Color(0xFFE65100),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
         actions: [
           TextButton(
@@ -96,7 +168,9 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
             ),
             onPressed: () => Navigator.pop(ctx, true),
             child: Text(
-              'profile_edit_reset_confirm_btn'.tr(),
+              isFree
+                  ? 'profile_edit_reset_confirm_btn_free'.tr()
+                  : 'profile_edit_reset_confirm_btn_ad'.tr(),
               style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800),
             ),
           ),
@@ -104,16 +178,37 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
       ),
     );
 
-    if (confirmed == true) {
-      await DatabaseHelper.instance.clearAllData();
-      widget.onSaved();
-      if (mounted) {
-        Navigator.pop(context);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('profile_edit_reset_success'.tr()),
-            backgroundColor: AppColors.medicalAlertRed,
-          ),
+    if (confirmed != true) return;
+
+    if (isFree) {
+      // 1. Ücretsiz Reklamsız İlk Sıfırlama
+      await DatabaseHelper.instance.incrementResetCount();
+      await DatabaseHelper.instance.clearAllData(preserveResetCount: true);
+      if (!mounted) return;
+
+      Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => const LanguageSelectionScreen()),
+        (route) => false,
+      );
+    } else {
+      // 2. ve Sonraki Sıfırlamalar: Reklam Şartı
+      if (!mounted) return;
+      final rewardEarned = await AdRewardDialog.show(
+        context: context,
+        title: 'profile_edit_reset_ad_title'.tr(),
+        subtitle: 'profile_edit_reset_ad_sub'.tr(),
+        unlockTargetName: 'profile_edit_reset_ad_target'.tr(),
+        onRewardEarned: () {},
+      );
+
+      if (rewardEarned == true) {
+        await DatabaseHelper.instance.incrementResetCount();
+        await DatabaseHelper.instance.clearAllData(preserveResetCount: true);
+        if (!mounted) return;
+
+        Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => const LanguageSelectionScreen()),
+          (route) => false,
         );
       }
     }
@@ -361,7 +456,7 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
                   const SizedBox(height: 8),
                   ClayButton(
                     color: const Color(0xFFFFEBEE),
-                    height: 46,
+                    height: 48,
                     borderRadius: 14,
                     padding: const EdgeInsets.symmetric(horizontal: 14),
                     onPressed: _confirmResetData,
@@ -380,6 +475,39 @@ class _ProfileEditSheetState extends State<ProfileEditSheet> {
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SizedBox(width: 6),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: _resetCount == 0
+                                ? const Color(0xFFE8F5E9)
+                                : const Color(0xFFFFF3E0),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                _resetCount == 0 ? Icons.check_circle_outline_rounded : Icons.smart_display_rounded,
+                                size: 11,
+                                color: _resetCount == 0 ? const Color(0xFF2E7D32) : const Color(0xFFE65100),
+                              ),
+                              const SizedBox(width: 3),
+                              Text(
+                                _resetCount == 0
+                                    ? 'profile_edit_reset_badge_free'.tr()
+                                    : 'profile_edit_reset_badge_ad'.tr(),
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w800,
+                                  color: _resetCount == 0
+                                      ? const Color(0xFF2E7D32)
+                                      : const Color(0xFFE65100),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],

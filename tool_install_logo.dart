@@ -1,7 +1,8 @@
 import 'dart:io';
 
 void main() {
-  final sourcePath = r'C:\Users\ismai\.gemini\antigravity-ide\brain\2c84689d-a3c1-4949-a385-f364c05c0775\aura_logo_clay_1788038754876.jpg';
+  const sourcePath =
+      r'C:\Users\ismai\.gemini\antigravity-ide\brain\2c84689d-a3c1-4949-a385-f364c05c0775\aura_logo_clay_1788038754876.jpg';
   final sourceFile = File(sourcePath);
 
   if (!sourceFile.existsSync()) {

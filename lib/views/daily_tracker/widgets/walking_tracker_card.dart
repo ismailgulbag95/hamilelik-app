@@ -40,7 +40,8 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
     }
   }
 
-  void _openManualAddSheet(BuildContext context, {bool initialDurationMode = false}) {
+  void _openManualAddSheet(BuildContext context,
+      {bool initialDurationMode = false}) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -57,7 +58,8 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
               ),
               backgroundColor: AppColors.primaryPink,
               behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
               duration: const Duration(seconds: 2),
             ),
           );
@@ -89,13 +91,17 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                     width: 38,
                     height: 38,
                     decoration: ClayTheme.clayDecoration(
-                      color: isTargetReached ? AppColors.successGreen : AppColors.clayPeach,
+                      color: isTargetReached
+                          ? AppColors.successGreen
+                          : AppColors.clayPeach,
                       borderRadius: 12,
                     ),
                     child: Center(
                       child: Icon(
                         Icons.directions_walk_rounded,
-                        color: isTargetReached ? Colors.white : AppColors.secondaryPeach,
+                        color: isTargetReached
+                            ? Colors.white
+                            : AppColors.secondaryPeach,
                         size: 22,
                       ),
                     ),
@@ -113,7 +119,8 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                         ),
                       ),
                       Text(
-                        'walking_target_desc'.tr(args: [targetSteps.toString()]),
+                        'walking_target_desc'
+                            .tr(args: [targetSteps.toString()]),
                         style: const TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w600,
@@ -131,12 +138,15 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                   ClayButton(
                     color: AppColors.clayRose,
                     borderRadius: 14,
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                    onPressed: () => _openManualAddSheet(context, initialDurationMode: _isDurationMode),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    onPressed: () => _openManualAddSheet(context,
+                        initialDurationMode: _isDurationMode),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.add_rounded, size: 16, color: AppColors.primaryDark),
+                        const Icon(Icons.add_rounded,
+                            size: 16, color: AppColors.primaryDark),
                         const SizedBox(width: 2),
                         Text(
                           'walking_add_manual'.tr(),
@@ -152,7 +162,8 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                   if (widget.stepCount > 0 || widget.walkingMinutes > 0) ...[
                     const SizedBox(width: 4),
                     IconButton(
-                      icon: const Icon(Icons.refresh_rounded, size: 20, color: AppColors.textMuted),
+                      icon: const Icon(Icons.refresh_rounded,
+                          size: 20, color: AppColors.textMuted),
                       onPressed: widget.onReset,
                       tooltip: 'walking_reset_tooltip'.tr(),
                     ),
@@ -183,43 +194,61 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                           style: TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.w900,
-                            color: isTargetReached ? AppColors.successGreen : AppColors.primaryDark,
+                            color: isTargetReached
+                                ? AppColors.successGreen
+                                : AppColors.primaryDark,
                             letterSpacing: -0.5,
                           ),
                         ),
                         Text(
                           isTargetReached
                               ? 'walking_target_reached'.tr()
-                              : 'walking_steps_progress'.tr(args: [targetSteps.toString(), (progress * 100).toInt().toString()]),
+                              : 'walking_steps_progress'.tr(args: [
+                                  targetSteps.toString(),
+                                  (progress * 100).toInt().toString()
+                                ]),
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
-                            color: isTargetReached ? AppColors.successGreen : AppColors.textSecondary,
+                            color: isTargetReached
+                                ? AppColors.successGreen
+                                : AppColors.textSecondary,
                           ),
                         ),
                       ],
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
                       decoration: ClayTheme.clayButtonDecoration(
-                        color: isTargetReached ? AppColors.clayMint : AppColors.clayRose,
+                        color: isTargetReached
+                            ? AppColors.clayMint
+                            : AppColors.clayRose,
                         borderRadius: 16,
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(
-                            isTargetReached ? Icons.emoji_events_rounded : Icons.directions_walk_rounded,
+                            isTargetReached
+                                ? Icons.emoji_events_rounded
+                                : Icons.directions_walk_rounded,
                             size: 16,
-                            color: isTargetReached ? AppColors.successGreen : AppColors.primaryDark,
+                            color: isTargetReached
+                                ? AppColors.successGreen
+                                : AppColors.primaryDark,
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            isTargetReached ? 'walking_status_done'.tr() : 'walking_status_ongoing'.tr(),
+                            isTargetReached
+                                ? 'walking_status_done'.tr()
+                                : 'walking_status_ongoing'.tr(),
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w800,
-                              color: isTargetReached ? AppColors.successGreen : AppColors.primaryDark,
+                              color: isTargetReached
+                                  ? AppColors.successGreen
+                                  : AppColors.primaryDark,
                             ),
                           ),
                         ],
@@ -243,7 +272,9 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                       minHeight: 10,
                       backgroundColor: Colors.transparent,
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        isTargetReached ? AppColors.successGreen : AppColors.primaryPink,
+                        isTargetReached
+                            ? AppColors.successGreen
+                            : AppColors.primaryPink,
                       ),
                     ),
                   ),
@@ -254,11 +285,19 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _buildStatItem('walking_stat_distance'.tr(), '$distanceKm km', Icons.straighten_rounded),
+                    _buildStatItem('walking_stat_distance'.tr(),
+                        '$distanceKm km', Icons.straighten_rounded),
                     Container(width: 1, height: 24, color: Colors.black12),
-                    _buildStatItem('walking_stat_calorie'.tr(), '$burnedKcal kcal', Icons.local_fire_department_rounded),
+                    _buildStatItem(
+                        'walking_stat_calorie'.tr(),
+                        '$burnedKcal kcal',
+                        Icons.local_fire_department_rounded),
                     Container(width: 1, height: 24, color: Colors.black12),
-                    _buildStatItem('walking_stat_duration'.tr(), 'walking_minutes_short'.tr(args: [widget.walkingMinutes.toString()]), Icons.timer_rounded),
+                    _buildStatItem(
+                        'walking_stat_duration'.tr(),
+                        'walking_minutes_short'
+                            .tr(args: [widget.walkingMinutes.toString()]),
+                        Icons.timer_rounded),
                   ],
                 ),
               ],
@@ -293,15 +332,21 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                           Icon(
                             Icons.directions_walk_rounded,
                             size: 15,
-                            color: !_isDurationMode ? AppColors.primaryDark : AppColors.textSecondary,
+                            color: !_isDurationMode
+                                ? AppColors.primaryDark
+                                : AppColors.textSecondary,
                           ),
                           const SizedBox(width: 5),
                           Text(
                             'walking_tab_steps'.tr(),
                             style: TextStyle(
                               fontSize: 11,
-                              fontWeight: !_isDurationMode ? FontWeight.w800 : FontWeight.w600,
-                              color: !_isDurationMode ? AppColors.primaryDark : AppColors.textSecondary,
+                              fontWeight: !_isDurationMode
+                                  ? FontWeight.w800
+                                  : FontWeight.w600,
+                              color: !_isDurationMode
+                                  ? AppColors.primaryDark
+                                  : AppColors.textSecondary,
                             ),
                           ),
                         ],
@@ -328,15 +373,21 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                           Icon(
                             Icons.timer_rounded,
                             size: 15,
-                            color: _isDurationMode ? AppColors.primaryDark : AppColors.textSecondary,
+                            color: _isDurationMode
+                                ? AppColors.primaryDark
+                                : AppColors.textSecondary,
                           ),
                           const SizedBox(width: 5),
                           Text(
                             'walking_tab_duration'.tr(),
                             style: TextStyle(
                               fontSize: 11,
-                              fontWeight: _isDurationMode ? FontWeight.w800 : FontWeight.w600,
-                              color: _isDurationMode ? AppColors.primaryDark : AppColors.textSecondary,
+                              fontWeight: _isDurationMode
+                                  ? FontWeight.w800
+                                  : FontWeight.w600,
+                              color: _isDurationMode
+                                  ? AppColors.primaryDark
+                                  : AppColors.textSecondary,
                             ),
                           ),
                         ],
@@ -361,8 +412,16 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                     onPressed: () => widget.onAddSteps(500, minutes: 4),
                     child: Column(
                       children: [
-                        const Text('+500', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: AppColors.primaryDark)),
-                        Text('walking_minutes_short'.tr(args: ['4']), style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textSecondary)),
+                        const Text('+500',
+                            style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.primaryDark)),
+                        Text('walking_minutes_short'.tr(args: ['4']),
+                            style: const TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textSecondary)),
                       ],
                     ),
                   ),
@@ -375,8 +434,16 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                     onPressed: () => widget.onAddSteps(1000, minutes: 8),
                     child: Column(
                       children: [
-                        const Text('+1.000', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: AppColors.primaryDark)),
-                        Text('walking_minutes_short'.tr(args: ['8']), style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textSecondary)),
+                        const Text('+1.000',
+                            style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.primaryDark)),
+                        Text('walking_minutes_short'.tr(args: ['8']),
+                            style: const TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textSecondary)),
                       ],
                     ),
                   ),
@@ -389,8 +456,16 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                     onPressed: () => widget.onAddSteps(2000, minutes: 16),
                     child: Column(
                       children: [
-                        const Text('+2.000', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: AppColors.primaryDark)),
-                        Text('walking_minutes_short'.tr(args: ['16']), style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textSecondary)),
+                        const Text('+2.000',
+                            style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.primaryDark)),
+                        Text('walking_minutes_short'.tr(args: ['16']),
+                            style: const TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textSecondary)),
                       ],
                     ),
                   ),
@@ -398,10 +473,13 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                 const SizedBox(width: 8),
                 ClayButton(
                   color: AppColors.clayRose,
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   borderRadius: 18,
-                  onPressed: () => _openManualAddSheet(context, initialDurationMode: false),
-                  child: const Icon(Icons.edit_note_rounded, size: 20, color: AppColors.primaryDark),
+                  onPressed: () =>
+                      _openManualAddSheet(context, initialDurationMode: false),
+                  child: const Icon(Icons.edit_note_rounded,
+                      size: 20, color: AppColors.primaryDark),
                 ),
               ],
             )
@@ -414,10 +492,18 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                     color: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     onPressed: () => widget.onAddSteps(1800, minutes: 15),
-                    child: Column(
+                    child: const Column(
                       children: [
-                        const Text('+15 Dk', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: AppColors.primaryDark)),
-                        const Text('~1.800 Adım', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textSecondary)),
+                        Text('+15 Dk',
+                            style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.primaryDark)),
+                        Text('~1.800 Adım',
+                            style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textSecondary)),
                       ],
                     ),
                   ),
@@ -428,10 +514,18 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                     color: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     onPressed: () => widget.onAddSteps(3600, minutes: 30),
-                    child: Column(
+                    child: const Column(
                       children: [
-                        const Text('+30 Dk', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: AppColors.primaryDark)),
-                        const Text('~3.600 Adım', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textSecondary)),
+                        Text('+30 Dk',
+                            style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.primaryDark)),
+                        Text('~3.600 Adım',
+                            style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textSecondary)),
                       ],
                     ),
                   ),
@@ -442,10 +536,18 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                     color: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     onPressed: () => widget.onAddSteps(5400, minutes: 45),
-                    child: Column(
+                    child: const Column(
                       children: [
-                        const Text('+45 Dk', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: AppColors.primaryDark)),
-                        const Text('~5.400 Adım', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textSecondary)),
+                        Text('+45 Dk',
+                            style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.primaryDark)),
+                        Text('~5.400 Adım',
+                            style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textSecondary)),
                       ],
                     ),
                   ),
@@ -453,10 +555,13 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                 const SizedBox(width: 8),
                 ClayButton(
                   color: AppColors.clayRose,
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   borderRadius: 18,
-                  onPressed: () => _openManualAddSheet(context, initialDurationMode: true),
-                  child: const Icon(Icons.edit_note_rounded, size: 20, color: AppColors.primaryDark),
+                  onPressed: () =>
+                      _openManualAddSheet(context, initialDurationMode: true),
+                  child: const Icon(Icons.edit_note_rounded,
+                      size: 20, color: AppColors.primaryDark),
                 ),
               ],
             ),
@@ -475,7 +580,8 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(Icons.tips_and_updates_rounded, color: AppColors.waterBlue, size: 18),
+                    const Icon(Icons.tips_and_updates_rounded,
+                        color: AppColors.waterBlue, size: 18),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
@@ -494,7 +600,9 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(Icons.info_outline_rounded, color: AppColors.waterBlue.withValues(alpha: 0.8), size: 14),
+                    Icon(Icons.info_outline_rounded,
+                        color: AppColors.waterBlue.withValues(alpha: 0.8),
+                        size: 14),
                     const SizedBox(width: 6),
                     Expanded(
                       child: Text(
@@ -528,14 +636,20 @@ class _WalkingTrackerCardState extends State<WalkingTrackerCard> {
             const SizedBox(width: 3),
             Text(
               label,
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: AppColors.textSecondary),
+              style: const TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textSecondary),
             ),
           ],
         ),
         const SizedBox(height: 2),
         Text(
           value,
-          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: AppColors.primaryDark),
+          style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w800,
+              color: AppColors.primaryDark),
         ),
       ],
     );
@@ -687,7 +801,8 @@ class _WalkingManualAddSheetState extends State<_WalkingManualAddSheet> {
                   ],
                 ),
                 IconButton(
-                  icon: const Icon(Icons.close_rounded, color: AppColors.textMuted),
+                  icon: const Icon(Icons.close_rounded,
+                      color: AppColors.textMuted),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
               ],
@@ -717,7 +832,9 @@ class _WalkingManualAddSheetState extends State<_WalkingManualAddSheet> {
                         duration: const Duration(milliseconds: 180),
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         decoration: BoxDecoration(
-                          color: _isDurationMode ? AppColors.clayPeach : Colors.transparent,
+                          color: _isDurationMode
+                              ? AppColors.clayPeach
+                              : Colors.transparent,
                           borderRadius: BorderRadius.circular(14),
                           boxShadow: _isDurationMode
                               ? [
@@ -735,15 +852,21 @@ class _WalkingManualAddSheetState extends State<_WalkingManualAddSheet> {
                             Icon(
                               Icons.timer_rounded,
                               size: 18,
-                              color: _isDurationMode ? AppColors.primaryDark : AppColors.textSecondary,
+                              color: _isDurationMode
+                                  ? AppColors.primaryDark
+                                  : AppColors.textSecondary,
                             ),
                             const SizedBox(width: 6),
                             Text(
                               'walking_tab_duration'.tr(),
                               style: TextStyle(
                                 fontSize: 13,
-                                fontWeight: _isDurationMode ? FontWeight.w800 : FontWeight.w600,
-                                color: _isDurationMode ? AppColors.primaryDark : AppColors.textSecondary,
+                                fontWeight: _isDurationMode
+                                    ? FontWeight.w800
+                                    : FontWeight.w600,
+                                color: _isDurationMode
+                                    ? AppColors.primaryDark
+                                    : AppColors.textSecondary,
                               ),
                             ),
                           ],
@@ -759,7 +882,9 @@ class _WalkingManualAddSheetState extends State<_WalkingManualAddSheet> {
                         duration: const Duration(milliseconds: 180),
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         decoration: BoxDecoration(
-                          color: !_isDurationMode ? AppColors.clayPeach : Colors.transparent,
+                          color: !_isDurationMode
+                              ? AppColors.clayPeach
+                              : Colors.transparent,
                           borderRadius: BorderRadius.circular(14),
                           boxShadow: !_isDurationMode
                               ? [
@@ -777,15 +902,21 @@ class _WalkingManualAddSheetState extends State<_WalkingManualAddSheet> {
                             Icon(
                               Icons.directions_walk_rounded,
                               size: 18,
-                              color: !_isDurationMode ? AppColors.primaryDark : AppColors.textSecondary,
+                              color: !_isDurationMode
+                                  ? AppColors.primaryDark
+                                  : AppColors.textSecondary,
                             ),
                             const SizedBox(width: 6),
                             Text(
                               'walking_tab_steps'.tr(),
                               style: TextStyle(
                                 fontSize: 13,
-                                fontWeight: !_isDurationMode ? FontWeight.w800 : FontWeight.w600,
-                                color: !_isDurationMode ? AppColors.primaryDark : AppColors.textSecondary,
+                                fontWeight: !_isDurationMode
+                                    ? FontWeight.w800
+                                    : FontWeight.w600,
+                                color: !_isDurationMode
+                                    ? AppColors.primaryDark
+                                    : AppColors.textSecondary,
                               ),
                             ),
                           ],
@@ -805,7 +936,8 @@ class _WalkingManualAddSheetState extends State<_WalkingManualAddSheet> {
               alignment: WrapAlignment.center,
               children: _isDurationMode
                   ? [10, 15, 20, 30, 45, 60].map((mins) {
-                      final isSelected = _textController.text == mins.toString();
+                      final isSelected =
+                          _textController.text == mins.toString();
                       return GestureDetector(
                         onTap: () {
                           setState(() {
@@ -813,12 +945,17 @@ class _WalkingManualAddSheetState extends State<_WalkingManualAddSheet> {
                           });
                         },
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 14, vertical: 7),
                           decoration: BoxDecoration(
-                            color: isSelected ? AppColors.primaryPink : Colors.white,
+                            color: isSelected
+                                ? AppColors.primaryPink
+                                : Colors.white,
                             borderRadius: BorderRadius.circular(14),
                             border: Border.all(
-                              color: isSelected ? AppColors.primaryPink : Colors.black12,
+                              color: isSelected
+                                  ? AppColors.primaryPink
+                                  : Colors.black12,
                             ),
                           ),
                           child: Text(
@@ -826,14 +963,17 @@ class _WalkingManualAddSheetState extends State<_WalkingManualAddSheet> {
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
-                              color: isSelected ? Colors.white : AppColors.primaryDark,
+                              color: isSelected
+                                  ? Colors.white
+                                  : AppColors.primaryDark,
                             ),
                           ),
                         ),
                       );
                     }).toList()
                   : [500, 1000, 2000, 3000, 5000].map((steps) {
-                      final isSelected = _textController.text == steps.toString();
+                      final isSelected =
+                          _textController.text == steps.toString();
                       return GestureDetector(
                         onTap: () {
                           setState(() {
@@ -841,12 +981,17 @@ class _WalkingManualAddSheetState extends State<_WalkingManualAddSheet> {
                           });
                         },
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 14, vertical: 7),
                           decoration: BoxDecoration(
-                            color: isSelected ? AppColors.primaryPink : Colors.white,
+                            color: isSelected
+                                ? AppColors.primaryPink
+                                : Colors.white,
                             borderRadius: BorderRadius.circular(14),
                             border: Border.all(
-                              color: isSelected ? AppColors.primaryPink : Colors.black12,
+                              color: isSelected
+                                  ? AppColors.primaryPink
+                                  : Colors.black12,
                             ),
                           ),
                           child: Text(
@@ -854,7 +999,9 @@ class _WalkingManualAddSheetState extends State<_WalkingManualAddSheet> {
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
-                              color: isSelected ? Colors.white : AppColors.primaryDark,
+                              color: isSelected
+                                  ? Colors.white
+                                  : AppColors.primaryDark,
                             ),
                           ),
                         ),
@@ -869,7 +1016,9 @@ class _WalkingManualAddSheetState extends State<_WalkingManualAddSheet> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: AppColors.secondaryPeach.withValues(alpha: 0.3), width: 1.5),
+                border: Border.all(
+                    color: AppColors.secondaryPeach.withValues(alpha: 0.3),
+                    width: 1.5),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withValues(alpha: 0.02),
@@ -900,7 +1049,9 @@ class _WalkingManualAddSheetState extends State<_WalkingManualAddSheet> {
                       ? 'walking_field_duration_hint'.tr()
                       : 'walking_field_steps_hint'.tr(),
                   suffixIcon: Icon(
-                    _isDurationMode ? Icons.timer_outlined : Icons.directions_walk_rounded,
+                    _isDurationMode
+                        ? Icons.timer_outlined
+                        : Icons.directions_walk_rounded,
                     color: AppColors.secondaryPeach,
                   ),
                 ),
@@ -956,7 +1107,8 @@ class _WalkingManualAddSheetState extends State<_WalkingManualAddSheet> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.check_circle_outline_rounded, color: Colors.white, size: 20),
+                  const Icon(Icons.check_circle_outline_rounded,
+                      color: Colors.white, size: 20),
                   const SizedBox(width: 8),
                   Text(
                     'walking_confirm_add'.tr(),
@@ -986,14 +1138,20 @@ class _WalkingManualAddSheetState extends State<_WalkingManualAddSheet> {
             const SizedBox(width: 3),
             Text(
               title,
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: AppColors.textSecondary),
+              style: const TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textSecondary),
             ),
           ],
         ),
         const SizedBox(height: 2),
         Text(
           value,
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w900, color: AppColors.primaryDark),
+          style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w900,
+              color: AppColors.primaryDark),
         ),
       ],
     );

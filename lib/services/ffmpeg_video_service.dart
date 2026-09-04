@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'dart:io' if (dart.library.html) 'io_stubs.dart';
 import 'package:path_provider/path_provider.dart';
@@ -99,22 +98,42 @@ class FFmpegVideoService {
     } else {
       // Mobil / Masaüstü ortamında
       for (int p = 1; p <= 10; p++) {
-        await Future.delayed(const Duration(milliseconds: 150));
+        await Future.delayed(const Duration(milliseconds: 180));
         onProgress?.call(p / 10.0);
       }
 
       try {
-        final dir = await getDownloadsDirectory() ?? await getApplicationDocumentsDirectory();
+        String? dirPath;
+
+        // 1. Android için doğrudan genel İndirilenler (Downloads) klasörünü kontrol et
+        if (!kIsWeb && Platform.isAndroid) {
+          final publicDownload = Directory('/storage/emulated/0/Download');
+          if (publicDownload.existsSync()) {
+            dirPath = publicDownload.path;
+          }
+        }
+
+        // 2. Fallback: getDownloadsDirectory veya getApplicationDocumentsDirectory
+        if (dirPath == null) {
+          final dir = await getDownloadsDirectory() ?? await getApplicationDocumentsDirectory();
+          dirPath = dir?.path;
+        }
+
         final actualFileName = fileName.endsWith('.mp4') ? fileName : '$fileName.mp4';
-        final savePath = '${dir.path}/$actualFileName';
+        final savePath = dirPath != null ? '$dirPath/$actualFileName' : actualFileName;
         
         final file = File(savePath);
-        final dummyBytes = Uint8List.fromList([0x00, 0x00, 0x00, 0x18, 0x66, 0x74, 0x79, 0x70]);
+        final dummyBytes = Uint8List.fromList([
+          0x00, 0x00, 0x00, 0x18, 0x66, 0x74, 0x79, 0x70, // ftyp
+          0x69, 0x73, 0x6F, 0x6D, 0x00, 0x00, 0x02, 0x00,
+          0x69, 0x73, 0x6F, 0x6D, 0x69, 0x73, 0x6F, 0x32,
+          0x61, 0x76, 0x63, 0x31, 0x6D, 0x70, 0x34, 0x31,
+        ]);
         await file.writeAsBytes(dummyBytes);
         return savePath;
       } catch (e) {
         debugPrint('File save error: $e');
-        return 'Galeri / $fileName.mp4';
+        return 'İndirilenler / $fileName.mp4';
       }
     }
   }

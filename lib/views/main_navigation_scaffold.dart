@@ -10,8 +10,6 @@ import 'timeline/timeline_screen.dart';
 import 'journal/journal_screen.dart';
 import 'emergency/emergency_screen.dart';
 
-import 'debug/debug_floating_button.dart';
-
 /// Aura Pregnancy - Ana Gezinme İskeleti (6 Sekmeli Akışkan Claymorphic Navigasyon)
 class MainNavigationScaffold extends StatefulWidget {
   final int initialIndex;
@@ -49,19 +47,9 @@ class _MainNavigationScaffoldState extends State<MainNavigationScaffold> {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: AmbientBackground(
-        child: Stack(
-          children: [
-            IndexedStack(
-              index: _currentIndex,
-              children: screens,
-            ),
-            // 🛠️ Sağ Kenar Geliştirici & Test Paneli Butonu (Prodüksiyonda kolayca kaldırılabilir)
-            DebugFloatingButton(
-              onDataChanged: () {
-                setState(() {});
-              },
-            ),
-          ],
+        child: IndexedStack(
+          index: _currentIndex,
+          children: screens,
         ),
       ),
 
